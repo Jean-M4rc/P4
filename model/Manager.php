@@ -1,6 +1,6 @@
 <?php
 
-namespace Jim\P4\model; //la classe sera dans ce namespace
+namespace P4\model; //la classe sera dans ce namespace
 
 class Manager
 {

@@ -7,8 +7,8 @@ session_start();
         <meta charset="utf-8" />
         <title><?= $title ?></title>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-		<link href="../../public/css/lux.min.css" rel="stylesheet" />
-        <link href="../../public/css/style.css" rel="stylesheet" /> 
+		<link href="public/css/lux.min.css" rel="stylesheet" />
+        <link href="public/css/style.css" rel="stylesheet" /> 
     </head>
         
     <body>
@@ -24,7 +24,7 @@ session_start();
         <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Mes billets</a>
+        <a class="nav-link" href="#">Mes aventures</a>
       </li>
 	<?php
 		if (isset($_SESSION['pseudo'])||isset($_COOKIE['pseudo'])){

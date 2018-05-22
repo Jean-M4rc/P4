@@ -1,6 +1,6 @@
 <?php
 // Ici c'est notre classe manager de billet, on doit fpouvoir récupérer la liste des billets et faire le CRUD des billets
-namespace Jim\P4\model; // la classe sera dans ce namespace
+namespace P4\model; // la classe sera dans ce namespace
 
 require_once("model/Manager.php");
 
@@ -11,7 +11,7 @@ class PostsManager extends Manager
 	{
 		$db = $this->dbConnect();
 		
-		$req = $db->query('SELECT id, title, content, DATE_FORMAT(date_create,\'%d/%m/%Y à %Hh%imin%ss\') AS date_create_fr, DATE_FORMAT(date_update,\'%d/%m/%Y à %Hh%imin%ss\') AS date_update_fr FORM posts ORDER BY date_create');
+		$req = $db->query('SELECT ID, title, content, DATE_FORMAT(date_create,\'%d/%m/%Y à %Hh%imin%ss\') AS date_create_fr FROM posts ORDER BY date_create');
 		
 		return $req;
 	}
@@ -21,7 +21,7 @@ class PostsManager extends Manager
 	{
 		$db = $this->dbConnect();
 		
-		$req = $db->prepare('SELECT id, title, content, DATE_FORMAT(date_create,\'%d/%m/%Y à %Hh%imin%ss\') AS date_create_fr, DATE_FORMAT(date_update,\'%d/%m/%Y à %Hh%imin%ss\') AS date_update_fr FORM posts WHERE id = ?');
+		$req = $db->prepare('SELECT ID, title, content, DATE_FORMAT(date_create,\'%d/%m/%Y à %Hh%imin%ss\') AS date_create_fr FROM posts WHERE id = ?');
 		
 		$req->execute(array($postId));
 		

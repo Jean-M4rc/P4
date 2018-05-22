@@ -1,0 +1,18 @@
+body {
+	background-color : #eee;
+}
+h1{
+	text-align : center;
+	margin-top:20px;
+}
+.pintro{
+	width:70%;
+	margin:auto;
+}
+.jumbotron{
+	width: 75%;
+	margin : auto;
+}
+.jumbotron .btn{
+	width:auto;
+}
