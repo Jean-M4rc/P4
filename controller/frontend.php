@@ -10,7 +10,10 @@ require_once('model/CommentsManager.php');
 
 // Le controlleur front-end va proposer les différentes fonctions nécessaires pour les vues publiques.
 // je dois créer une classe controler et ensuite faire deux objets, une classe FrontControler et une classe BackControler
-
+function homePage()
+{
+	require('view/frontend/homepageView.php');
+}
 // Première fonction de base listPosts() qui affiche tout les billets de la bdd
 function listPosts()
 {

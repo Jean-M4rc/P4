@@ -5,6 +5,27 @@ h1{
 	text-align : center;
 	margin-top:20px;
 }
+.carousel-inner img{
+	max-height:850px;
+	height:auto;
+}
+.carousel-caption{
+	background-color:rgba(0,0,0,0.4);
+	border-radius:20px;
+	box-shadow: 5px 5px 10px black;
+}
+.slidecaption{
+	color:#fff;
+}
+.pslide{
+	font-size:1.7em;
+}
+.carousel-control-prev:hover{
+	background-image:linear-gradient(to left, transparent, black);
+}
+.carousel-control-next:hover{
+	background-image:linear-gradient(to right, transparent, black);
+}
 .pintro{
 	width:70%;
 	margin:auto;
