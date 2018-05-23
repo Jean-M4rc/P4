@@ -64,14 +64,14 @@
 	<div class="carousel-item">
 		<img class="d-block w-100" src="public/images/homepage/7_slide_skeeze.jpg" alt="paysage:Alaska, source:Pixabay, autor:Skeeze">
 		<div class="carousel-caption d-none d-md-block">
-			<h2 class="slidecaption ">A l'aube, la nuit s'éteind...</h2>
+			<h2 class="slidecaption ">A l'aube, la nuit s'éteint...</h2>
 			<p class="pslide">les Dieux laissent leurs pinceaux</p>
 		</div>
     </div>
 	<div class="carousel-item">
 		<img class="d-block w-100" src="public/images/homepage/8_slide_Patjosse.jpg" alt="paysage:Alaska, source:Pixabay, autor:Patjosse">
 		<div class="carousel-caption d-none d-md-block">
-			<h2 class="slidecaption ">L'homme reprend ses couleurs,</h2>
+			<h2 class="slidecaption ">L'homme reprend ses droits,</h2>
 			<p class="pslide">l'activité repart</p>
 		</div>
     </div>

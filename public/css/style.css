@@ -37,3 +37,10 @@ h1{
 .jumbotron .btn{
 	width:auto;
 }
+
+footer{
+	display:flex;
+	justify-content:space-around;
+	padding-top:20px;
+	background-color:#343a40;
+}
