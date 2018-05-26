@@ -16,7 +16,7 @@ try {
 	else 
 	{
 		// listPosts(); // Ici c'est la page par défaut du site, à l'avenir il faudra la changer avec une page d'accueil et non une page de lecture.
-		homePage();
+		P4\controller\homePage();
 	}
 	
 }

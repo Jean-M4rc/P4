@@ -2,7 +2,7 @@
 // ---------------------------------------------------------------------- //
 // ---------------------------- CONTROLLER ------------------------------ //
 // ---------------------------------------------------------------------- //
-
+namespace P4\controller;
 // Chargement des classes du model
 require_once('model/PostsManager.php');
 require_once('model/CommentsManager.php');
