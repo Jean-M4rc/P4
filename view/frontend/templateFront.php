@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,18 +11,18 @@ session_start();
         
     <body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-			<a class="navbar-brand" href="index.php">Jérôme Forteroche</a>
+			<a class="navbar-brand" href="http://localhost/P4/index.php">Jérôme Forteroche | <i class="fas fa-home"></i></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
+					<!--<li class="nav-item active">
 						<a class="nav-link" href="http://localhost/P4/index.php">Accueil <span class="sr-only">(current)</span></a>
-					</li>
+					</li>-->
 					<li class="nav-item">
-						<a class="nav-link" href="#">Mes aventures</a>
+						<a class="nav-link" href="http://localhost/P4/index.php?action=listPosts">Mes aventures</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">Mon livre d'Or</a>
@@ -33,10 +30,10 @@ session_start();
 				</ul>
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
-		if (isset($_SESSION['pseudo'])||isset($_COOKIE['pseudo'])){
+		if (isset($_SESSION['pseudoJF'])||isset($_COOKIE['pseudo'])){
 	?>
 				<div class="btngroup">
-					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#userProfilModal"><i class="fas fa-user-edit"></i> Mon profil</a></button><!-- icone FA de mon profil -->
+					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#userProfilModal"><i class="fas fa-user-edit"></i> Mon profil</a></button>
 					<a href="#"><button class="btn btn btn-outline-secondary" type="button"><i class="fas fa-sign-out-alt"></i> Déconnexion</button></a><!-- icone FA de déconnexion -->
 					<!-- au lieu du lien mettre une modal qui demande la confirmation de la déconnexion -->
 				</div>
@@ -56,17 +53,7 @@ session_start();
 				
 			</div>
 		</nav>
-		
-		<!-- Ici un bandeau contenant les messages d'erreurs recu par le serveur, les modales n'étant pas accessible facilement par le php -->
-		
-		<?php  if (isset($_GET['erreur']) && isset($message)){?>
-			<div class="alert alert-dismissible alert-warning">
-				<button type="button" class="close" data-dismiss="alert">&times;</button>
-				<h4 class="alert-heading">Attention !</h4>
-				<p class="mb-0"><?= $message; ?></p>
-			</div>
-		<?php } ?>
-		
+			
 		<!-- Modal -> signInModal -->
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenteredForSignIn" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -125,6 +112,7 @@ session_start();
 					</form>
 				</div>
 			</div>
+			<?php $_SESSION['errorField'] =""; ?>
 		</div>
 		<!-- End signInModal -->
 		
@@ -173,22 +161,24 @@ session_start();
 
         <?= $content ?>
 		
-		<footer>
-			<div class="card border-primary mb-3" style="max-width: 20rem;">
+		
+		
+		<footer class="row">
+			<div class="card border-primary col-12 col-md-4 col-lg-3">
 				<div class="card-header">Mon dernier Récit</div>
 					<div class="card-body">
 						<h4 class="card-title">Le titre du dernier billet</h4>
 						<p class="card-text">Le résumé du dernier billet</p>
 					</div>
 			</div>
-			<div class="card border-primary mb-3" style="max-width: 20rem;">
+			<div class="card border-primary col-12 col-md-4 col-lg-3">
 				<div class="card-header">Le dernier commentaire posté</div>
 				<div class="card-body">
 					<h4 class="card-title">L'auteur et le titre du billet</h4>
 					<p class="card-text">Le résumé du commentaire</p>
 				</div>
 			</div>
-			<div class="card border-primary mb-3" style="max-width: 20rem;">
+			<div class="card border-primary col-12 col-md-4 col-lg-3">
 				<div class="card-header">Plus d'aventure ?</div>
 				<div class="card-body">
 					<h4 class="card-title">Me suivre sur les réseaux</h4>
@@ -202,4 +192,5 @@ session_start();
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	<script src="public/js/validator.js"></script>
+	<script src="public/js/anim.js"></script>
 </html>

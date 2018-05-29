@@ -9,7 +9,10 @@
 
 class Post
 {
-
+	protected 	$id,
+				$title,
+				$content,
+				$date_create;
 }
 
 ?>

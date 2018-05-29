@@ -1,12 +1,13 @@
 <?php
-// Ici c'est notre classe manager de billet, on doit fpouvoir récupérer la liste des billets et faire le CRUD des billets
+// Ici c'est notre classe manager de billet, on doit pouvoir récupérer la liste des billets et faire le CRUD des billets
+
 namespace P4\model; // la classe sera dans ce namespace
 
 require_once("model/Manager.php");
 
 class PostsManager extends Manager
 {
-	 //Ici on écrit la méthode qui récupère tous les billets de la bdd
+	
 	public function getPosts()
 	{
 		$db = $this->dbConnect();

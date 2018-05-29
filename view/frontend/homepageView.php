@@ -100,5 +100,22 @@
   </a>
 </div>
 
+<?php 
+	if(isset($_SESSION['modalView'])){
+		if ($_SESSION['modalView'] == 'signed'){
+			include('view/frontend/partial/signedView.php');
+		}
+		else if ($_SESSION['modalView'] == 'logged'){
+			include('view/frontend/partial/loggedView.php');
+		}
+		else if ($_SESSION['modalView'] == 'signinError'){
+			include('view/frontend/partial/signinErrorView.php');
+		}
+		else if ($_SESSION['modalView'] == 'loginError'){
+			include('view/frontend/partial/loginErrorView.php');
+		}		
+	}
+?>
+	
 <?php $content = ob_get_clean(); ?>
 <?php require('templateFront.php'); ?>
