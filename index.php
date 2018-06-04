@@ -5,12 +5,10 @@
 // ----------- P4 ------- LE ROUTEUR DU SITE ------------------------ //
 // ------------------------------------------------------------------ //
 
-// On appelle session_start() APRES avoir enregistré l'autoload.
 session_start();
-// Ici c'est le routeur, comme adresse de base 
-// je veux afficher une page d'accueil graphique épurée très nature
 
 // Auto-loader -------------------------
+
 require_once('vendor/autoloadhome.php');
 require_once('vendor/autoload.php');
 require_once('controller/frontend.php');
@@ -28,11 +26,11 @@ try {
 			header('Location: .');
 			exit();
 		}
-		else if($_GET['action']== 'listPosts')
+		else if($_GET['action']== 'listPosts') // Afficher les billets
 		{
 			listPosts();
 		}
-		else if($_GET['action']== 'signin') //inscription au blog
+		else if($_GET['action']== 'signin') // Inscription au blog
 		{
 			if(!empty($_POST['g-recaptcha-response'])) // On vérifie si le captcha est rempli
 			{
@@ -60,6 +58,31 @@ try {
 			{
 				throw new Exception('Le captcha est n\'est pas rempli');
 			}
+		}
+		else if ($_GET['action']== 'login') // Connexion en tant que membre
+		{
+			if (!empty($_POST['pseudo']) && !empty($_POST['mdp']))
+			{
+				if (isset($_POST['CA']))
+				{
+					// 1 = setcookies
+					logUser($_POST['pseudo'], $_POST['mdp'], 1);
+				}
+				else
+				{
+					// 0 = !setcookies
+					logUser($_POST['pseudo'], $_POST['mdp'], 0);
+				}
+			}
+			else // L'un des champs est vide
+			{
+				throw new Exception('L\'identifiant ou le mot de passe n\'est pas valide !');
+			}
+		}
+		else if ($_GET['action']== 'userProfil') // Modification des infos du membre
+		{
+			// ici on balance la fonction de récupération des infos existantes
+			userProfil();
 		}
 		else
 		{

@@ -37,16 +37,13 @@ h1{
 .jumbotron .btn{
 	width:auto;
 }
-.with-errors,
-.alert{
+.with-errors/*.alert*/{
 	color:red;
-	font-size:1.2em;
-	text-align:center;
-	width:100%;
+	
 }
-span{
+/*span{
 	width:100%;
-}
+}*/
 
 footer{
 	display:flex;

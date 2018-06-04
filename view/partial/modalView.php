@@ -63,7 +63,33 @@
 		</div>	
 	<?php
 		}
-		else if($_GET['src']=="signformSuccess")
+		else if($_GET['src']=='logInError')
+		{
+			$titleModal = "Attention";
+			$contentModal = "Votre identifiant ou votre mot de passe est erroné.";
+			$targetModal = "#logInModal";
+	?>
+		<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					<h5 class="modal-title"><?= $titleModal ?></h5>
+					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target=<?= $targetModal ?>>
+					<span aria-hidden="true">&times;</span>
+					</button>
+					</div>
+					<div class="modal-body">
+					<p class="text-danger"><?= $contentModal ?></p>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= <?= $targetModal ?> >Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php
+		}
+		else if($_GET['src']=='success')
 		{
 			switch ($_GET['log'])
 			{
@@ -71,12 +97,12 @@
 					$titleModal = 'Félicitations';
 					$contentModal = 'Bienvenue ' . $_SESSION['login'] . ' ! Vous êtes désormais inscrit sur notre blog et connecté.';
 				break;
+
+				case ('logged'):
+					$titleModal = 'Félicitations';
+					$contentModal = 'Bonjour ' . $_SESSION['login'] . ' !<br/><br/> Vous êtes désormais connecté.<br/><br/> <span class="text-dark">Vous pouvez vous déconnecter en cliquant sur le bouton "Déconnexion" dans le menu de navigation</span>';
+				break;
 			}
-			//On affiche un message de validation
-			//On enregistre le pseudo,le password et le mail dans la session
-			//On redirige sur index.php
-			
-			
 	?>
 		<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
 			<div class="modal-dialog" role="document">

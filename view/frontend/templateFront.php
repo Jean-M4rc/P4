@@ -20,9 +20,6 @@
 
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
-					<!--<li class="nav-item active">
-						<a class="nav-link" href="http://localhost/P4/index.php">Accueil <span class="sr-only">(current)</span></a>
-					</li>-->
 					<li class="nav-item">
 						<a class="nav-link" href="http://localhost/P4/index.php?action=listPosts">Mes aventures</a>
 					</li>
@@ -32,14 +29,14 @@
 				</ul>
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
-		if (isset($_SESSION['login'])||isset($_COOKIE['pseudo'])){
+		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
 	?>
 				<div class="btngroup">
-					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#userProfilModal"><i class="fas fa-user-edit"></i> Mon profil</a></button>
-					<a href="http://localhost/P4/index.php?action=logOut"><button class="btn btn btn-outline-secondary" type="button"><i class="fas fa-sign-out-alt"></i> Déconnexion</button></a><!-- icone FA de déconnexion -->
+					<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
+					<button class="btn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
 					<!-- au lieu du lien mettre une modal qui demande la confirmation de la déconnexion -->
 				</div>
-				
+
 	<?php
 		// S'il n'est pas connecté on affiche le menu de base
 		} else {
@@ -47,16 +44,44 @@
 				<div class="btngroup">
 					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user-plus"></i> Inscription</button>
 					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button>
-				</div>
-				
+				</div>	
 	<?php
 		}
-	?>
-				
+	?>	
 			</div>
 		</nav>
-			
-		<!-- Modal -> signInModal -->
+		
+		<!--  ----  Modals ---- -->
+		
+		<!-- Modal -- logOutModal -->
+		<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="LogOutModalCenter" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="modal-title" id="exampleModalCenterTitle">Déconnexion</h2>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<form method="post" action="http://localhost/P4/index.php?action=logOut">
+						<fieldset>
+							<div class="modal-body">
+								<div class="alert alert-danger text-center" role="alert">
+								Confirmez votre déconnexion. Vous pourrez vous reconnecter ultérieurement.
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+								<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- End LogOutModal -->
+
+		<!-- Modal -- signInModal -->
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenteredForSignIn" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -71,46 +96,29 @@
 							<div class="modal-body">
 								<div class="form-group"><!-- le login -->
 									<label for="login" class="control-label">Pseudo :</label>
-									
-									<?php  if (isset($_GET['log']) && ($_GET['log']=="loginused" || $_GET['log']=="loginshort")){echo "<span class='alert'>Le pseudo n'est pas valide</span>";} ?>
-									
 									<input class="form-control" id="login" name="login" type="text" pattern=".{3,}" data-error="Votre pseudo est trop court !" required>
 									<div class="help-block">Minimum 3 caractères</div>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group"><!-- le mot de passe -->
 									<label for="mdp1" class="control-label">Mot de passe : </label>
-									
-									<?php if (isset($_GET['log']) && ($_GET['log']=="passwordmirror")){echo "<span class='alert'>Les mot de passe ne sont pas identiques</span>";} ?>
-									
 									<input class="form-control" id="mdp1" name="mdp1" type="password" pattern=".{6,}" data-error="Votre mot de passe est trop court !" required>
 									<div class="help-block">Minimum 6 caractères</div>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group"><!-- la confirmation du mot de passe -->
 									<label for="mdp2" class="control-label">Confirmez votre mot de passe : </label>
-									<input class="form-control" data-match="#mdp1" id="mdp2" name="mdp2" type="password" data-match-error="Oupss, les mots de passes ne correspondent pas !"required>
+									<input class="form-control" data-match="#mdp1" id="mdp2" name="mdp2" type="password" data-match-error="Les mots de passes ne correspondent pas !"required>
 									<div class="help-block with-errors"></div>
 									
 								</div>
 								<div class="form-group"><!-- le mail -->
 									<label for="mail" class="control-label">Votre adresse mail :</label>
-									
-									<?php if (isset($_GET['log']) && ($_GET['log']=="mailused" || $_GET['log']=="mailmirror")){echo "<span class='alert'>L'adresse mail n'est pas valide</span>";} ?>
-									
 									<input class="form-control" id="mail" name="mail_user" type="email" aria-describedby="emailHelp" data-error="Attention, votre adresse email n'est pas valide" required>
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
-								
-								<div class="flex-column">
-									<?php if(isset($_GET['Exception']) && $_GET['Exception']== 'Le captcha est n\'est pas rempli'){
-										echo "<span class='alert mx-auto' style='width:304px'>" . $_GET['Exception'] . "</span>";
-										}?>
-									<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
-								</div>
-								
-
+								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
 							</div><!-- modal-body -->
 							<div class="modal-footer">
 								<div class="form-group">
@@ -125,7 +133,6 @@
 		</div>
 		<!-- End signInModal -->
 		
-		
 		<!-- Modal -- logInModal -->
 		<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalCenter" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
@@ -136,7 +143,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" data-toggle="validator" action="connexion_post.php">
+					<form method="post" data-toggle="validator" action="http://localhost/P4/index.php?action=login">
 						<fieldset>
 							<div class="modal-body">
 								<div class="form-group"><!-- Le log -->
@@ -152,7 +159,7 @@
 								<div class="form-group">
 									<div class="form-check checkbox">
 										<label class="from-check-label">
-											<input type="checkbox" class="form-check-input" id="ca" name="ca">
+											<input type="checkbox" class="form-check-input" id="ca" value="1" name="CA">
 											Connexion automatique
 										</label>
 									</div>
@@ -167,39 +174,18 @@
 				</div>
 			</div>
 		</div>
-		<!-- End LogInModal -->
+		<!-- End logInModal -->
+		
 		<?php 
 		include('view/partial/modalView.php');
 		?>
 
         <?= $content ?>
 		
-		
-		
-		<footer class="row">
-			<div class="card border-primary col-12 col-md-4 col-lg-3">
-				<div class="card-header">Mon dernier Récit</div>
-					<div class="card-body">
-						<h4 class="card-title">Le titre du dernier billet</h4>
-						<p class="card-text">Le résumé du dernier billet</p>
-					</div>
-			</div>
-			<div class="card border-primary col-12 col-md-4 col-lg-3">
-				<div class="card-header">Le dernier commentaire posté</div>
-				<div class="card-body">
-					<h4 class="card-title">L'auteur et le titre du billet</h4>
-					<p class="card-text">Le résumé du commentaire</p>
-				</div>
-			</div>
-			<div class="card border-primary col-12 col-md-4 col-lg-3">
-				<div class="card-header">Plus d'aventure ?</div>
-				<div class="card-body">
-					<h4 class="card-title">Me suivre sur les réseaux</h4>
-					<p class="card-text">Icone avec liens facebook etc</p>
-				</div>
-			</div>
-		</footer>
-		
+		<?php
+		include('view/partial/footerView.php');
+		?>
+
     </body>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>

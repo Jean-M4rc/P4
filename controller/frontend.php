@@ -81,5 +81,75 @@ function newUser($login, $mdp1, $mdp2, $email)
 	}
 }
 
+function logUser($login, $password, $cookied)
+{
+	// Vérouillage des failles XSS
+	$login = htmlspecialchars($_POST['pseudo']);
+	$password = htmlspecialchars($_POST['mdp']);
+	
+	$userManager = new P4\model\UsersManager();
+	echo 'on arrive au controleur - ';
+	// On appelle la méthode pour savoir si ce pseudo existe
+	if ($userManager->exists($login)){
+		
+		echo 'le pseudo est vérifé dans la bdd - ';
+		// true => on va chercher les infos dans la bdd
+		$infoUser = $userManager->userInfos($login);
+		
+		// Maintenant il faut comparer les mots de passes
+		$isPasswordCorrect = password_verify($password, $infoUser['password']);
+
+		if ($isPasswordCorrect)
+		{
+			if ($cookied == 1)
+			{
+				// On défini le cookie et la session, les informations retenues peuvent évoluées
+				setcookie('log', $infoUser['login'], time() + 365*24*3600, null, null, false, true);
+				setcookie('password', $infoUser['password'], time() + 365*24*3600, null, null, false, true);
+				
+				$_SESSION['login'] = $infoUser['login'];
+				$_SESSION['password'] = $infoUser['password'];
+				$_SESSION['date_sign'] = $infoUser['date_sign'];
+				$_SESSION['email'] = $infoUser['email'];
+				$_SESSION['rule'] =  $infoUser['admin'];
+				$_SESSION['name'] = $infoUser['name'];
+				$_SESSION['country'] = $infoUser['country'];
+				$_SESSION['avatar_path'] = $infoUser['avatar_path'];
+				
+				header('location:index.php?src=success&log=logged');
+				require('view/partial/modalView.php');
+			
+			}
+			else if ($cookied == 0)
+			{
+				setcookie('log','');
+				setcookie('password','');
+				// On défini que la session
+				$_SESSION['login'] = $infoUser['login'];
+				$_SESSION['password'] = $infoUser['password'];
+				$_SESSION['date_sign'] = $infoUser['date_sign'];
+				$_SESSION['email'] = $infoUser['email'];
+				$_SESSION['rule'] =  $infoUser['admin'];
+				$_SESSION['name'] = $infoUser['name'];
+				$_SESSION['country'] = $infoUser['country'];
+				$_SESSION['avatar_path'] = $infoUser['avatar_path'];
+				
+				header('location:index.php?src=success&log=logged');
+				require('view/partial/modalView.php');
+			
+			}
+		}
+	}
+	else // Le pseudo n'existe pas on affiche le message d'erreur
+	{
+		header('location:index.php?src=logInError');
+		require('view/partial/modalView.php');
+	}
+}
+
+function userProfil()
+{
+	require('view/frontend/userProfilView.php');
+}
 
 ?>

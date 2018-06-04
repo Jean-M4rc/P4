@@ -54,13 +54,22 @@ class UsersManager extends Manager
 	
 	public function existMail($info)
 	{
-				
 		// Sinon, c'est que l'on veut vérifier si le nom existe ou pas.
 		$db = $this->dbConnect();
 		$q = $db->prepare('SELECT COUNT(*) FROM users WHERE email = :email');
 		$q->execute([':email'=>$info]);
 		
 		return (bool) $q->fetchColumn();
+	}
+	
+	public function userInfos($log)
+	{
+		$db = $this->dbConnect();
+		$q = $db->prepare('SELECT * FROM users WHERE login = :log');
+		$q->execute([':log'=>$log]);
+		$userInfos = $q->fetch();
+		
+		return $userInfos;
 	}
 
 
