@@ -6,7 +6,9 @@
         <title><?= $title ?></title>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link href="public/css/lux.min.css" rel="stylesheet" />
-        <link href="public/css/style.css" rel="stylesheet" /> 
+        <link href="public/css/style.css" rel="stylesheet" />
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		
     </head>
         
     <body>
@@ -30,11 +32,11 @@
 				</ul>
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
-		if (isset($_SESSION['pseudoJF'])||isset($_COOKIE['pseudo'])){
+		if (isset($_SESSION['login'])||isset($_COOKIE['pseudo'])){
 	?>
 				<div class="btngroup">
 					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#userProfilModal"><i class="fas fa-user-edit"></i> Mon profil</a></button>
-					<a href="#"><button class="btn btn btn-outline-secondary" type="button"><i class="fas fa-sign-out-alt"></i> Déconnexion</button></a><!-- icone FA de déconnexion -->
+					<a href="http://localhost/P4/index.php?action=logOut"><button class="btn btn btn-outline-secondary" type="button"><i class="fas fa-sign-out-alt"></i> Déconnexion</button></a><!-- icone FA de déconnexion -->
 					<!-- au lieu du lien mettre une modal qui demande la confirmation de la déconnexion -->
 				</div>
 				
@@ -70,7 +72,7 @@
 								<div class="form-group"><!-- le login -->
 									<label for="login" class="control-label">Pseudo :</label>
 									
-									<?php  if (isset($_GET['erreurpseudo'])){echo "<span class='alert'>Le pseudo est déjà utilisé</span>";} ?>
+									<?php  if (isset($_GET['log']) && ($_GET['log']=="loginused" || $_GET['log']=="loginshort")){echo "<span class='alert'>Le pseudo n'est pas valide</span>";} ?>
 									
 									<input class="form-control" id="login" name="login" type="text" pattern=".{3,}" data-error="Votre pseudo est trop court !" required>
 									<div class="help-block">Minimum 3 caractères</div>
@@ -79,7 +81,7 @@
 								<div class="form-group"><!-- le mot de passe -->
 									<label for="mdp1" class="control-label">Mot de passe : </label>
 									
-									<?php if (isset($_GET['erreurmdp'])){echo "<span class='alert'>Les mot de passe ne sont pas identiques</span>";} ?>
+									<?php if (isset($_GET['log']) && ($_GET['log']=="passwordmirror")){echo "<span class='alert'>Les mot de passe ne sont pas identiques</span>";} ?>
 									
 									<input class="form-control" id="mdp1" name="mdp1" type="password" pattern=".{6,}" data-error="Votre mot de passe est trop court !" required>
 									<div class="help-block">Minimum 6 caractères</div>
@@ -94,13 +96,21 @@
 								<div class="form-group"><!-- le mail -->
 									<label for="mail" class="control-label">Votre adresse mail :</label>
 									
-									<?php if (isset($_GET['erreurmail'])){echo "<span class='alert'>L'adresse mail n'est pas valide</span>";} ?>
+									<?php if (isset($_GET['log']) && ($_GET['log']=="mailused" || $_GET['log']=="mailmirror")){echo "<span class='alert'>L'adresse mail n'est pas valide</span>";} ?>
 									
-									<input class="form-control" id="mail" name="mail_user" type="email" aria-describedby="emailHelp" data-error="Bruh, that email address is invalid" required>
+									<input class="form-control" id="mail" name="mail_user" type="email" aria-describedby="emailHelp" data-error="Attention, votre adresse email n'est pas valide" required>
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
 								
+								<div class="flex-column">
+									<?php if(isset($_GET['Exception']) && $_GET['Exception']== 'Le captcha est n\'est pas rempli'){
+										echo "<span class='alert mx-auto' style='width:304px'>" . $_GET['Exception'] . "</span>";
+										}?>
+									<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
+								</div>
+								
+
 							</div><!-- modal-body -->
 							<div class="modal-footer">
 								<div class="form-group">
@@ -112,9 +122,9 @@
 					</form>
 				</div>
 			</div>
-			<?php $_SESSION['errorField'] =""; ?>
 		</div>
 		<!-- End signInModal -->
+		
 		
 		<!-- Modal -- logInModal -->
 		<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalCenter" aria-hidden="true">
@@ -158,6 +168,9 @@
 			</div>
 		</div>
 		<!-- End LogInModal -->
+		<?php 
+		include('view/partial/modalView.php');
+		?>
 
         <?= $content ?>
 		

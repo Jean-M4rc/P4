@@ -1,3 +1,3 @@
 $(".closeModal").click(function(){
-	$(".modalTemp").hide();
+	$(".modalTemp").hide();	
 });
