@@ -17,12 +17,18 @@ require_once('controller/backend.php');
 // Routeur --------------
 
 try {
-	
+	if(isset($_COOKIE['login'])&&!isset($_SESSION['login'])) // Si le cookie existe mais que la session n'existe pas
+	{
+		sessionUser($_COOKIE['login']);
+	}
+		
 	if(isset($_GET['action']))
 	{
 		if($_GET['action']== 'logOut') // D'abord on écoute la déconnexion
 		{
 			session_destroy();
+			setcookie('login','');
+			setcookie('password','');
 			header('Location: .');
 			exit();
 		}
@@ -83,6 +89,11 @@ try {
 		{
 			// ici on balance la fonction de récupération des infos existantes
 			userProfil();
+		}
+		else if ($_GET['action']== 'updateProfil') // Mise à jour du profil
+		{
+			// On lance le controleur en authentifiant le membre avec son id
+			updatingUser($_SESSION['userId']);
 		}
 		else
 		{

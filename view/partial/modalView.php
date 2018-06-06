@@ -23,6 +23,12 @@
 					$targetModal = "#signInModal";
 				break;
 				
+				case 'passwordshort':
+					$titleModal = "Attention";
+					$contentModal = "Votre mot de passe est trop court, veuillez en choisir un autre.";
+					$targetModal = "#signInModal";
+				break;
+				
 				case 'passwordmirror':
 					$titleModal = "Attention";
 					$contentModal = 'Les mots de passe ne sont pas identiques';
@@ -95,7 +101,7 @@
 			{
 				case ('signed'):
 					$titleModal = 'Félicitations';
-					$contentModal = 'Bienvenue ' . $_SESSION['login'] . ' ! Vous êtes désormais inscrit sur notre blog et connecté.';
+					$contentModal = 'Bienvenue ' . $_SESSION['login'] . ' !<br/><br/><span class="text-dark">Vous êtes désormais inscrit sur notre blog et connecté.</span>';
 				break;
 
 				case ('logged'):

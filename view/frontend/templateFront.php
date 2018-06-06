@@ -67,7 +67,7 @@
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">
-								Confirmez votre déconnexion. Vous pourrez vous reconnecter ultérieurement.
+								Confirmez votre déconnexion. Vous effacerez aussi vos cookies par cette action. Vous pourrez vous reconnecter ultérieurement. 
 								</div>
 							</div>
 							<div class="modal-footer">

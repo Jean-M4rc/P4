@@ -2,7 +2,6 @@
 
 namespace P4\model;
 
-
 class User {
 	
 	private 	$id,
@@ -10,11 +9,8 @@ class User {
 				$password,
 				$email,
 				$admin, // les droits :0 abonnés, :1 modérateurs, :2 auteur
-				$name, // A définir dans la page personnalisation
-				$nick_name, // A définir dans la page personnalisation
 				$country, // A définir dans la page personnalisation
 				$avatar_path; // A définir dans la page personnalisation
-	
 	
 	// Les constantes de rôles
 	
@@ -47,16 +43,6 @@ class User {
 	public function admin()
 	{
 		return $this->_admin;
-	}
-	
-	public function name()
-	{
-		return $this->_name;
-	}
-	
-	public function nick_name()
-	{
-		return $this->_nick_name;
 	}
 	
 	public function country()
@@ -109,22 +95,6 @@ class User {
 		$admin = (int) $admin;
 		if($admin >= 0){
 			$this->_admin = $admin;
-		}
-	}
-	
-	public function setName($name)
-	{
-		if(is_string($name))
-		{
-				$this->_name = $name;
-		}
-	}
-	
-	public function setNickName($nickName)
-	{
-		if(is_string($nickName))
-		{
-				$this->_nickName = $nickName;
 		}
 	}
 	

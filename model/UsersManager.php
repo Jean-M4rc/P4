@@ -7,22 +7,20 @@
 // à l'inscription/création d'un utilisateur lambda
 // à la validation
 // de la personnalisation du profil 
-// de la gestion des users par l'admin role(modrateur, auteur, abonné)
+// de la gestion des users par l'admin role (moderateur, auteur, abonné)
 // de la suppression
 
 namespace P4\model;
 
 require_once ('model/Manager.php');
-require_once('model/USer.php');
+require_once('model/User.php');
 
 class UsersManager extends Manager 
 {
 	public function addNewUser($login, $password, $email)
 	{
 		// Ici on fait la création d'un abonné. On créer l'entrée dans la base de données.
-		// Les donnees sont déjà testés, on effectue ici seulement l'écriture dans la bdd
 		// Ici l'écrituere en BDD
-		echo 'ici commence la requete sql<br/>';
 		
 		$db = $this->dbConnect();
 		$req = $db->prepare('INSERT INTO `users`(`login`, `password`, `email`, `date_sign`) VALUES (?,?,?,NOW())');
@@ -65,11 +63,27 @@ class UsersManager extends Manager
 	public function userInfos($log)
 	{
 		$db = $this->dbConnect();
-		$q = $db->prepare('SELECT * FROM users WHERE login = :log');
+		$q = $db->prepare('SELECT *, DATE_FORMAT(date_sign, \'%d/%m/%Y à %Hh%imin%ss\') AS date_sign FROM users WHERE login = :log');
 		$q->execute([':log'=>$log]);
 		$userInfos = $q->fetch();
 		
 		return $userInfos;
+	}
+	
+	public function updateUserInfo($userId, $pseudo, $email, $password, $country, $avatar_path)
+	{
+		$db = $this->dbConnect();
+		$updatedUser = $db->prepare('UPDATE users SET login = :pseudo, email = :email, password = :password, country = :country, avatar_path = :avatar_path  WHERE ID = :id');
+		$updatedUser->execute([
+		'pseudo' => $pseudo,
+		'email' => $email,
+		'password' => $password,
+		'country' => $country,
+		'avatar_path' => $avatar_path,		
+		'id' => $userId
+		]);
+		
+		return $updatedUser;
 	}
 
 
