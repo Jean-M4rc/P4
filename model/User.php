@@ -11,7 +11,7 @@ class User {
 				$admin, // les droits :0 abonnés, :1 modérateurs, :2 auteur
 				$country, // A définir dans la page personnalisation
 				$avatar_path; // A définir dans la page personnalisation
-	
+
 	// Les constantes de rôles
 	
 	const AUTOR_RULE = 2;
@@ -22,7 +22,7 @@ class User {
 	
 	public function id()
 	{
-			return $this->_id;
+		return $this->_id;
 	}
 	
 	public function login()
@@ -47,7 +47,7 @@ class User {
 	
 	public function country()
 	{
-		return $this->_counry;
+		return $this->_country;
 	}
 	
 	public function avatar_path()
@@ -102,7 +102,7 @@ class User {
 	{
 		if(is_string($country))
 		{
-				$this->_country = $country;
+			$this->_country = $country;
 		}
 	}
 	
@@ -110,7 +110,7 @@ class User {
 	{
 		if(is_string($avatar_path))
 		{
-				$this->_avatar_path = $avatar_path;
+			$this->_avatar_path = $avatar_path;
 		}
 	}
 	

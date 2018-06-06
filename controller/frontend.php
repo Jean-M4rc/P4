@@ -10,12 +10,7 @@ require_once('model/PostsManager.php');
 require_once('model/CommentsManager.php');
 require_once('model/UsersManager.php');
 
-
-
-// On n'appelle pas la classe model/Manager car elle est déjà appelé dans les deux classes appelées !
-
 // Le controlleur front-end va proposer les différentes fonctions nécessaires pour les vues publiques.
-
 // je dois créer une classe controler et ensuite faire deux objets, une classe FrontControler et une classe BackendControler
 
 function homePage()
@@ -23,9 +18,7 @@ function homePage()
 	require('view/frontend/homepageView.php');
 }
 
-// Première fonction de base listPosts() qui affiche tout les billets de la bdd
-
-function listPosts()
+function listPosts() // Première fonction de base listPosts() qui affiche tout les billets de la bdd
 {
 	$postsManager = new P4\model\PostsManager(); // Création d'un objet à partir de la classe. Utilisation du namespace
 	$posts = $postsManager->getPosts(); // Appel d'une méthode de cette classe pour cet objet.
@@ -59,7 +52,7 @@ function newUser($login, $mdp1, $mdp2, $email)
 		header('location:index.php?src=signformError&log=passwordmirror');
 		require('view/partial/modalView.php');
 	}
-	else if (strlen($mdp2)<=6) // Test de la longueur du mot de passe
+	else if (strlen($mdp2)<=5) // Test de la longueur du mot de passe
 	{
 		header('location:index.php?src=signformError&log=passwordshort');
 		require('view/partial/modalView.php');
@@ -297,13 +290,106 @@ function updatingUser($userId)
 	
 	echo '<br/>le pays est : ' . $country;
 	
-	if ($_FILES['size']!= 0)
+	// Test de l'image et redimensionnement pour pouvoir être afficher en fenêtre ////////////
+	
+	if (!empty($_FILES['userImage']))
 	{
-		echo '<br/>il y a un fichier';
+		if ($_FILES['userImage']['error'] <= 0)
+		{
+			if ($_FILES['userImage']['size'] <= 2097152)
+			{	
+				$userImage = $_FILES['userImage']['name'];
+				
+				echo '<br/>le nom du fichier est : ' . $userImage;
+				
+				// On défini les extensions acceptées
+				$ListeExtension = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif');
+				$ListeExtensionIE = array('jpg' => 'image/pjpg', 'jpeg'=>'image/pjpeg');
+				
+				// On cherche l'extension du fichier
+				$ExtensionPresumee = explode('.', $userImage);
+				$ExtensionPresumee = strtolower($ExtensionPresumee[count($ExtensionPresumee)-1]);
+				
+				if ($ExtensionPresumee == 'jpg' || $ExtensionPresumee == 'jpeg' || $ExtensionPresumee == 'pjpg' || $ExtensionPresumee == 'pjpeg' || $ExtensionPresumee == 'gif' || $ExtensionPresumee == 'png') // L'extension est valide
+				{
+					$userImage = getimagesize($_FILES['userImage']['tmp_name']);
+				
+					if ($userImage['mime'] == $ListeExtension[$ExtensionPresumee]  || $userImage['mime'] == $ListeExtensionIE[$ExtensionPresumee])
+					{
+						// Ici nous allons procéder au redimensionnement, nous devons récrire ce block pour les 2 autres format gif et png
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
+						{
+							echo '<br/>le format MIME est jpg';
+							$newUserImage = imagecreatefromjpeg($_FILES['userImage']['tmp_name']);
+						}
+						else if ($userImage['mime'] == 'image/png')
+						{
+							echo '<br/>le format MIME est png';
+							$newUserImage = imagecreatefrompng($_FILES['userImage']['tmp_name']);
+						}
+						else if ($userImage['mime'] == 'image/gif')
+						{
+							echo '<br/>le format MIME est gif';
+							$newUserImage = imagecreatefromgif($_FILES['userImage']['tmp_name']);
+						}
+						else
+						{
+							echo '<br/>le type MIME ne correspond pas';
+						}
+						
+						// Nous avons créé la nouvelle image en fonction de son extension nous poursuivons le traitement
+						$sizeNewUserImage = getimagesize($_FILES['userImage']['tmp_name']);
+						// On détermine le ratio 
+						$newWidth = 100;
+						$Reduction = (($newWidth * 100) / $sizeNewUserImage[0]);
+						$newHeight = (($sizeNewUserImage[1] * $Reduction)/100);
+						$userAvatar = imagecreatetruecolor($newWidth, $newHeight) or die ("Erreur");
+						imagecopyresampled($userAvatar, $newUserImage, 0, 0, 0, 0, $newWidth, $newHeight, $sizeNewUserImage[0], $sizeNewUserImage[1]);
+						imagedestroy($newUserImage);
+						
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
+						{
+							echo '<br/>on crée un jpg';
+							imagejpeg($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
+						}
+						else if ($userImage['mime'] == 'image/png')
+						{
+							echo '<br/>on crée un png';
+							imagepng($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 6);
+						}
+						else if ($userImage['mime'] == 'image/gif')
+						{
+							echo '<br/>on crée un gif';
+							imagegif($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
+						}
+
+						$avatar_path = 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee;
+						echo '<br/>' . $avatar_path;
+					}
+					else
+					{
+						echo '<br/> Le type MIME n\'est pas bon';
+					}
+				}
+				else
+				{
+					echo '<br/>l\'extension du fichier n\'est pas valide';
+				}
+			}
+			else
+			{
+				echo '<br/>L\'image est trop grande';
+			}
+		}
+		else
+		{
+			echo '<br/>le téléchargement a rencontré une erreur. Code erreur : ' . $_FILES['userImage']['error'];
+		}
 	}
 	else
 	{
-		echo '<br/>pas de fichier';
+		echo '<br/>pas de fichier envoyé';
+		$avatar_path = $_SESSION['avatar_path'];
 	}
 }
 ?>

@@ -87,7 +87,7 @@ try {
 		}
 		else if ($_GET['action']== 'userProfil') // Modification des infos du membre
 		{
-			// ici on balance la fonction de récupération des infos existantes
+			// On appelle le controlleur pour aller chercher les infos et la vue correspondante
 			userProfil();
 		}
 		else if ($_GET['action']== 'updateProfil') // Mise à jour du profil

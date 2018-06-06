@@ -85,8 +85,6 @@ class UsersManager extends Manager
 		
 		return $updatedUser;
 	}
-
-
 }
 
 ?>
