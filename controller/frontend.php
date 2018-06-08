@@ -154,9 +154,6 @@ function sessionUser($login)
 
 function updatingUser($userId)
 {
-	// Vérifier les informations envoyer (faille XSS)
-	// Vérifier la disponibilité des modifs
-	// Lancer l'update du profil
 	$userManager = new P4\model\UsersManager();
 	
 	// Test de toutes les valeurs
@@ -173,8 +170,7 @@ function updatingUser($userId)
 			{
 				if($userManager->exists($_POST['pseudo'])) // Le pseudo est déjà utilisé
 				{
-					header('location:index.php?action=userProfil&error=usedpseudo');
-					// Faire une modal pour l'erreur
+					header('location:index.php?action=userProfil&error=loginused');
 				}
 				else // Le pseudo est libre et valide on le sauvegarde juste dans la variable
 				{
@@ -189,8 +185,7 @@ function updatingUser($userId)
 		}
 		else
 		{
-			header('location:index.php?action=userProfil&error=shortpseudo');
-			// faire une modal pour l'erreur
+			header('location:index.php?action=userProfil&error=loginshort');
 		}
 	}
 	else
@@ -198,8 +193,6 @@ function updatingUser($userId)
 		$pseudo = $_SESSION['login']; // Pas de nouveau pseudo on conserve l'ancien
 	} 
 	// Fin du Test  ------  Le pseudo est testé /////////////////////////
-	
-	echo 'Le pseudo est : ' . $pseudo;
 	
 	// Test du mail ////////////////////////
 	
@@ -211,14 +204,13 @@ function updatingUser($userId)
 		{
 			if ($userManager->existMail($_POST['email'])) // Le mail est déjà utilisé
 			{
-				header('location:index.php?action=userProfil&error=usedemail');
+				header('location:index.php?action=userProfil&error=mailused');
 				// Faire une modal pour l'erreur
 			}
 			else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) // Le mail est libre on vérifie son format
 			{
 				// Le mail n'est pas au bon format
-				header('location:index.php?action=userProfil&error=patternemail');
-				// Faire une modal pour l'erreur
+				header('location:index.php?action=userProfil&error=mailmirror');
 			}
 			else // Tout est bon pour l'email on le sauvegarde
 			{
@@ -236,8 +228,6 @@ function updatingUser($userId)
 	}
 	// Fin du Test ---- Le mail est testé ////////////////////
 	
-	echo '<br/>le mail est : ' . $email;
-	
 	// Test des mots de passe ///////////////////////////////////
 	
 	if(isset($_POST['mdp1'])&& strlen($_POST['mdp1'])!=0 && isset($_POST['mdp2'])&& strlen($_POST['mdp2'])!=0 && isset($_POST['mdp3'])&& strlen($_POST['mdp3'])!=0)// Les 3 champs de mot de passe sont remplis
@@ -245,8 +235,7 @@ function updatingUser($userId)
 		if ($_POST['mdp1'] != $_POST['mdp2'])
 		{
 			// Les mots de passe sont différents
-			header('location:index.php?action=updateProfil&log=mirrorpassword');
-			// Faire une modal pour l'erreur
+			header('location:index.php?action=userProfil&error=passwordmirror');
 		}
 		else // Les mots de passe sont identiques, vérification du mot de passe de l'user
 		{
@@ -260,12 +249,16 @@ function updatingUser($userId)
 					$mdp3 = htmlspecialchars($_POST['mdp3']);
 					$password = password_hash($mdp3, PASSWORD_DEFAULT);
 				}
+				else
+				{
+					// Le mot de passe est trop court
+					header('location:index.php?action=userProfil&error=passwordshort');
+				}
 			}
 			else
 			{
 				// Le mot de passe initial n'est pas le bon
-				header('location:index.php?action=updateProfil&log=wrongpassword');
-				// Faire une modal pour l'erreur
+				header('location:index.php?action=userProfil&error=passwordwrong');
 			}
 		}
 	}
@@ -274,8 +267,6 @@ function updatingUser($userId)
 		$password = $_SESSION['password'];
 	}
 	// Fin du test ----- Les mots de passe sont testés /////////////////
-	
-	echo '<br/>le password est : ' . $password;
 	
 	// Test du pays //////////////////////////////////
 	if(isset($_POST['country'])&&strlen($_POST['country'])!=0)
@@ -288,19 +279,15 @@ function updatingUser($userId)
 	}
 	// Fin du Test ----- Le pays est testé /////////////
 	
-	echo '<br/>le pays est : ' . $country;
-	
 	// Test de l'image et redimensionnement pour pouvoir être afficher en fenêtre ////////////
 	
-	if (!empty($_FILES['userImage']))
+	if (isset($_FILES['userImage']) && !empty($_FILES['userImage']))
 	{
-		if ($_FILES['userImage']['error'] <= 0)
+		if ($_FILES['userImage']['error'] == 0)
 		{
 			if ($_FILES['userImage']['size'] <= 2097152)
 			{	
 				$userImage = $_FILES['userImage']['name'];
-				
-				echo '<br/>le nom du fichier est : ' . $userImage;
 				
 				// On défini les extensions acceptées
 				$ListeExtension = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif');
@@ -319,77 +306,119 @@ function updatingUser($userId)
 						// Ici nous allons procéder au redimensionnement, nous devons récrire ce block pour les 2 autres format gif et png
 						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
 						{
-							echo '<br/>le format MIME est jpg';
 							$newUserImage = imagecreatefromjpeg($_FILES['userImage']['tmp_name']);
 						}
 						else if ($userImage['mime'] == 'image/png')
 						{
-							echo '<br/>le format MIME est png';
 							$newUserImage = imagecreatefrompng($_FILES['userImage']['tmp_name']);
 						}
 						else if ($userImage['mime'] == 'image/gif')
 						{
-							echo '<br/>le format MIME est gif';
 							$newUserImage = imagecreatefromgif($_FILES['userImage']['tmp_name']);
 						}
 						else
 						{
-							echo '<br/>le type MIME ne correspond pas';
+							//le type MIME ne correspond pas
+							header('location:index.php?action=userProfil&error=imagewrong');
 						}
 						
 						// Nous avons créé la nouvelle image en fonction de son extension nous poursuivons le traitement
 						$sizeNewUserImage = getimagesize($_FILES['userImage']['tmp_name']);
-						// On détermine le ratio 
-						$newWidth = 100;
-						$Reduction = (($newWidth * 100) / $sizeNewUserImage[0]);
-						$newHeight = (($sizeNewUserImage[1] * $Reduction)/100);
+						
+						// On détermine le ratio si la dimension la plus grande
+	
+						$width = $sizeNewUserImage[0];
+						$height = $sizeNewUserImage[1];
+						$avatarSide = 75;
+						if ($width >= $height)
+						{
+							$newWidth = $avatarSide;
+							$Reduction = (($newWidth * 100) / $width);
+							$newHeight = (($height * $Reduction)/100);
+						}
+						else if ($height > $width)
+						{
+							$newHeight = $avatarSide;
+							$Reduction = (($newHeight * 100) / $height);
+							$newWidth = (($width * $Reduction)/100);
+						}
+						
 						$userAvatar = imagecreatetruecolor($newWidth, $newHeight) or die ("Erreur");
-						imagecopyresampled($userAvatar, $newUserImage, 0, 0, 0, 0, $newWidth, $newHeight, $sizeNewUserImage[0], $sizeNewUserImage[1]);
+						imagecopyresampled($userAvatar, $newUserImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 						imagedestroy($newUserImage);
+
 						
 						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
 						{
-							echo '<br/>on crée un jpg';
 							imagejpeg($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
 						}
 						else if ($userImage['mime'] == 'image/png')
 						{
-							echo '<br/>on crée un png';
 							imagepng($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 6);
 						}
 						else if ($userImage['mime'] == 'image/gif')
 						{
-							echo '<br/>on crée un gif';
 							imagegif($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
 						}
 
 						$avatar_path = 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee;
-						echo '<br/>' . $avatar_path;
 					}
 					else
 					{
-						echo '<br/> Le type MIME n\'est pas bon';
+						// Le type MIME n'est pas bon
+						header('location:index.php?action=userProfil&error=imagewrong');
 					}
 				}
 				else
 				{
-					echo '<br/>l\'extension du fichier n\'est pas valide';
+					// l'extension du fichier n'est pas valide
+					header('location:index.php?action=userProfil&error=imagewrong');
 				}
 			}
 			else
 			{
-				echo '<br/>L\'image est trop grande';
+				// L'image est trop grande
+				header('location:index.php?action=userProfil&error=imagesize');
 			}
+		}
+		else if ($_FILES['userImage']['error'] == 4)// Le code erreur 4 signifie pas de fichier
+		{
+			// Pas de fichier donc on garde l'ancien chemin
+			$avatar_path = $_SESSION['avatar_path'];
 		}
 		else
 		{
-			echo '<br/>le téléchargement a rencontré une erreur. Code erreur : ' . $_FILES['userImage']['error'];
+			// Le téléchargement a rencontré une erreur.
+			header('location:index.php?action=userProfil&error=uploaderror');
 		}
 	}
 	else
 	{
-		echo '<br/>pas de fichier envoyé';
+		// Pas de fichier envoyé -- partie probablement inutile
+		echo 'c\'est inutile ?';
 		$avatar_path = $_SESSION['avatar_path'];
 	}
+	
+	/*
+	echo 'Voici les données après test : <br/>';
+	echo $pseudo . '<br/>';
+	echo $email . '<br/>';
+	echo $password . '<br/>';
+	echo $country . '<br/>';
+	echo $avatar_path . '<br/><br/><br/>';
+	
+	echo 'Voici les données avant test : <br/>';
+	echo $_SESSION['login'] . '<br/>';
+	echo $_SESSION['email'] . '<br/>';
+	echo $_SESSION['password'] . '<br/>';
+	echo $_SESSION['country'] . '<br/>';
+	echo $_SESSION['avatar_path'] . '<br/>';
+	*/
+	
+	//Maintenant toutes les valeurs sont testés on peut lancer la requete d'upload avec tout les paramètres
+	$userManager->updateUserInfo($_SESSION['userId'], $pseudo, $email, $password, $country, $avatar_path);
+	sessionUser($pseudo);
+	header('location:index.php?action=userProfil&success=true');
+	// Faire la modal de succès et prévenir de l'application des changements à la prochaine connexion
 }
 ?>

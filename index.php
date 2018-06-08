@@ -17,6 +17,7 @@ require_once('controller/backend.php');
 // Routeur --------------
 
 try {
+	
 	if(isset($_COOKIE['login'])&&!isset($_SESSION['login'])) // Si le cookie existe mais que la session n'existe pas
 	{
 		sessionUser($_COOKIE['login']);
@@ -94,6 +95,7 @@ try {
 		{
 			// On lance le controleur en authentifiant le membre avec son id
 			updatingUser($_SESSION['userId']);
+			userProfil();
 		}
 		else
 		{

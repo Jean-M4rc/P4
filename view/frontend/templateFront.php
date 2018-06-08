@@ -63,7 +63,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" action="http://localhost/P4/index.php?action=logOut">
+					<form method="post" action="http://localhost/P4/index.php?action=logOut"> 
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">
@@ -119,6 +119,12 @@
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
+								<br/>
+								<div class="alert alert-dismissible alert-primary">
+								  <button type="button" class="close" data-dismiss="alert">&times;</button>
+								  <h4 class="alert-heading">Attention</h4>
+								  <p class="mb-0">Ce site utilise des cookies lorsque vous y créez un compte.</p>
+								</div>
 							</div><!-- modal-body -->
 							<div class="modal-footer">
 								<div class="form-group">
@@ -162,11 +168,11 @@
 											<input type="checkbox" class="form-check-input" id="ca" value="1" name="CA">
 											Se souvenir de moi.
 										</label>
-										<div class="alert alert-dismissible alert-warning">
-										  <button type="button" class="close" data-dismiss="alert">&times;</button>
-										  <h4 class="alert-heading">Warning!</h4>
-										  <p class="mb-0">Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, <a href="#" class="alert-link">vel scelerisque nisl consectetur et</a>.</p>
-										</div>
+									</div><br/>
+									<div class="alert alert-dismissible alert-primary">
+									  <button type="button" class="close" data-dismiss="alert">&times;</button>
+									  <h4 class="alert-heading">Attention</h4>
+									  <p class="mb-0">Cocher l'option "Se souvenir de moi" permettra de mémoriser des cookies pour améliorer votre expérience. Si vous voulez supprimer ces cookies cliquez sur le bouton "Déconnexion".</p>
 									</div>
 								</div>
 							</div>

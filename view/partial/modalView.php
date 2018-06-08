@@ -16,13 +16,7 @@
 					$contentModal = "Ce pseudo est trop court, veuillez en choisir un autre.";
 					$targetModal = "#signInModal";
 				break;
-				
-				case 'loginshort':
-					$titleModal = "Attention";
-					$contentModal = "Ce pseudo est trop court, veuillez en choisir un autre.";
-					$targetModal = "#signInModal";
-				break;
-				
+
 				case 'passwordshort':
 					$titleModal = "Attention";
 					$contentModal = "Votre mot de passe est trop court, veuillez en choisir un autre.";
@@ -66,7 +60,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	<?php
 		}
 		else if($_GET['src']=='logInError')
@@ -153,5 +147,79 @@
 			</div>
 		</div>
 <?php
+	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'userProfil' && isset($_GET['error']))
+	{
+		switch($_GET['error'])
+		{
+			case 'loginused':
+				$titleModal = "Attention";
+				$contentModal = "Ce pseudo est déjà utilisé, veuillez en choisir un autre.";
+			break;
+			
+			case 'loginshort':
+				$titleModal = "Attention";
+				$contentModal = "Ce pseudo est trop court, veuillez en choisir un autre.";
+			break;
+
+			case 'passwordshort':
+				$titleModal = "Attention";
+				$contentModal = "Votre mot de passe est trop court, veuillez en choisir un autre.";
+			break;
+			
+			case 'passwordwrong':
+				$titleModal = "Attention";
+				$contentModal = "Votre mot de passe est erroné";
+			break;
+			
+			case 'passwordmirror':
+				$titleModal = "Attention";
+				$contentModal = 'Les mots de passe ne sont pas identiques';
+			break;
+			
+			case 'mailused':
+				$titleModal = "Attention";
+				$contentModal = 'Cette adresse email est déjà utilisée. Veuillez en renseigner une autre.';
+			break;
+			
+			case 'mailmirror':
+				$titleModal = "Attention";
+				$contentModal = 'L\'adresse email n\'est pas valide.';
+			break;
+			
+			case 'imagewrong':
+				$titleModal = "Attention";
+				$contentModal = 'L\'image n\'est pas valide.';
+			break;
+			
+			case 'imagesize':
+				$titleModal = "Attention";
+				$contentModal = 'L\'image dépasse les 2Mo.';
+			break;
+			
+			case 'uploaderror':
+				$titleModal = "Attention";
+				$contentModal = 'Le téléchargement a échoué.';
+			break;
+		}?>
+			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title"><?= $titleModal ?></h5>
+						<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+						<div class="modal-body">
+						<p class='text-danger'><?= $contentModal ?></p>
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-primary closeModal">Fermer</button>
+						</div>
+					</div>
+				</div>
+			</div>	
+	<?php
 	}
 ?>

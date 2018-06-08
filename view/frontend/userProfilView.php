@@ -16,7 +16,7 @@
 					<p class="card-text">Email : <?= $_SESSION['email'] ?></p>
 					<p class="card-text">Pays : <?= $_SESSION['country'] ?></p>
 					<p class="card-text">Mon avatar :</p>
-					<p class="card-text"><img class="mx-auto" style="width:75%;height:auto;display:block;" src="<?= $_SESSION['avatar_path'] ?>" alt="Photo de profil"/></p>
+					<p class="card-text"><img class="mx-auto" style="display:block;" src="<?= $_SESSION['avatar_path'] ?>" alt="Photo de profil"/></p>
 				</div>
 				<div class="card-footer">
 				<button type="button" class="btn btn-secondary">Supprimer mon profil</button>
