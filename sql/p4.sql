@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 08 juin 2018 à 11:27
+-- Généré le :  sam. 09 juin 2018 à 13:13
 -- Version du serveur :  5.7.19
 -- Version de PHP :  7.1.9
 
@@ -36,6 +36,29 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `comment` text NOT NULL,
   `date_comment` datetime NOT NULL,
   `report` int(11) NOT NULL DEFAULT '0',
+  `moderation` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `comments`
+--
+
+INSERT INTO `comments` (`ID`, `post_id`, `autor_id`, `comment`, `date_comment`, `report`, `moderation`) VALUES
+(1, 1, 2, 'test', '2018-06-09 13:58:46', 0, 0),
+(2, 1, 1, 'test', '2018-06-09 13:59:58', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `goldbook`
+--
+
+DROP TABLE IF EXISTS `goldbook`;
+CREATE TABLE IF NOT EXISTS `goldbook` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `autor_id` varchar(255) NOT NULL,
+  `booking` text NOT NULL,
   `moderation` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -74,10 +97,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `date_sign` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_sign` date NOT NULL,
   `admin` int(11) NOT NULL DEFAULT '0',
   `country` varchar(255) NOT NULL DEFAULT 'undefinied',
-  `avatar_path` varchar(255) NOT NULL DEFAULT 'undefinied',
+  `avatar_path` varchar(255) NOT NULL DEFAULT 'public/images/user_avatar/0.jpeg',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
@@ -86,12 +109,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`ID`, `login`, `password`, `email`, `date_sign`, `admin`, `country`, `avatar_path`) VALUES
-(1, 'Jean-Pierre', '$2y$10$ZbI9aoV4u94WjHWe6KNcRucZSnT.jAhldx44KZH6dYIoekGLgKCUq', 'jean.jean@gmail.com', '2018-05-29 19:34:43', 0, 'undefinied', 'undefinied'),
-(2, 'Marc', '$2y$10$A.jjx1Ns4Bd9ZkWx6lNGLecqu2p7yaKMOtgxJ4hS2pQ.vvi9Bt/gO', 'marc.marc@gmail.com', '2018-05-31 10:44:58', 0, 'undefinied', 'undefinied'),
-(3, 'Marie', '$2y$10$JrxK2iKE48rt/GHfeHt40e60qYC1wyvMJOSdYMBl6pPAaeDvp1h7e', 'marie.marie@gmail.com', '2018-05-31 16:52:31', 0, 'undefinied', 'undefinied'),
-(6, 'Raymond', '$2y$10$LOKj7BXxs7LdoS2gIbB4subXgMk9T/VkUFZ0UxOv7R93dho66wtgi', 'raymond@gmail.com', '2018-05-31 17:48:49', 0, 'undefinied', 'undefinied'),
-(7, 'Guillaume', '$2y$10$N7tWR3DAV0R7ZFJ51WYt6.uamMf/3FVd1kfQoclcIL5nnRte9hCUi', 'guigui@gmail.com', '2018-06-01 14:43:17', 0, 'France', 'public/images/user_avatar/7.jpg'),
-(8, 'Jean-Philippe', '$2y$10$U53Ld/kdpfSyIbEKLcwh.uNeqyrKFNK36OP.sRw9kq1c/vjkXGizK', 'philou@gmail.com', '2018-06-06 21:39:06', 0, 'undefinied', 'undefinied');
+(1, 'Jean-Pierre', '$2y$10$ZbI9aoV4u94WjHWe6KNcRucZSnT.jAhldx44KZH6dYIoekGLgKCUq', 'jean.jean@gmail.com', '2018-05-29', 0, 'undefinied', 'public/images/user_avatar/0.jpeg'),
+(2, 'Marc', '$2y$10$A.jjx1Ns4Bd9ZkWx6lNGLecqu2p7yaKMOtgxJ4hS2pQ.vvi9Bt/gO', 'marc.marc@gmail.com', '2018-05-31', 0, 'undefinied', 'public/images/user_avatar/0.jpeg'),
+(3, 'Marie', '$2y$10$JrxK2iKE48rt/GHfeHt40e60qYC1wyvMJOSdYMBl6pPAaeDvp1h7e', 'marie.marie@gmail.com', '2018-05-31', 0, 'undefinied', 'public/images/user_avatar/0.jpeg'),
+(6, 'Raymond', '$2y$10$LOKj7BXxs7LdoS2gIbB4subXgMk9T/VkUFZ0UxOv7R93dho66wtgi', 'raymond@gmail.com', '2018-05-31', 0, 'undefinied', 'public/images/user_avatar/0.jpeg'),
+(7, 'Guillaume', '$2y$10$N7tWR3DAV0R7ZFJ51WYt6.uamMf/3FVd1kfQoclcIL5nnRte9hCUi', 'guigui@gmail.com', '2018-06-01', 0, 'France', 'public/images/user_avatar/0.jpeg'),
+(8, 'Jean-Philippe', '$2y$10$U53Ld/kdpfSyIbEKLcwh.uNeqyrKFNK36OP.sRw9kq1c/vjkXGizK', 'philou@gmail.com', '2018-06-06', 0, 'undefinied', 'public/images/user_avatar/0.jpeg');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
