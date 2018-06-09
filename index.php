@@ -25,7 +25,11 @@ try {
 		
 	if(isset($_GET['action']))
 	{
-		if($_GET['action']== 'logOut') // D'abord on écoute la déconnexion
+		if($_GET['action']== 'signOut')
+		{
+			signOut($_SESSION['userId']);
+		}
+		else if($_GET['action']== 'logOut') // Déconnexion
 		{
 			session_destroy();
 			setcookie('login','');

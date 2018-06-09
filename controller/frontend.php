@@ -18,7 +18,7 @@ function homePage()
 	require('view/frontend/homepageView.php');
 }
 
-function listPosts() // Première fonction de base listPosts() qui affiche tout les billets de la bdd
+function listPosts() // Première fonction de base listPosts() qui affiche tout les résumés de billets de la bdd
 {
 	$postsManager = new P4\model\PostsManager(); // Création d'un objet à partir de la classe. Utilisation du namespace
 	$posts = $postsManager->getPosts(); // Appel d'une méthode de cette classe pour cet objet.
@@ -280,8 +280,11 @@ function updatingUser($userId)
 	// Fin du Test ----- Le pays est testé /////////////
 	
 	// Test de l'image et redimensionnement pour pouvoir être afficher en fenêtre ////////////
-	
-	if (isset($_FILES['userImage']) && !empty($_FILES['userImage']))
+	if (isset($_POST['deleteUserAvatar']))
+	{
+		$avatar_path = 'public/images/user_avatar/0.jpeg';
+	}
+	else if (isset($_FILES['userImage']) && !empty($_FILES['userImage']))
 	{
 		if ($_FILES['userImage']['error'] == 0)
 		{
@@ -399,21 +402,6 @@ function updatingUser($userId)
 		$avatar_path = $_SESSION['avatar_path'];
 	}
 	
-	/*
-	echo 'Voici les données après test : <br/>';
-	echo $pseudo . '<br/>';
-	echo $email . '<br/>';
-	echo $password . '<br/>';
-	echo $country . '<br/>';
-	echo $avatar_path . '<br/><br/><br/>';
-	
-	echo 'Voici les données avant test : <br/>';
-	echo $_SESSION['login'] . '<br/>';
-	echo $_SESSION['email'] . '<br/>';
-	echo $_SESSION['password'] . '<br/>';
-	echo $_SESSION['country'] . '<br/>';
-	echo $_SESSION['avatar_path'] . '<br/>';
-	*/
 	
 	//Maintenant toutes les valeurs sont testés on peut lancer la requete d'upload avec tout les paramètres
 	$userManager->updateUserInfo($_SESSION['userId'], $pseudo, $email, $password, $country, $avatar_path);
@@ -421,4 +409,16 @@ function updatingUser($userId)
 	header('location:index.php?action=userProfil&success=true');
 	// Faire la modal de succès et prévenir de l'application des changements à la prochaine connexion
 }
+
+/*function signOut($userId)
+{
+	$password = htmlspecialchars($_POST['mdp']);
+	
+	$isPasswordCorrect = password_verify($password, $userId);
+
+		if ($isPasswordCorrect)
+		{
+			// On peut effacer l'entrée du membre
+			
+}*/
 ?>

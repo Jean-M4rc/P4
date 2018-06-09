@@ -12,14 +12,15 @@
 				<div class="card-header">Mes informations actuelles</div>
 				<div class="card-body">
 					<h4 class="card-title">Pseudo : <?= $_SESSION['login'] ?></h4>
-					<p class="card-text">Compte créé le <?= $_SESSION['date_sign'] ?></p>
+					<p class="card-text">Mon avatar :</p>
+					<p class="card-text"><img class="mx-auto" style="display:block;" src="<?= $_SESSION['avatar_path'] ?>" alt="Votre photo de profil"/></p>
 					<p class="card-text">Email : <?= $_SESSION['email'] ?></p>
 					<p class="card-text">Pays : <?= $_SESSION['country'] ?></p>
-					<p class="card-text">Mon avatar :</p>
-					<p class="card-text"><img class="mx-auto" style="display:block;" src="<?= $_SESSION['avatar_path'] ?>" alt="Photo de profil"/></p>
+					<p class="card-text">Compte créé le <?= $_SESSION['date_sign'] ?></p>
+					<p class="card-text">Nombre de messages postés : <span class="badge badge-pill badge-light">A définir <!--<?= $_SESSION['msgcount'] ?>--></span></p>
 				</div>
 				<div class="card-footer">
-				<button type="button" class="btn btn-secondary">Supprimer mon profil</button>
+				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#signOutModal"><i class="fas fa-user-slash"></i> Supprimer mon profil</button>
 				</div>
 			</div>
 			<div class="jumbotron mb-3">
@@ -65,21 +66,54 @@
 						</div>
 						<!-- Upload de l'image de profil -->
 						<div class="form-group">
-							<label for="image">Télécharger votre avatar. Attention seul le format '.jpeg' est supporté</label>
+							<label for="image">Télécharger votre avatar</label>
 							<input type="hidden" name="MAX_FILE_SIZE" value="2097152"/>
 							<input type="file" class="form-control-file" name="userImage" id="image" aria-describedby="fileHelp" >
+							Supprimer votre photo : <input type="checkbox" name="deleteUserAvatar" value="delete"/>
 							<small id="fileHelp" class="form-text text-muted">Attention l'image ne doit pas excéder 2 Mo. Et elle peut être soumise à modération.</small>
 						</div>
 						<!-- Validation du formulaire ou reset -->
 						<p class="lead text-right">
 							<button type="reset" class="btn btn-secondary">Annuler</button>
-							<button type="submit" class="btn btn-primary">Mettre à jour vos informations</button>
+							<button type="submit" class="btn btn-primary">Mettre à jour<span class="d-none d-sm-inline"> vos informations</span></button>
 						</p>
 					</fieldset>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+<!-- signOutModal -->
+			<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalCenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title" id="exampleModalCenterTitle">Suppression</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form method="post" action="http://localhost/P4/index.php?action=signOut"> 
+							<fieldset>
+								<div class="modal-body">
+									<div class="alert alert-danger text-center" role="alert">
+									Etes-vous sûr de vouloir supprimer votre profil ?<br/>
+									Toutes vos données (sauf vos commentaires) seront effacées. 
+									</div>
+									<div class="form-group">
+										<label for="mdp1">Entrez votre mot de passe</label>
+										<input class="form-control" id="password" name="password" type="password">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									<input class="btn btn-primary" id="submit" type="submit" value="Supprimer">
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
 
 <?php $content = ob_get_clean(); ?>
 <?php require('templateFront.php'); ?>

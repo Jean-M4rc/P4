@@ -95,12 +95,12 @@
 			{
 				case ('signed'):
 					$titleModal = 'Félicitations';
-					$contentModal = 'Bienvenue ' . $_SESSION['login'] . ' !<br/><br/><span class="text-dark">Vous êtes désormais inscrit sur notre blog et connecté.</span>';
+					$contentModal = '<h5 class="font-weight-bold">Bienvenue ' . $_SESSION['login'] . ' !</h5><br/><p><span class="text-success font-weight-bold">Vous êtes désormais inscrit sur notre blog et connecté.</span></p>';
 				break;
 
 				case ('logged'):
 					$titleModal = 'Félicitations';
-					$contentModal = 'Bonjour ' . $_SESSION['login'] . ' !<br/><br/> Vous êtes désormais connecté.<br/><br/> <span class="text-dark">Vous pouvez vous déconnecter en cliquant sur le bouton "Déconnexion" dans le menu de navigation</span>';
+					$contentModal = '<h5 class="font-weight-bold">Bonjour ' . $_SESSION['login'] . ' !</h5><br/><p><span class="text-success font-weight-bold">Vous êtes désormais connecté.</span><br/></p><p class="text-dark">Vous pouvez vous déconnecter en cliquant sur le bouton "Déconnexion" dans le menu de navigation.</p>';
 				break;
 			}
 	?>
@@ -108,13 +108,13 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-					<h5 class="modal-title"><?= $titleModal ?></h5>
+					<h4 class="modal-title"><?= $titleModal ?></h5>
 					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 					</button>
 					</div>
 					<div class="modal-body">
-					<p class='text-success'><?= $contentModal ?></p>
+					<p><?= $contentModal ?></p>
 					</div>
 					<div class="modal-footer">
 					<button type="button" class="btn btn-primary closeModal">Fermer</button>
