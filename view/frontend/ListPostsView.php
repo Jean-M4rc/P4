@@ -14,7 +14,7 @@ while($data = $posts->fetch()){
 		<hr class="my-4">
 		<p><?= nl2br(htmlspecialchars($data['content'])) ?></p>
 		<p class="lead">
-			<a class="btn btn-primary btn-lg" href="index.php?action=post&amp;id=<?= $data['id'] ?>" role="button">Lire cette aventure</a>
+			<a class="btn btn-primary btn-lg" href="index.php?action=post&id=<?= $data['id'] ?>" role="button">Lire cette aventure</a>
 		</p>
 	</div>
 <?php

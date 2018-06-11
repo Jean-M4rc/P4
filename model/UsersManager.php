@@ -85,6 +85,15 @@ class UsersManager extends Manager
 		
 		return $updatedUser;
 	}
+
+	public function deleteUser($userId)
+	{
+		$db = $this->dbConnect();
+		$req = $db->prepare('DELETE FROM users WHERE id= ?');
+
+		$affectedUser=$req->execute(array($userId));
+		
+	}
 }
 
 ?>

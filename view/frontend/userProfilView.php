@@ -101,7 +101,7 @@
 									Toutes vos données (sauf vos commentaires) seront effacées. 
 									</div>
 									<div class="form-group">
-										<label for="mdp1">Entrez votre mot de passe</label>
+										<label for="password">Entrez votre mot de passe</label>
 										<input class="form-control" id="password" name="password" type="password">
 									</div>
 								</div>

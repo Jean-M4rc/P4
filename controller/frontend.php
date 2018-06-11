@@ -73,7 +73,7 @@ function newUser($login, $mdp1, $mdp2, $email)
 		$password = password_hash($mdp2, PASSWORD_DEFAULT);
 		$affectedUser = $userManager->addNewUser($login, $password, $email);
 		$_SESSION['login'] = $login;
-		
+		sessionUser($_SESSION['login']);
 		header('location:index.php?src=signformSuccess&log=signed');
 		require('view/partial/modalView.php');
 	}
@@ -410,15 +410,27 @@ function updatingUser($userId)
 	// Faire la modal de succès et prévenir de l'application des changements à la prochaine connexion
 }
 
-/*function signOut($userId)
+function signOut($userId)
 {
-	$password = htmlspecialchars($_POST['mdp']);
+	$password = htmlspecialchars($_POST['password']);
 	
-	$isPasswordCorrect = password_verify($password, $userId);
+	$isPasswordCorrect = password_verify($password, $_SESSION['password']);
 
 		if ($isPasswordCorrect)
 		{
 			// On peut effacer l'entrée du membre
+			$userManager = new P4\model\UsersManager();
+			$userManager->deleteUser($_SESSION['userId']);
 			
-}*/
+			// On efface les cookies et on détruit la session
+			session_destroy();
+			setcookie('login','');
+			setcookie('password','');
+			header('Location: .');
+		}
+		else
+		{
+			header('location:index.php?action=userProfil&log=signOutError');
+		}
+}
 ?>

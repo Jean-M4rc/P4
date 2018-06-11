@@ -101,6 +101,10 @@ try {
 			updatingUser($_SESSION['userId']);
 			userProfil();
 		}
+		else if ($_GET['action'] == 'pandOra')
+		{
+			adminEcho();
+		}
 		else
 		{
 			homepage();

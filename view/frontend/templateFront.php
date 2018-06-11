@@ -30,11 +30,18 @@
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
 		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
+			
+			if ($_SESSION['rule'] == 2){
+	?>
+				<div class="btngroup mr-2">
+					<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
+				</div>
+	<?php			
+			}
 	?>
 				<div class="btngroup">
 					<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
 					<button class="btn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-					<!-- au lieu du lien mettre une modal qui demande la confirmation de la déconnexion -->
 				</div>
 
 	<?php
@@ -123,7 +130,7 @@
 								<div class="alert alert-dismissible alert-primary">
 								  <button type="button" class="close" data-dismiss="alert">&times;</button>
 								  <h4 class="alert-heading">Attention</h4>
-								  <p class="mb-0">Ce site utilise des cookies lorsque vous y créez un compte.</p>
+								  <p class="mb-0">Ce site est susceptible d'utiliser des cookies.</p>
 								</div>
 							</div><!-- modal-body -->
 							<div class="modal-footer">
@@ -162,17 +169,16 @@
 									<input id="mdp" class="form-control" name="mdp" type="password" pattern=".{6,}" data-error="Votre mot de passe est trop court !" required />
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="form-group">
-									<div class="form-check checkbox">
-										<label class="from-check-label">
-											<input type="checkbox" class="form-check-input" id="ca" value="1" name="CA">
+								<div class="alert alert-primary">
+									<h4 class="alert-heading">Attention</h4>
+									<div class="form-group">
+										<div class="form-check checkbox">
+											<label class="from-check-label">
+												<input type="checkbox" class="form-check-input" id="ca" value="1" name="CA">
 											Se souvenir de moi.
-										</label>
-									</div><br/>
-									<div class="alert alert-dismissible alert-primary">
-									  <button type="button" class="close" data-dismiss="alert">&times;</button>
-									  <h4 class="alert-heading">Attention</h4>
-									  <p class="mb-0">Cocher l'option "Se souvenir de moi" permettra de mémoriser des cookies pour améliorer votre expérience. Si vous voulez supprimer ces cookies cliquez sur le bouton "Déconnexion".</p>
+											</label>
+										</div>
+										<p class="mb-0">Cocher l'option "Se souvenir de moi" permettra de mémoriser des cookies pour améliorer votre expérience. Si vous voulez supprimer ces cookies cliquez sur le bouton "Déconnexion".</p>	
 									</div>
 								</div>
 							</div>

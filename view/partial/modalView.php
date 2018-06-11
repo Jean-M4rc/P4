@@ -61,7 +61,7 @@
 				</div>
 			</div>
 		</div>
-	<?php
+<?php
 		}
 		else if($_GET['src']=='logInError')
 		{
@@ -87,7 +87,7 @@
 				</div>
 			</div>
 		</div>
-	<?php
+<?php
 		}
 		else if($_GET['src']=='success')
 		{
@@ -220,6 +220,32 @@
 					</div>
 				</div>
 			</div>	
-	<?php
+<?php
+	}
+	else if (isset($_GET['action']) && $_GET['action']=='userProfil'&& isset($_GET['log']) && $_GET['log'] == 'signOutError')
+	{
+		$titleModal = "Attention";
+		$contentModal = "Le mot de passe n'est pas valide.";
+		$targetModal = "#signOutModal";
+	?>
+		<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+					<h5 class="modal-title"><?= $titleModal ?></h5>
+					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target=<?= $targetModal ?>>
+					<span aria-hidden="true">&times;</span>
+					</button>
+					</div>
+					<div class="modal-body">
+					<p class="text-danger"><?= $contentModal ?></p>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= <?= $targetModal ?> >Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+<?php
 	}
 ?>
