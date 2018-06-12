@@ -40,7 +40,10 @@ h1{
 .with-errors{
 	color:red;	
 }
-
+#newPostForm{
+	width:80%;
+	margin:auto;
+}
 footer{
 	display:flex;
 	justify-content:space-around;

@@ -4,7 +4,6 @@
 // --------- P4 --------------- CONTROLLER ------------------------------ //
 // ---------------------------------------------------------------------- //
 
-
 // Chargement des classes du model
 require_once('model/PostsManager.php');
 require_once('model/CommentsManager.php');

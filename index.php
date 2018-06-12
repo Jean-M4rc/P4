@@ -8,8 +8,8 @@
 session_start();
 
 // Auto-loader -------------------------
+//require_once('vendor/autoloadhome.php');
 
-require_once('vendor/autoloadhome.php');
 require_once('vendor/autoload.php');
 require_once('controller/frontend.php');
 require_once('controller/backend.php');
@@ -25,7 +25,7 @@ try {
 		
 	if(isset($_GET['action']))
 	{
-		if($_GET['action']== 'signOut')
+		if($_GET['action']== 'signOut') // Suppression du compte
 		{
 			signOut($_SESSION['userId']);
 		}
@@ -37,7 +37,7 @@ try {
 			header('Location: .');
 			exit();
 		}
-		else if($_GET['action']== 'listPosts') // Afficher les billets
+		else if($_GET['action']== 'listPosts') // Afficher les résumés des billets
 		{
 			listPosts();
 		}
@@ -52,7 +52,7 @@ try {
 				{ //s'il est bon on vérifie la présence de tout les champs
 					if (!empty($_POST['login']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2']) && !empty($_POST['mail_user']))
 					{
-						// On appelle la méthode newUser du controler pour vérifier appeller le model et vérifier les données
+						// On appelle la méthode newUser du controleur pour vérifier et appeller le model et vérifier les données
 						newUser($_POST['login'], $_POST['mdp1'], $_POST['mdp2'], $_POST['mail_user']);
 					}
 					else // L'un des champs est vide
@@ -74,7 +74,7 @@ try {
 		{
 			if (!empty($_POST['pseudo']) && !empty($_POST['mdp']))
 			{
-				if (isset($_POST['CA']))
+				if (isset($_POST['CA'])) // Connexion automatique ou pas
 				{
 					// 1 = setcookies
 					logUser($_POST['pseudo'], $_POST['mdp'], 1);
@@ -99,11 +99,12 @@ try {
 		{
 			// On lance le controleur en authentifiant le membre avec son id
 			updatingUser($_SESSION['userId']);
+			
 			userProfil();
 		}
 		else if ($_GET['action'] == 'pandOra')
 		{
-			adminEcho();
+			adminHome();
 		}
 		else
 		{
@@ -120,5 +121,6 @@ catch(Exception $e){
 	$msgError = $e->getMessage();
 	header('Location:index.php?Exception=' .$msgError.'');
 	require('view/partial/modalView.php');
+	
 }
 ?> 

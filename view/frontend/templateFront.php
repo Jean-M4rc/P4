@@ -200,7 +200,7 @@
         <?= $content ?>
 		
 		<?php
-		include('view/partial/footerView.php');
+		include('view/partial/footerFrontView.php');
 		?>
 
     </body>

@@ -13,7 +13,7 @@
 namespace P4\model;
 
 require_once ('model/Manager.php');
-//require_once('model/User.php');
+require_once('model/User.php');
 
 class UsersManager extends Manager 
 {
@@ -60,7 +60,7 @@ class UsersManager extends Manager
 		return (bool) $q->fetchColumn();
 	}
 	
-	public function userInfos($log)
+	public function userInfos($log) // fonction a mettre dans l'objet User
 	{
 		$db = $this->dbConnect();
 		$q = $db->prepare('SELECT *, DATE_FORMAT(date_sign, \'%d/%m/%Y \') AS date_sign FROM users WHERE login = :log');
