@@ -12,7 +12,7 @@
     </head>
         
     <body>
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
 			<a class="navbar-brand" href="http://localhost/P4/index.php">Jérôme Forteroche | <i class="fas fa-home"></i></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -27,34 +27,33 @@
 						<a class="nav-link" href="#">Mon livre d'Or</a>
 					</li>
 				</ul>
+				<div class="btngroup">
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
 		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
 			
 			if ($_SESSION['rule'] == 2){
 	?>
-				<div class="btngroup mr-2">
-					<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
-				</div>
+				<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
 	<?php			
 			}
 	?>
-				<div class="btngroup">
-					<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
-					<button class="btn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-				</div>
+				
+				<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
+				<button class="btn btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+				
 
 	<?php
 		// S'il n'est pas connecté on affiche le menu de base
 		} else {
 	?>
-				<div class="btngroup">
-					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user-plus"></i> Inscription</button>
-					<button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button>
-				</div>	
+				<button class="btn btn-outline-secondary mr-1 my-1" type="button" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user-plus"></i> Inscription</button>
+				<button class="btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button>
+					
 	<?php
 		}
 	?>	
+				</div>
 			</div>
 		</nav>
 		

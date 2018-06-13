@@ -12,23 +12,23 @@
 		<script>
 			tinymce.init({
 				selector: '#newPost',
-				plugins : 'advlist autoresize autolink link image imagetools lists charmap textcolor print preview',
+				themes:'inlite',
+				content_css:'public/css/lux.min.css',
+				plugins : 'preview hr',
+				toolbar:false,
+				menu: {
+					edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+					insert: {title: 'Insert', items: ' template hr'},
+					formats: {title: 'Mise en forme', items:'formats'},
+					view: {title: 'Aperçu', items: 'preview'}
+				},
+				statusbar : false,
 				branding:false,
-			});
-			tinymce.activeEditor.uploadImages(function(success) {
-				$.post('ajax/post.php', tinymce.activeEditor.getContent()).done(function() {
-					console.log("Uploaded images and posted content as an ajax request.");
-				});
-			});
-			tinymce.activeEditor.uploadImages(function(success) {
-				document.forms[0].submit();
-			});
-
-
+				language :'fr_FR'
+			})
+				
 		</script>
-
     </head>
-        
     <body>
 	<?php
 		include('view/partial/adminNav.php');
@@ -68,11 +68,14 @@
 		include('view/partial/modalView.php');
 		?>
 
-		<h2 class="text-center my-3">Un nouveau récit ?</h2>
-		<form id="newPostForm" method="post" action="">
+		<h1 class="text-center my-3">Un nouveau récit ?</h2>
+		<form id="newPostForm" method="post" action="index.php?action=addNewPost">
 			<fieldset>
+				<div class="form-group-row">
+					<h3><label for="postTitle" class="form-label">Titre de votre récit : <input class="form-control" type="text" name="postTitle" size="200px" required></label></h2>
+				</div>
 				<div class="form-group">
-					<textarea id="newPost" name="newPost" rows="15" cols="80"></textarea>
+					<textarea id="newPost" name="newPost" cols="80" rows="15"></textarea>
 				</div>
 				<div class="form-group d-flex justify-content-end">
 					<input type="reset" name="reset" class="btn btn-light mr-2" value="Effacer" />

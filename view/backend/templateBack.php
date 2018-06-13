@@ -7,43 +7,11 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link href="public/css/lux.min.css" rel="stylesheet" />
         <link href="public/css/style.css" rel="stylesheet" />
-		<script src='vendor/Tiny/tinymce/tinymce.min.js'></script>
-		<script>
-			tinymce.init({
-				selector: '#newPost',
-				plugins : 'advlist autoresize autolink link image imagetools lists charmap textcolor print preview',
-			});
-		</script>
-
     </head>
-        
     <body>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="http://localhost/P4/index.php">Jérôme Forteroche | <i class="fas fa-home"></i></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="navbarColor03">
-
-				<div class="btngroup mr-2">
-					<a href='http://localhost/P4/index.php?action=pandOra&target=postsEdit'><button class="btn btn-outline-primary" type="button"><i class="fas fa-book"></i> Mes récits</button></a>
-				</div>
-				<div class="btngroup mr-2">
-					<a href='http://localhost/P4/index.php?action=pandOra&target=usersEdit'><button class="btn btn-outline-primary" type="button"><i class="fas fa-users"></i> Mes abonnés</button></a>
-				</div>
-				<div class="btngroup mr-2">
-					<a href='http://localhost/P4/index.php?action=pandOra&target=commentsEdit'><button class="btn btn-outline-primary" type="button"><i class="fas fa-quote-right"></i> Commentaires</button></a>
-				</div>
-				<div class="btngroup mr-2">
-					<a href='http://localhost/P4/index.php?action=pandOra&target=goldbookEdit'><button class="btn btn-outline-primary" type="button"><i class="fas fa-quote-right"></i> Livre d'Or</button></a>
-				</div>
-				<div class="btngroup">
-					<button class="btn btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-				</div>
-			</div>
-		</nav>
-		
+	<?php
+	include('view/partial/adminNav.php');
+	?>
 		<!--  ----  Modals ---- -->
 		
 		<!-- Modal -- logOutModal -->
@@ -89,6 +57,5 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-	<script src="public/js/validator.js"></script>
 	<script src="public/js/anim.js"></script>
 </html>
