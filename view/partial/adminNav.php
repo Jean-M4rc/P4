@@ -7,6 +7,7 @@
 	<div class="collapse navbar-collapse justify-content-end" id="navbarColor03">
 
 		<div class="btngroup">
+			<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-primary mr-1 my-1" type="button"><i class="far fa-file-alt"></i> Ecrire</button></a>
 			<a href='http://localhost/P4/index.php?action=pandOra&target=postsEdit'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-book"></i> Récits</button></a>
 			<a href='http://localhost/P4/index.php?action=pandOra&target=usersEdit'><button class="btn btn-outline-info mr-1 my-1" type="button"><i class="fas fa-users"></i> Abonnés</button></a>
 			<a href='http://localhost/P4/index.php?action=pandOra&target=commentsEdit'><button class="btn btn-outline-warning mr-1 my-1" type="button"><i class="fas fa-quote-right"></i> Commentaires</button></a>

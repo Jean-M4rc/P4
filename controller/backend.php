@@ -38,4 +38,54 @@ function postsBackView()
 	require('view/backend/postsEditView.php');
 	
 }
+
+function updatePost($postID, $postTitle, $postContent)
+{
+	// On controle les valeurs et on update
+		
+	$postManager = new P4\model\PostsManager;
+	// Test d'un Id valide
+	if (is_numeric($postID))
+	{
+		if ($postManager->existsID($postID))
+		{
+			if (!empty($postTitle) && strlen($postTitle)>5 && is_string($postTitle))
+			{
+				if(!empty($postContent) && strlen($postContent)>20 && is_string($postContent))
+				{
+					$postManager->updatePost($postID, $postTitle, $postContent);
+					header('location:index.php?action=pandOra&target=postsEdit&successpostup');					
+				}
+				else
+				{
+					// header('location:index.php?action=pandOra&errorpostup');
+					// Avec la modal qui va avec
+					echo "le contenu du récit n'est pas valide";
+				}
+			}
+			else
+			{
+				// header('location:index.php?action=pandOra&errorpostup');
+				// Avec la modal qui va avec
+				echo "le titre du récit n'est pas valide";
+			}
+		}
+		else
+		{
+			// header('location:index.php?action=pandOra&errorpostup');
+			// Avec la modal qui va avec
+			echo "l'ID du récit n'existe pas";
+		}
+	}
+	else
+	{
+		// header('location:index.php?action=pandOra&errorpostup');
+		// Avec la modal qui va avec
+		echo "l'ID du récit n'est pas valide";
+	}
+	
+	
+	
+	
+}
 ?>

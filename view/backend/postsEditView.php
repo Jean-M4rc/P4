@@ -6,16 +6,16 @@
 	<h1 class="text-center">Voici l'ensemble de vos récits :</h1>
 	<p class="text-center">Classer du plus récent au plus ancien</p>
 
-	<table class="table table-striped table-sm m-auto">
+	<table class="table table-striped w-100">
 		<thead class="thead-dark">
-			<tr>
-				<th class="align-middle text-center" scope="col">Numéro de récit</th>
-				<th class="align-middle text-center" scope="col">Titre du récit</th>
-				<th class="align-middle text-center" scope="col">Date de création du récit</th>
-				<th class="align-middle text-center" scope="col">Voir le récit</th>
-				<th class="align-middle text-center" scope="col">Modifier le récit</th>
-				<th class="align-middle text-center" scope="col">Supprimer le récit</th>
-				<th class="align-middle text-center d-table-cell d-lg-none" scope="col">Actions</th> <!-- lui doit etre caché en vue large -->
+			<tr class="text-center">
+				<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>
+				<th class="align-middle"scope="col">Titre du récit</th>
+				<th class="d-none d-sm-table-cell align-middle" scope="col">Date de création du récit</th>
+				<th class="d-none d-lg-table-cell align-middle" scope="col">Voir le récit</th>
+				<th class="d-none d-lg-table-cell align-middle" scope="col">Modifier le récit</th>
+				<th class="d-none d-lg-table-cell align-middle" scope="col">Supprimer le récit</th>
+				<th class="d-table-cell d-lg-none align-middle" scope="col">Actions</th> <!-- lui doit etre caché en vue large -->
 			</tr>
 		</thead>
 		<tbody>
@@ -24,26 +24,89 @@
     while ($data = $posts->fetch())
     {
 ?>
-			<tr class="text-dark">
-				<td><?= htmlspecialchars($data['ID'])?></td>
-				<td><?= htmlspecialchars($data['title'])?></td>
-				<td><?= htmlspecialchars($data['date_create_fr'])?></td>
-				<td><button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#lookModal"><i class="fas fa-search-plus"></i> Plus d'infos</button></td>
-				<td><button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#lookModal"><i class="fas fa-search-plus"></i> Modifier</button></td>
-				<td><button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#lookModal"><i class="fas fa-search-plus"></i> Supprimer</button></td>
+			<tr class="text-dark text-center">
+				<td class="d-none d-sm-table-cell align-middle"><?= htmlspecialchars($data['ID'])?></td>
+				<td class="align-middle"><?= htmlspecialchars($data['title'])?></td>
+				<td class="d-none d-sm-table-cell align-middle">Le <?= htmlspecialchars($data['date_create_fr'])?></td>
+				<td class="d-none d-lg-table-cell align-middle"><button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i> Plus d'infos</button></td>
+				<td class="d-none d-lg-table-cell align-middle"><button class="btn btn-outline-primary" type="button" data-toggle="modal" data-target="#updateModal<?= $data['ID'] ?>"><i class="fas fa-edit"></i> Modifier</button></td>
+				<td class="d-none d-lg-table-cell align-middle"><button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal<?= $data['ID'] ?>"><i class="far fa-trash-alt"></i> Supprimer</button></td>
 				
 				<!-- partie caché en vue large -->
-				<td class="d-table-cell d-lg-none"><button class="btn btn-outline-primary action-toggler" type="button" data-toggle="collapse" data-target="#actionCollapsed" aria-controls="actionCollapsed" aria-expanded="true" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button></td>
-			</tr>
+				<td class="d-table-cell d-lg-none">
+					<button class="btn btn-outline-success action-toggler mb-1" type="button" data-toggle="collapse" data-target="#actionCollapsed<?= $data['ID'] ?>" aria-controls="actionCollapsed" aria-expanded="false"><i class="fas fa-bars"></i></button>
+					<div id="actionCollapsed<?= $data['ID'] ?>" class="collapse">
+							<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i> Plus d'infos</button>
+							<button class="btn btn-outline-primary my-1" type="button" data-toggle="modal" data-target="#updateModal<?= $data['ID'] ?>"><i class="fas fa-edit"></i> Modifier</button>
+							<button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal<?= $data['ID'] ?>"><i class="far fa-trash-alt"></i> Supprimer</button>
+					</div>
+				</td>
+			</tr>			
 	<!--  ----  Modals ---- -->
-	<!-- Modal -- logOutModal -->
-	<div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="LogOutModalCenter" aria-hidden="true">
+	
+	<!-- Modal -- lookModal -->
+	<div class="modal fade" id="lookModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="LookModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Déconnexion</h2>
+					<h2 class="modal-title" id="exampleModalCenterTitle"><?= htmlspecialchars($data['title']) ?></h2>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				<?= $data['content'] ?>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End LookModal -->
+	
+	
+	
+	<!-- Modal -- updateModal -->
+	<div class="modal fade" id="updateModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="exampleModalCenterTitle">Corriger quelque chose ?</h2>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=updatePost"> 
+					<fieldset>
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="postTitle">Le titre de votre récit</label>
+								<input type="text" class="form-control" name="postTitle" value="<?= $data['title']; ?>"/>
+							</div>
+							<div class="form-group">
+								<label for="postContent">Le contenu de votre récit</label>
+								<textarea name="postContent" cols="80" rows="20"><?= $data['content'] ?></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="hidden" name="postID" value="<?= $data['ID']; ?>">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+							<input class="btn btn-primary" id="submit" type="submit" value="Modifier">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- End LookModal -->
+	
+	<!-- Modal -- deleteModal -->
+	<div class="modal fade" id="deleteModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="exampleModalCenterTitle"><?= htmlspecialchars($data['title']) ?></h2>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -64,7 +127,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- End LogOutModal -->
+	<!-- End LookModal -->
 	
 <?php
     }

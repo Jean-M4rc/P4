@@ -44,5 +44,27 @@ class PostsManager extends Manager
 		));
 		
 	}
+	
+	public function existsID($id)
+	{
+		$db = $this->dbConnect();
+		$q = $db->prepare('SELECT COUNT(*) FROM posts WHERE ID = :id');
+		$q->execute([':id'=>$id]);
+		
+		return (bool) $q->fetchColumn();
+	}
+	
+	public function updatePost($postID, $postTitle, $postContent)
+	{
+		$db = $this->dbConnect();
+		$updatedPost = $db->prepare('UPDATE posts SET title = :title, content = :content  WHERE ID = :postid');
+		$updatedPost->execute([
+		'title' => $postTitle,
+		'content' => $postContent,
+		'postid' => $postID
+		]);
+		
+		return $updatedPost;
+	}
 }
 ?>

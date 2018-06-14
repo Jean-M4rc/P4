@@ -7,6 +7,28 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link href="public/css/lux.min.css" rel="stylesheet" />
         <link href="public/css/style.css" rel="stylesheet" />
+		<!-- ici rajout pour test des modif tinymce -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src='vendor/Tiny/tinymce/tinymce.min.js'></script>
+		<script>
+			tinymce.init({
+				selector: 'textarea',
+				themes:'inlite',
+				height:300,
+				content_css:'public/css/lux.min.css',
+				plugins : 'preview hr',
+				toolbar:false,
+				menu: {
+					edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+					insert: {title: 'Insert', items: ' template hr'},
+					formats: {title: 'Mise en forme', items:'formats'},
+					view: {title: 'Aperçu', items: 'preview'}
+				},
+				statusbar : false,
+				branding:false,
+				language :'fr_FR'
+			})
+		</script>
     </head>
     <body>
 	<?php

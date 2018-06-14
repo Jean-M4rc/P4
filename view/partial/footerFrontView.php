@@ -1,4 +1,4 @@
-<footer class="row">
+<footer>
 	<div class="card border-primary col-12 col-md-4 col-lg-3">
 		<div class="card-header">Mon dernier Récit</div>
 			<div class="card-body">

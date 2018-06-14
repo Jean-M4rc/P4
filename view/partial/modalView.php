@@ -42,7 +42,7 @@
 				break;
 			}
 			
-	?>
+?>
 		<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -222,7 +222,7 @@
 			</div>	
 <?php
 	}
-	else if (isset($_GET['action']) && $_GET['action']=='userProfil'&& isset($_GET['log']) && $_GET['log'] == 'signOutError')
+	else if (isset($_GET['action']) && $_GET['action']=='userProfil' && isset($_GET['log']) && $_GET['log'] == 'signOutError')
 	{
 		$titleModal = "Attention";
 		$contentModal = "Le mot de passe n'est pas valide.";

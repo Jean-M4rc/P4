@@ -116,6 +116,10 @@ try {
 						case 'postsEdit':
 							postsBackView();
 						Break;
+						
+						case 'updatePost':
+							updatePost($_POST['postID'],$_POST['postTitle'],$_POST['postContent']);
+						Break;
 					}
 				}
 				else
