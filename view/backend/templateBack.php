@@ -17,13 +17,12 @@
 				height:300,
 				content_css:'public/css/lux.min.css',
 				plugins : 'preview hr',
-				toolbar:false,
 				menu: {
-					edit: {title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall'},
+					edit: {title: 'Edit', items: 'cut copy paste pastetext | selectall'},
 					insert: {title: 'Insert', items: ' template hr'},
-					formats: {title: 'Mise en forme', items:'formats'},
 					view: {title: 'Aperçu', items: 'preview'}
 				},
+				toolbar:'undo redo | bold italic underline | fontsizeselect | formatselect | alignleft aligncenter alignright alignjustify | indent outdent',
 				statusbar : false,
 				branding:false,
 				language :'fr_FR'
@@ -64,7 +63,6 @@
 		</div>
 		<!-- End LogOutModal -->
 
-		
 		<?php 
 		include('view/partial/modalView.php');
 		?>
@@ -80,4 +78,5 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 	<script src="public/js/anim.js"></script>
+	<script src="public/js/validator.js"></script>
 </html>

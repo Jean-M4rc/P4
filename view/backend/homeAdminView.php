@@ -3,10 +3,11 @@
 <?php ob_start(); ?>
 
 	<h1 class="text-center my-3">Un nouveau récit ?</h2>
-	<form id="newPostForm" method="post" action="index.php?action=addNewPost">
+	<form id="newPostForm" method="post" action="index.php?action=addNewPost" data-toggle="validator" role="form">
 		<fieldset>
-			<div class="form-group-row">
-				<h3><label for="postTitle" class="form-label">Titre de votre récit : <input class="form-control" type="text" name="postTitle" size="200px" required></label></h2>
+			<div class="form-group-row mb-3">
+				<label for="postTitle" class="form-label"><h3>Titre de votre récit : </h3><input class="form-control" type="text" data-minlength="5" name="postTitle" size="200px" required><div class="help-block">Minimum 5 lettres</div></label>
+				
 			</div>
 			<div class="form-group">
 				<textarea id="newPost" name="newPost" cols="80" rows="15"></textarea>

@@ -148,60 +148,206 @@
 		</div>
 <?php
 	}
-	else if (isset($_GET['action']) && $_GET['action'] == 'userProfil' && isset($_GET['error']))
+	else if (isset($_GET['action']) && $_GET['action'] == 'userProfil')
 	{
-		switch($_GET['error'])
+		if (isset($_GET['error']))
 		{
-			case 'loginused':
-				$titleModal = "Attention";
-				$contentModal = "Ce pseudo est déjà utilisé, veuillez en choisir un autre.";
-			break;
-			
-			case 'loginshort':
-				$titleModal = "Attention";
-				$contentModal = "Ce pseudo est trop court, veuillez en choisir un autre.";
-			break;
+			switch($_GET['error'])
+			{
+				case 'loginused':
+					$titleModal = "Attention";
+					$contentModal = "Ce pseudo est déjà utilisé, veuillez en choisir un autre.";
+				break;
+				
+				case 'loginshort':
+					$titleModal = "Attention";
+					$contentModal = "Ce pseudo est trop court, veuillez en choisir un autre.";
+				break;
 
-			case 'passwordshort':
-				$titleModal = "Attention";
-				$contentModal = "Votre mot de passe est trop court, veuillez en choisir un autre.";
-			break;
-			
-			case 'passwordwrong':
-				$titleModal = "Attention";
-				$contentModal = "Votre mot de passe est erroné";
-			break;
-			
-			case 'passwordmirror':
-				$titleModal = "Attention";
-				$contentModal = 'Les mots de passe ne sont pas identiques';
-			break;
-			
-			case 'mailused':
-				$titleModal = "Attention";
-				$contentModal = 'Cette adresse email est déjà utilisée. Veuillez en renseigner une autre.';
-			break;
-			
-			case 'mailmirror':
-				$titleModal = "Attention";
-				$contentModal = 'L\'adresse email n\'est pas valide.';
-			break;
-			
-			case 'imagewrong':
-				$titleModal = "Attention";
-				$contentModal = 'L\'image n\'est pas valide.';
-			break;
-			
-			case 'imagesize':
-				$titleModal = "Attention";
-				$contentModal = 'L\'image dépasse les 2Mo.';
-			break;
-			
-			case 'uploaderror':
-				$titleModal = "Attention";
-				$contentModal = 'Le téléchargement a échoué.';
-			break;
-		}?>
+				case 'passwordshort':
+					$titleModal = "Attention";
+					$contentModal = "Votre mot de passe est trop court, veuillez en choisir un autre.";
+				break;
+				
+				case 'passwordwrong':
+					$titleModal = "Attention";
+					$contentModal = "Votre mot de passe est erroné";
+				break;
+				
+				case 'passwordmirror':
+					$titleModal = "Attention";
+					$contentModal = 'Les mots de passe ne sont pas identiques';
+				break;
+				
+				case 'mailused':
+					$titleModal = "Attention";
+					$contentModal = 'Cette adresse email est déjà utilisée. Veuillez en renseigner une autre.';
+				break;
+				
+				case 'mailmirror':
+					$titleModal = "Attention";
+					$contentModal = 'L\'adresse email n\'est pas valide.';
+				break;
+				
+				case 'imagewrong':
+					$titleModal = "Attention";
+					$contentModal = 'L\'image n\'est pas valide.';
+				break;
+				
+				case 'imagesize':
+					$titleModal = "Attention";
+					$contentModal = 'L\'image dépasse les 2Mo.';
+				break;
+				
+				case 'uploaderror':
+					$titleModal = "Attention";
+					$contentModal = 'Le téléchargement a échoué.';
+				break;
+			}?>
+				<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+							<h5 class="modal-title"><?= $titleModal ?></h5>
+							<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+							</div>
+							<div class="modal-body">
+							<p class='text-danger'><?= $contentModal ?></p>
+							</div>
+							<div class="modal-footer">
+							<button type="button" class="btn btn-primary closeModal">Fermer</button>
+							</div>
+						</div>
+					</div>
+				</div>	
+	<?php
+		}
+		else if (isset($_GET['log']) && $_GET['log'] == 'signOutError')
+		{
+			$titleModal = "Attention";
+			$contentModal = "Le mot de passe n'est pas valide.";
+			$targetModal = "#signOutModal";
+	?>
+			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title"><?= $titleModal ?></h5>
+						<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target=<?= $targetModal ?>>
+						<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+						<div class="modal-body">
+						<p class="text-danger"><?= $contentModal ?></p>
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= <?= $targetModal ?> >Fermer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	<?php
+		}
+	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'pandOra')
+	{
+		if(isset($_GET['target']) && $_GET['target'] == 'postsEdit')
+		{
+			if (isset($_GET['log']))
+			{
+				switch($_GET['log'])
+				{
+					case 'successpostup':
+					$titleModal = "Felicitations";
+					$contentStyle = "text-success";
+					$contentModal = "Votre récit a bien été mis à jour";
+					Break;
+					
+					case 'errorpostup':
+					$titleModal = "Attention";
+					$contentStyle = "text-danger";
+					$contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
+					Break;
+				}
+				
+			?>
+				<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+							<h5 class="modal-title"><?= $titleModal ?></h5>
+							<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+							</div>
+							<div class="modal-body">
+							<p class="<?= $contentStyle; ?>"><?= $contentModal ?></p>
+							</div>
+							<div class="modal-footer">
+							<button type="button" class="btn btn-primary closeModal" data-toggle="modal">Fermer</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php
+			}
+			else if (isset($_GET['postdown']))
+			{
+				switch($_GET['postdown'])
+				{
+					case 'success':
+					$titleModal = "Felicitations";
+					$contentStyle = "text-success";
+					$contentModal = "Votre récit a bien été supprimé.";
+					Break;
+					
+					case 'fail':
+					$titleModal = "Attention";
+					$contentStyle = "text-danger";
+					$contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
+					Break;
+				}
+			?>
+				<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+							<h5 class="modal-title"><?= $titleModal ?></h5>
+							<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+							</button>
+							</div>
+							<div class="modal-body">
+							<p class="<?= $contentStyle; ?>"><?= $contentModal ?></p>
+							</div>
+							<div class="modal-footer">
+							<button type="button" class="btn btn-primary closeModal" data-toggle="modal">Fermer</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php
+			}
+		}
+		else if(isset($_GET['log']))
+		{
+			switch($_GET['log'])
+			{
+				case 'successPost':
+				$titleModal = "Felicitations";
+				$contentStyle = "text-success";
+				$contentModal = "Votre récit est bien ajouté";
+				Break;
+				
+				case 'errorPost':
+				$titleModal = "Erreur";
+				$contentStyle = "text-danger";
+				$contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
+				Break;
+			}
+		?>
 			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -212,40 +358,15 @@
 						</button>
 						</div>
 						<div class="modal-body">
-						<p class='text-danger'><?= $contentModal ?></p>
+						<p class="<?= $contentStyle; ?>"><?= $contentModal ?></p>
 						</div>
 						<div class="modal-footer">
-						<button type="button" class="btn btn-primary closeModal">Fermer</button>
+						<button type="button" class="btn btn-primary closeModal" data-toggle="modal">Fermer</button>
 						</div>
-					</div>
-				</div>
-			</div>	
-<?php
-	}
-	else if (isset($_GET['action']) && $_GET['action']=='userProfil' && isset($_GET['log']) && $_GET['log'] == 'signOutError')
-	{
-		$titleModal = "Attention";
-		$contentModal = "Le mot de passe n'est pas valide.";
-		$targetModal = "#signOutModal";
-	?>
-		<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-					<h5 class="modal-title"><?= $titleModal ?></h5>
-					<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" data-toggle="modal" data-target=<?= $targetModal ?>>
-					<span aria-hidden="true">&times;</span>
-					</button>
-					</div>
-					<div class="modal-body">
-					<p class="text-danger"><?= $contentModal ?></p>
-					</div>
-					<div class="modal-footer">
-					<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= <?= $targetModal ?> >Fermer</button>
 					</div>
 				</div>
 			</div>
-		</div>
-<?php
+		<?php
+		}
 	}
 ?>

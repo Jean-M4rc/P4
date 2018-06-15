@@ -15,7 +15,7 @@
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Voir le récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Modifier le récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Supprimer le récit</th>
-				<th class="d-table-cell d-lg-none align-middle" scope="col">Actions</th> <!-- lui doit etre caché en vue large -->
+				<th class="d-table-cell d-lg-none align-middle" scope="col" style="width:140px">Actions</th> <!-- lui doit etre caché en vue large -->
 			</tr>
 		</thead>
 		<tbody>
@@ -35,10 +35,10 @@
 				<!-- partie caché en vue large -->
 				<td class="d-table-cell d-lg-none">
 					<button class="btn btn-outline-success action-toggler mb-1" type="button" data-toggle="collapse" data-target="#actionCollapsed<?= $data['ID'] ?>" aria-controls="actionCollapsed" aria-expanded="false"><i class="fas fa-bars"></i></button>
-					<div id="actionCollapsed<?= $data['ID'] ?>" class="collapse">
-							<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i> Plus d'infos</button>
-							<button class="btn btn-outline-primary my-1" type="button" data-toggle="modal" data-target="#updateModal<?= $data['ID'] ?>"><i class="fas fa-edit"></i> Modifier</button>
-							<button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal<?= $data['ID'] ?>"><i class="far fa-trash-alt"></i> Supprimer</button>
+					<div id="actionCollapsed<?= $data['ID'] ?>" class="collapse px-0" style="width:90px">
+						<button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i></button>
+						<button class="btn btn-outline-primary my-1" type="button" data-toggle="modal" data-target="#updateModal<?= $data['ID'] ?>"><i class="fas fa-edit"></i></button>
+						<button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#deleteModal<?= $data['ID'] ?>"><i class="far fa-trash-alt"></i></button>
 					</div>
 				</td>
 			</tr>			
@@ -64,8 +64,6 @@
 		</div>
 	</div>
 	<!-- End LookModal -->
-	
-	
 	
 	<!-- Modal -- updateModal -->
 	<div class="modal fade" id="updateModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
@@ -106,21 +104,28 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?= htmlspecialchars($data['title']) ?></h2>
+					<h2 class="modal-title" id="exampleModalCenterTitle">Suppression</h2>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=logOut"> 
+				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=deletePost"> 
 					<fieldset>
 						<div class="modal-body">
-							<div class="alert alert-danger text-center" role="alert">
-							Confirmez votre déconnexion. Vous effacerez aussi vos cookies par cette action. Vous pourrez vous reconnecter ultérieurement. 
+							<div class="alert alert-danger text-center font-weight-bold" role="alert">
+							Etes-vous sûr de vouloir supprimer ce récit ? 
+							</div>
+							<div class="card mx-auto text-white bg-primary mb-3" style="width: 18rem;">
+								<div class="card-body">
+									<h5 class="card-title"><?= $data['title']; ?></h5>
+									<p class="card-text"><?= $data['resume']; ?></p>
+								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
+						<input type="hidden" name="postID" value="<?= $data['ID']; ?>"/>
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-							<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
+							<input class="btn btn-primary" id="submit" type="submit" value="Supprimer">
 						</div>
 					</fieldset>
 				</form>

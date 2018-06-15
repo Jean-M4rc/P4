@@ -16,18 +16,16 @@ function newPost($title,$post)
 	if (isset($post) && is_string($post) && !empty($post) && isset($title) && is_string($title))
 	{
 		// On crée un résumé du récit
-		$resume = strip_tags(substr($post,0,300) . '...','<br>');
+		$resume = substr($post,0,300). '...';
+		$resumeEnd = strip_tags($resume,'<br>');
 		// On peut appeler le model et la vue pour sauvegarder ce nouveau récit
 		$postsManager = new P4\model\PostsManager();
-		$postsManager->addPost($title, $post, $resume);
-		header('location:index.php?action=pandOra&successpost');
-		
+		$postsManager->addPost($title, $post, $resumeEnd);
+		header('location:index.php?action=pandOra&log=successPost');
 	}
 	else
 	{
-		echo 'le contenu est vide';
-		// header('location:index.php?action=pandOra&errorpost');
-		// Avec la modal qui va avec
+		header('location:index.php?action=pandOra&log=errorPost');
 	}
 }
 
@@ -42,8 +40,8 @@ function postsBackView()
 function updatePost($postID, $postTitle, $postContent)
 {
 	// On controle les valeurs et on update
-		
 	$postManager = new P4\model\PostsManager;
+	
 	// Test d'un Id valide
 	if (is_numeric($postID))
 	{
@@ -54,38 +52,41 @@ function updatePost($postID, $postTitle, $postContent)
 				if(!empty($postContent) && strlen($postContent)>20 && is_string($postContent))
 				{
 					$postManager->updatePost($postID, $postTitle, $postContent);
-					header('location:index.php?action=pandOra&target=postsEdit&successpostup');					
+					header('location:index.php?action=pandOra&target=postsEdit&log=successpostup');					
 				}
 				else
 				{
-					// header('location:index.php?action=pandOra&errorpostup');
-					// Avec la modal qui va avec
-					echo "le contenu du récit n'est pas valide";
+					header('location:index.php?action=pandOra&target=postsEdit&log=errorpostup');
 				}
 			}
 			else
 			{
-				// header('location:index.php?action=pandOra&errorpostup');
-				// Avec la modal qui va avec
-				echo "le titre du récit n'est pas valide";
+				header('location:index.php?action=pandOra&target=postsEdit&log=errorpostup');
 			}
 		}
 		else
 		{
-			// header('location:index.php?action=pandOra&errorpostup');
-			// Avec la modal qui va avec
-			echo "l'ID du récit n'existe pas";
+			header('location:index.php?action=pandOra&target=postsEdit&log=errorpostup');
 		}
 	}
 	else
 	{
-		// header('location:index.php?action=pandOra&errorpostup');
-		// Avec la modal qui va avec
-		echo "l'ID du récit n'est pas valide";
+		header('location:index.php?action=pandOra&target=postsEdit&log=errorpostup');
+	}	
+}
+
+function deletePost($postID)
+{
+	$postManager = new P4\model\PostsManager;
+	
+	if (is_numeric($postID) && $postManager->existsID($postID))
+	{
+		$postManager->deletePost($postID);
+		header('location:index.php?action=pandOra&target=postsEdit&postdown=success');
 	}
-	
-	
-	
-	
+	else
+	{
+		header('location:index.php?action=pandOra&target=postsEdit&postdown=fail');
+	}
 }
 ?>
