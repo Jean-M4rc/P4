@@ -15,14 +15,13 @@
 				selector: 'textarea',
 				themes:'inlite',
 				height:300,
-				content_css:'public/css/lux.min.css',
 				plugins : 'preview hr',
 				menu: {
 					edit: {title: 'Edit', items: 'cut copy paste pastetext | selectall'},
 					insert: {title: 'Insert', items: ' template hr'},
 					view: {title: 'Aperçu', items: 'preview'}
 				},
-				toolbar:'undo redo | bold italic underline | fontsizeselect | formatselect | alignleft aligncenter alignright alignjustify | indent outdent',
+				toolbar:'undo redo | bold italic underline | fontselect | fontsizeselect | formatselect | alignleft aligncenter alignright alignjustify | indent outdent',
 				statusbar : false,
 				branding:false,
 				language :'fr_FR'

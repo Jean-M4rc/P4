@@ -16,11 +16,10 @@ function newPost($title,$post)
 	if (isset($post) && is_string($post) && !empty($post) && isset($title) && is_string($title))
 	{
 		// On crée un résumé du récit
-		$resume = substr($post,0,300). '...';
-		$resumeEnd = strip_tags($resume,'<br>');
+		$resume = strip_tags(substr($post,0,300) . '...','<br>');
 		// On peut appeler le model et la vue pour sauvegarder ce nouveau récit
 		$postsManager = new P4\model\PostsManager();
-		$postsManager->addPost($title, $post, $resumeEnd);
+		$postsManager->addPost($title, $post, $resume);
 		header('location:index.php?action=pandOra&log=successPost');
 	}
 	else

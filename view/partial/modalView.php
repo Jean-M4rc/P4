@@ -250,6 +250,31 @@
 			</div>
 	<?php
 		}
+		else if(isset($_GET['success']) && $_GET['success'] == 'true')
+		{
+			$titleModal = "Félicitations";
+			$contentModal = "Votre profil a été mis à jour.";
+		?>	
+			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+						<h5 class="modal-title"><?= $titleModal ?></h5>
+						<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" data-toggle="modal">
+						<span aria-hidden="true">&times;</span>
+						</button>
+						</div>
+						<div class="modal-body">
+						<p class="text-success"><?= $contentModal ?></p>
+						</div>
+						<div class="modal-footer">
+						<button type="button" class="btn btn-primary closeModal" data-toggle="modal">Fermer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		<?php
+		}
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'pandOra')
 	{

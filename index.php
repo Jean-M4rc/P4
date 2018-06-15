@@ -104,7 +104,7 @@ try {
 			Break;
 			
 			case 'addNewPost':
-				$post = htmlspecialchars($_POST['newPost']);
+				$post = $_POST['newPost'];
 				$title = htmlspecialchars($_POST['postTitle']);
 				newPost($title,$post);
 			Break;

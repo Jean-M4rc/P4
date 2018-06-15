@@ -397,7 +397,6 @@ function updatingUser($userId)
 	else
 	{
 		// Pas de fichier envoyé -- partie probablement inutile
-		echo 'c\'est inutile ?';
 		$avatar_path = $_SESSION['avatar_path'];
 	}
 	
@@ -406,7 +405,7 @@ function updatingUser($userId)
 	$userManager->updateUserInfo($_SESSION['userId'], $pseudo, $email, $password, $country, $avatar_path);
 	sessionUser($pseudo);
 	header('location:index.php?action=userProfil&success=true');
-	// Faire la modal de succès et prévenir de l'application des changements à la prochaine connexion
+	// Faire la modal de succès
 }
 
 function signOut($userId)

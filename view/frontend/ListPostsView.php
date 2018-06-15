@@ -10,9 +10,9 @@
 while($data = $posts->fetch()){
 ?>
 		<div class="card border-primary justify-content-around m-2" style="width: 18rem;">
-			<div class="card-header">Ajouté le <?= $data['date_create_fr'] ?></div>
+			<div class="card-header">Ajouté le <?= $data['date_create_fr']; ?></div>
 			<div class="card-body">
-				<h4 class="card-title"><?= $data['title'] ?></h4>
+				<h4 class="card-title"><?= $data['title']; ?></h4>
 				<p class="card-text"><?= $data['resume'] ?></p>
 			</div>
 			<div class="card-footer">
