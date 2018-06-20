@@ -114,7 +114,7 @@
 					</button>
 					</div>
 					<div class="modal-body">
-					<p><?= $contentModal ?></p>
+					<p class="text-center"><?= $contentModal ?></p>
 					</div>
 					<div class="modal-footer">
 					<button type="button" class="btn btn-primary closeModal">Fermer</button>
@@ -138,7 +138,7 @@
 					</button>
 					</div>
 					<div class="modal-body">
-					<p class='text-danger'><?= $_GET['Exception'] ?></p>
+					<p class='text-danger text-center'><?= $_GET['Exception'] ?></p>
 					</div>
 					<div class="modal-footer">
 					<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= "#signInModal" >Fermer</button>
@@ -214,7 +214,7 @@
 							</button>
 							</div>
 							<div class="modal-body">
-							<p class='text-danger'><?= $contentModal ?></p>
+							<p class='text-danger text-center'><?= $contentModal ?></p>
 							</div>
 							<div class="modal-footer">
 							<button type="button" class="btn btn-primary closeModal">Fermer</button>
@@ -240,7 +240,7 @@
 						</button>
 						</div>
 						<div class="modal-body">
-						<p class="text-danger"><?= $contentModal ?></p>
+						<p class="text-danger text-center"><?= $contentModal ?></p>
 						</div>
 						<div class="modal-footer">
 						<button type="button" class="btn btn-primary closeModal" data-toggle="modal" data-target= <?= $targetModal ?> >Fermer</button>
@@ -265,7 +265,7 @@
 						</button>
 						</div>
 						<div class="modal-body">
-						<p class="text-success"><?= $contentModal ?></p>
+						<p class="text-success text-center"><?= $contentModal ?></p>
 						</div>
 						<div class="modal-footer">
 						<button type="button" class="btn btn-primary closeModal" data-toggle="modal">Fermer</button>
@@ -286,13 +286,13 @@
 				{
 					case 'successpostup':
 					$titleModal = "Felicitations";
-					$contentStyle = "text-success";
+					$contentStyle = "text-success text-center";
 					$contentModal = "Votre récit a bien été mis à jour";
 					Break;
 					
 					case 'errorpostup':
 					$titleModal = "Attention";
-					$contentStyle = "text-danger";
+					$contentStyle = "text-danger text-center";
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
 					Break;
 				}
@@ -324,13 +324,13 @@
 				{
 					case 'success':
 					$titleModal = "Felicitations";
-					$contentStyle = "text-success";
+					$contentStyle = "text-success text-center";
 					$contentModal = "Votre récit a bien été supprimé.";
 					Break;
 					
 					case 'fail':
 					$titleModal = "Attention";
-					$contentStyle = "text-danger";
+					$contentStyle = "text-danger text-center";
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
 					Break;
 				}
@@ -362,13 +362,13 @@
 			{
 				case 'successPost':
 				$titleModal = "Felicitations";
-				$contentStyle = "text-success";
+				$contentStyle = "text-success text-center";
 				$contentModal = "Votre récit est bien ajouté";
 				Break;
 				
 				case 'errorPost':
 				$titleModal = "Erreur";
-				$contentStyle = "text-danger";
+				$contentStyle = "text-danger text-center";
 				$contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
 				Break;
 			}

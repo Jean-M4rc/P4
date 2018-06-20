@@ -24,6 +24,19 @@ function listPosts() // Première fonction de base listPosts() qui affiche tout 
 	require('view/frontend/ListPostsView.php'); // Appel de la vue correspondante.
 }
 
+function post($id)
+{
+	$postsManager = new P4\model\PostsManager();
+	if ($postsManager->existsID($id))
+	{
+		// Si l'id est valide on affiche le post
+		$post = $postsManager->getPost($id);
+		$commentsManager = new P4\model\CommentsManager();
+		$comments = $commentsManager->getComments($id);
+		require('view/frontend/PostView.php');
+	}
+}
+
 function newUser($login, $mdp1, $mdp2, $email)
 {	
 	// Vérouillage des failles XSS
@@ -34,37 +47,46 @@ function newUser($login, $mdp1, $mdp2, $email)
 
 	// On instance un nouveau manager d'utilisateur pour appliquer ses fonctions
 	$userManager = new P4\model\UsersManager();
-		
+	$adress = $_SERVER['HTTP_REFERER'];
+	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+	{
+		$adress = 'http://localhost/P4/index.php?';
+	}
+	else
+	{
+		$adress = $_SERVER['HTTP_REFERER'] . '&';
+	}
+	
 	if ($userManager->exists($login))
 	{
 		// Si cette condition est vraie le pseudo est déjà utilisé
-		header('location:index.php?src=signformError&log=loginused');
+		header('location:' . $adress . 'src=signformError&log=loginused');
 		require('view/partial/modalView.php');
 	}
 	else if (strlen($login)<3)
 	{
-		header('location:index.php?src=signformError&log=loginshort');
+		header('location:' . $adress . 'src=signformError&log=loginshort');
 		require('view/partial/modalView.php');
 	}
 	else if ($mdp1 != $mdp2) //Test du mot de passe identiques
 	{
-		header('location:index.php?src=signformError&log=passwordmirror');
+		header('location:' . $adress . 'src=signformError&log=passwordmirror');
 		require('view/partial/modalView.php');
 	}
 	else if (strlen($mdp2)<=5) // Test de la longueur du mot de passe
 	{
-		header('location:index.php?src=signformError&log=passwordshort');
+		header('location:' . $adress . 'src=signformError&log=passwordshort');
 		require('view/partial/modalView.php');
 	}
 	else if ($userManager->existMail($email)) // Test de l'unicité de l'email
 	{
-		header('location:index.php?src=signformError&log=mailused');
+		header('location:' . $adress . 'src=signformError&log=mailused');
 		require('view/partial/modalView.php');
 		
 	}
 	else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) // Test de la Regex sur l'email
 	{
-		header('location:index.php?src=signformError&log=mailmirror');
+		header('location:' . $adress . 'src=signformError&log=mailmirror');
 		require('view/partial/modalView.php');
 	}
 	else //Tout les test sont bons, ont hache le mdp et on insert
@@ -73,7 +95,7 @@ function newUser($login, $mdp1, $mdp2, $email)
 		$affectedUser = $userManager->addNewUser($login, $password, $email);
 		$_SESSION['login'] = $login;
 		sessionUser($_SESSION['login']);
-		header('location:index.php?src=signformSuccess&log=signed');
+		header('location:' . $adress .'src=signformSuccess&log=signed');
 		require('view/partial/modalView.php');
 	}
 }
@@ -86,6 +108,15 @@ function logUser($login, $password, $cookied)
 	
 	$userManager = new P4\model\UsersManager();
 	
+	$adress = $_SERVER['HTTP_REFERER'];
+	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+	{
+		$adress = 'http://localhost/P4/index.php?';
+	}
+	else
+	{
+		$adress = $_SERVER['HTTP_REFERER'] . '&';
+	}
 	// On appelle la méthode pour savoir si ce pseudo existe
 	if ($userManager->exists($login)){
 		
@@ -119,14 +150,13 @@ function logUser($login, $password, $cookied)
 				setcookie('login','');
 				setcookie('password','');			
 			}
-			
-			header('location:index.php?src=success&log=logged');
+			header('location:' . $adress .'src=success&log=logged');
 			require('view/partial/modalView.php');
 		}
 	}
 	else // Le pseudo n'existe pas on affiche le message d'erreur
 	{
-		header('location:index.php?src=logInError');
+		header('location:' . $adress . 'src=logInError');
 		require('view/partial/modalView.php');
 	}
 }
@@ -151,7 +181,7 @@ function sessionUser($login)
 	$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 }
 
-function updatingUser($userId)
+function updatingUser($userId) // Mise à jour des informations de l'utilisateur
 {
 	$userManager = new P4\model\UsersManager();
 	
@@ -424,11 +454,20 @@ function signOut($userId)
 			session_destroy();
 			setcookie('login','');
 			setcookie('password','');
-			header('Location: .');
+			header('Location:index.php');
 		}
 		else
 		{
-			header('location:index.php?action=userProfil&log=signOutError');
+			$adress = $_SERVER['HTTP_REFERER'];
+			if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+			{
+				$adress = 'http://localhost/P4/index.php?';
+			}
+			else
+			{
+				$adress = $_SERVER['HTTP_REFERER'] . '&';
+			}
+			header('location:' . $adress . 'action=userProfil&log=signOutError');
 		}
 }
 ?>

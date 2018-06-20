@@ -35,7 +35,7 @@ try {
 				session_destroy();
 				setcookie('login','');
 				setcookie('password','');
-				header('Location: .');
+				header('Location:http://localhost/P4/index.php');
 				exit();
 			Break;
 			
@@ -136,6 +136,16 @@ try {
 				}
 			Break;
 			
+			case 'post':
+				if(isset($_GET['id'])){
+					post($_GET['id']);
+				}
+				else
+				{
+					require('view/partial/modalView.php');
+				}
+			Break;
+			
 			default :
 				homepage();
 			Break;
@@ -150,7 +160,18 @@ try {
 catch(Exception $e){
 	
 	$msgError = $e->getMessage();
-	header('Location:index.php?Exception=' .$msgError.'');
+	$adress = $_SERVER['HTTP_REFERER'];
+	
+	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+	{
+		$adress = 'http://localhost/P4/index.php?';
+	}
+	else
+	{
+		$adress = $_SERVER['HTTP_REFERER'] . '&';
+	}
+	
+	header('Location:' . $adress . 'Exception=' .$msgError.'');
 	require('view/partial/modalView.php');
 	
 }

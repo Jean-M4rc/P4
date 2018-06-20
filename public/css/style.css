@@ -26,10 +26,6 @@ h1{
 .carousel-control-next:hover{
 	background-image:linear-gradient(to right, transparent, black);
 }
-.pintro{
-	width:70%;
-	margin:auto;
-}
 .jumbotron{
 	width: 75%;
 	margin : auto;

@@ -9,7 +9,7 @@
 	<table class="table table-striped w-100">
 		<thead class="thead-dark">
 			<tr class="text-center">
-				<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>
+				<!--<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>-->
 				<th class="align-middle"scope="col">Titre du récit</th>
 				<th class="d-none d-sm-table-cell align-middle" scope="col">Date de création du récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Voir le récit</th>
@@ -25,7 +25,7 @@
     {
 ?>
 			<tr class="text-dark text-center">
-				<td class="d-none d-sm-table-cell align-middle"><?= htmlspecialchars($data['ID'])?></td>
+				<!--<td class="d-none d-sm-table-cell align-middle"><?= htmlspecialchars($data['ID'])?></td>-->
 				<td class="align-middle"><?= htmlspecialchars($data['title'])?></td>
 				<td class="d-none d-sm-table-cell align-middle">Le <?= htmlspecialchars($data['date_create_fr'])?></td>
 				<td class="d-none d-lg-table-cell align-middle"><button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i> Plus d'infos</button></td>
@@ -139,6 +139,7 @@
 ?>
 		</tbody>
 	</table>
+	
 </div>
 <?php
 	$posts ->closeCursor(); // Termine le traitement de la requête
