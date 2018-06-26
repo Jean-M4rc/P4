@@ -137,13 +137,26 @@ try {
 			Break;
 			
 			case 'post':
-				if(isset($_GET['id'])){
+				if(isset($_GET['id']))
+				{
 					post($_GET['id']);
 				}
 				else
 				{
 					require('view/partial/modalView.php');
 				}
+			Break;
+			
+			case 'addComment':
+				if(isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['autorId']))
+				{
+					addComment($_POST['comment'],$_POST['postId'],$_POST['autorId']);
+				}
+				else
+				{
+					throw new Exception('Le commentaire ne peut pas être ajouté !');
+				}
+			
 			Break;
 			
 			default :

@@ -74,7 +74,7 @@ function updatePost($postID, $postTitle, $postContent)
 	}	
 }
 
-function deletePost($postID)
+function deletePost($postID) // On doit aussi supprimer les commentaires du post en question
 {
 	$postManager = new P4\model\PostsManager;
 	
@@ -86,6 +86,37 @@ function deletePost($postID)
 	else
 	{
 		header('location:index.php?action=pandOra&target=postsEdit&postdown=fail');
+	}
+}
+
+function addComment($comment,$postId,$autorId)
+{
+	//Test des valeurs $comment, de l'existence de postid et de autorId
+	$comment = nl2br(htmlspecialchars($comment));
+	
+	$postManager = new P4\model\PostsManager();
+	if ($postManager->existsID($postId))
+	{
+		$userManager = new P4\model\UsersManager();
+		if (($userManager->exists($autorId)))
+		{
+			$commentManager = new P4\model\CommentsManager();
+			$commentManager->addComment($postId, $autorId, $comment);
+			header('location:index.php?action=post&id=' . $postId .'&log=addcommentsuccess');
+		}
+		else
+		{
+			echo $postId;
+			echo $autorId;
+			echo 'Le compte utilisateur est erroné';
+			
+		}
+	}
+	else
+	{
+		echo $postId;
+		echo $autorId;
+		echo 'Le postId n\'existe pas';
 	}
 }
 ?>

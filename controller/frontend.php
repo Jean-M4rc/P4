@@ -10,7 +10,6 @@ require_once('model/CommentsManager.php');
 require_once('model/UsersManager.php');
 
 // Le controlleur front-end va proposer les différentes fonctions nécessaires pour les vues publiques.
-// je dois créer une classe controler et ensuite faire deux objets, une classe FrontControler et une classe BackendControler
 
 function homePage()
 {
@@ -33,7 +32,11 @@ function post($id)
 		$post = $postsManager->getPost($id);
 		$commentsManager = new P4\model\CommentsManager();
 		$comments = $commentsManager->getComments($id);
-		require('view/frontend/PostView.php');
+		require('view/frontend/postView.php');
+	}
+	else
+	{
+		echo 'le post n\'existe pas';
 	}
 }
 

@@ -13,14 +13,14 @@
 namespace P4\model;
 
 require_once ('model/Manager.php');
-require_once('model/User.php');
+//require_once('model/User.php');
 
 class UsersManager extends Manager 
 {
 	public function addNewUser($login, $password, $email)
 	{
 		// Ici on fait la création d'un abonné. On créer l'entrée dans la base de données.
-		// Ici l'écrituere en BDD
+		// Ici l'écriture en BDD
 		
 		$db = $this->dbConnect();
 		$req = $db->prepare('INSERT INTO `users`(`login`, `password`, `email`, `date_sign`) VALUES (?,?,?,NOW())');
@@ -37,10 +37,16 @@ class UsersManager extends Manager
 		// Sinon c'est que l'on a passé un nom.
 			// Donc on exécute une requête COUNT() avec une clause WHERE, et on retourne un boolean.
 			
-		if (is_int($info)) // On veut savoir si tel personnage ayant pour id $info existe.
+		if (ctype_digit($info)) // On veut savoir si tel personnage ayant pour id $info existe.
 		{
-			return (bool) $this->_db->query('SELECT COUNT(*) FROM personnages WHERE id = ' . $info)->fetchColumn();
+			$db = $this->dbConnect();
+			$q = $db->prepare('SELECT COUNT(*) FROM users WHERE ID = :id');
+			$q->execute([':id'=>$info]);
+			
+			return (bool) $q->fetchColumn();
 		}
+		else
+		{
 		
 		// Sinon, c'est que l'on veut vérifier si le nom existe ou pas.
 		$db = $this->dbConnect();
@@ -48,8 +54,9 @@ class UsersManager extends Manager
 		$q->execute([':login'=>$info]);
 		
 		return (bool) $q->fetchColumn();
+		}
 	}
-	
+		
 	public function existMail($info)
 	{
 		// Sinon, c'est que l'on veut vérifier si le nom existe ou pas.
