@@ -35,7 +35,7 @@
 				<?php if(!isset($_SESSION['login']))
 				{
 					?>
-					<div class='help-block text-right'>Vous devez être connecté pour pouvoir commenter --> <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button></div>
+					<div class='help-block text-right text-info '>Vous devez être connecté pour pouvoir commenter <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button></div>
 				<?php
 				} 
 				?> 
@@ -46,13 +46,29 @@
 while ($comment = $comments->fetch())
 {
 ?>
-	<div class="media mx-auto">
-	  <img class="align-self-center mr-3" src="<?= $comment['user_avatar']; ?>" alt="Avatar de l'abonné">
-	  <div class="media-body">
-		<h5 class="mt-0"><?= $comment['user_login'] ?> <small class="text-muted">le <?= $comment['date_comment_fr'] ?></small></h5>
-		<p class="lead"><?= $comment['comment']; ?></p>
-	  </div>
-	</div>
+	<div class="row">
+		<div class="media mx-auto col-6 col-sm-8">
+		  <div class="d-none d-sm-block"><a href="index.php?action=usersList"><img class="align-self-center mr-3" src="<?= $comment['user_avatar']; ?>" alt="Avatar de l'abonné"></a></div>
+		  <div class="media-body">
+			<h5 class="mt-0"><a href="index.php?action=usersList"><?= $comment['user_login'] ?></a> <small class="text-muted">le <?= $comment['date_comment_fr'] ?></small></h5>
+			<p class="lead"><?= $comment['comment']; ?></p>
+		  </div>
+		</div>
+		<?php if(isset($_SESSION['login']))
+			{
+		?>
+		<form class="form-group col-6 col-sm-4" action="index.php?action=reportCom" method="post">
+			<div class="form-check">
+				<input type="hidden" name="comment_id" value="<?= $comment['comment_id']; ?>">
+				<input type="hidden" name="post_id" value="<?= $post['ID']; ?>"> 
+				<input value="1" name="report" type="hidden"><button type="submit" class="btn btn-outline-warning" <?php if ($comment['comment_report']==1){?> disabled><i class=" text-dark fas fa-exclamation-triangle fa-2x align-middle"></i><span class="d-none d-md-inline"><span class="text-dark">Signalé</span> <?php }else{ ?> ><i class="fas fa-exclamation-triangle fa-2x align-middle"></i><span class="d-none d-md-inline"> Signaler <?php } ?></span></button>
+			</div>
+		</form>
+		<?php
+			}
+		?>
+	</div>	
+	<br/>
 <?php
 }
 ?>

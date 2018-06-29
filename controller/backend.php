@@ -11,6 +11,11 @@ function adminHome()
 	require('view/backend/homeAdminView.php');
 }
 
+function createPostView()
+{
+	require('view/backend/createPostView.php');
+}
+
 function newPost($title,$post)
 {
 	if (isset($post) && is_string($post) && !empty($post) && isset($title) && is_string($title))
@@ -102,7 +107,7 @@ function addComment($comment,$postId,$autorId)
 		{
 			$commentManager = new P4\model\CommentsManager();
 			$commentManager->addComment($postId, $autorId, $comment);
-			header('location:index.php?action=post&id=' . $postId .'&log=addcommentsuccess');
+			header('location:index.php?action=post&id=' . $postId .'#comments');
 		}
 		else
 		{
@@ -118,5 +123,108 @@ function addComment($comment,$postId,$autorId)
 		echo $autorId;
 		echo 'Le postId n\'existe pas';
 	}
+}
+
+function reportComment($id, $postId)
+{
+	// test de l'existence du com
+	$commentManager = new P4\model\CommentsManager();
+	if ($commentManager->existsID($id))
+	{
+		// update du report
+		$commentManager->reportComment($id,1);
+		header('location:index.php?action=post&id=' . $postId .'&report=success');
+	}
+	else
+	{
+		header('location:index.php?action=post&id=' . $postId .'&report=fail');
+	}
+}
+
+function reportCommentAdmin($comment_id,$report)
+{
+	// test de l'existence du com
+	$commentManager = new P4\model\CommentsManager();
+	if ($commentManager->existsID($comment_id))
+	{
+		// update du report
+		if ($report == 1) // On lève le signalement
+		{
+			$report=0;
+			$commentManager->reportComment($comment_id,$report);
+			header('location:index.php?action=pandOra&target=commentsEdit');
+			
+		}
+		else if ($report == 0) // On signale le commentaire
+		{
+			$report=1;
+			$commentManager->reportComment($comment_id,$report);
+			header('location:index.php?action=pandOra&target=commentsEdit');
+		}
+		else
+		{
+			echo 'la valeur $report n\'est pas correcte';
+		}
+		
+	}
+	else
+	{
+		echo 'l\'id du com n\'est pas bonne';
+	}
+}
+
+function moderationComment($comment_id, $moderation)
+{
+	// test de l'existence du com
+	$commentManager = new P4\model\CommentsManager();
+	if ($commentManager->existsID($comment_id))
+	{
+		// update du report
+		if ($moderation == 1) // On lève la modération
+		{
+			$moderation=0;
+			$commentManager->moderateComment($comment_id,$moderation);
+			header('location:index.php?action=pandOra&target=commentsEdit');
+			
+		}
+		else if ($moderation == 0) // On signale le commentaire
+		{
+			$moderation=1;
+			$commentManager->moderateComment($comment_id,$moderation);
+			header('location:index.php?action=pandOra&target=commentsEdit');
+		}
+		else
+		{
+			echo 'la valeur $moderation n\'est pas correcte';
+		}
+		
+	}
+	else
+	{
+		echo 'l\'id du com n\'est pas bonne';
+	}
+}
+
+function deleteComment($comment_id)
+{
+	echo 'on est dans le controlleur back dans reportcommentadmin';
+	// test de l'existence du com
+	$commentManager = new P4\model\CommentsManager();
+	if ($commentManager->existsID($comment_id))
+	{
+		$commentManager->deletComment($comment_id);
+		header('location:index.php?action=pandOra&target=commentsEdit');
+	}
+	else
+	{
+		echo 'l\'id du com n\'est pas bonne';
+	}
+}
+
+function commentsEdit() // ici il faut ajouter la jointure autor_id nom de l'autor et la requete de récit pour afficher les noms de récits dans le filtres
+{
+	$commentManager = new P4\model\CommentsManager();
+	$com = $commentManager->getAllComments(); 
+	require('view/backend/commentsEditView.php');	
 }
 ?>

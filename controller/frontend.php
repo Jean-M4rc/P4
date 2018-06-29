@@ -156,6 +156,11 @@ function logUser($login, $password, $cookied)
 			header('location:' . $adress .'src=success&log=logged');
 			require('view/partial/modalView.php');
 		}
+		else
+		{
+			header('location:' . $adress . 'src=logInError');
+			require('view/partial/modalView.php');
+		}
 	}
 	else // Le pseudo n'existe pas on affiche le message d'erreur
 	{

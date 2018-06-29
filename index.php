@@ -113,8 +113,16 @@ try {
 				if (isset($_GET['target'])){
 					switch ($_GET['target'])
 					{
+						case 'postCreate':
+							createPostView();
+						Break;
+						
 						case 'postsEdit':
 							postsBackView();
+						Break;
+						
+						case 'commentsEdit':
+							commentsEdit();
 						Break;
 						
 						case 'updatePost':
@@ -143,7 +151,7 @@ try {
 				}
 				else
 				{
-					require('view/partial/modalView.php');
+					throw new Exception('Le post n\'est pas sélectionné !');
 				}
 			Break;
 			
@@ -157,6 +165,58 @@ try {
 					throw new Exception('Le commentaire ne peut pas être ajouté !');
 				}
 			
+			Break;
+			
+			case 'reportCom':
+				if(isset($_POST['comment_id']) && isset($_POST['post_id']) && isset($_POST['report']) && ($_POST['report']==1))
+				{
+					reportComment($_POST['comment_id'], $_POST['post_id']);
+				}
+				else
+				{
+					throw new Exception('Le commentaire ne peut pas être signalé !');
+				}
+			Break;
+			
+			case 'CommentEdit':
+				if (isset($_GET['tag'])){
+					switch ($_GET['tag'])
+					{
+						case 'reportComment':
+							if(isset($_POST['comment_id']) && isset($_POST['comment_report']))
+							{
+								reportCommentAdmin($_POST['comment_id'],$_POST['comment_report']);
+							}
+							else
+							{
+								echo 'ils manquent des infos pour le signalement';
+							}
+						break;
+						
+						case 'moderation':
+							if(isset($_POST['comment_id']) && isset($_POST['comment_moderation']))
+							{
+								moderationComment($_POST['comment_id'],$_POST['comment_moderation']);
+							}
+							else
+							{
+								echo 'ils manquent des infos pour la modération';
+							}						
+						Break;
+						
+						case 'delete':
+							if(isset($_POST['comment_id']))
+							{
+								deleteComment($_POST['comment_id']);
+							}
+							else
+							{
+								echo 'ils manquent des infos pour la suppression';
+							}
+						Break;
+						
+					}
+				}
 			Break;
 			
 			default :

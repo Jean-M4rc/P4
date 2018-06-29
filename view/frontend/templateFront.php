@@ -24,16 +24,22 @@
 					<li class="nav-item">
 						<a class="nav-link" href="http://localhost/P4/index.php?action=listPosts">Mes aventures</a>
 					</li>
+	<?php
+	if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
+	?>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Mon livre d'Or</a>
+						<a class="nav-link" href="http://localhost/P4/index.php?action=usersList">Membres</a>
 					</li>
+	<?php
+	}
+	?>
 				</ul>
 				<div class="btngroup">
 	<?php
 		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
 		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
 			
-			if ($_SESSION['rule'] == 2){
+			if ($_SESSION['rule'] >= 1){
 	?>
 				<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
 	<?php			
