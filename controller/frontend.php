@@ -120,6 +120,7 @@ function logUser($login, $password, $cookied)
 	{
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
+	
 	// On appelle la méthode pour savoir si ce pseudo existe
 	if ($userManager->exists($login)){
 		

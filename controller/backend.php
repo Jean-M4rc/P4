@@ -227,4 +227,94 @@ function commentsEdit() // ici il faut ajouter la jointure autor_id nom de l'aut
 	$com = $commentManager->getAllComments(); 
 	require('view/backend/commentsEditView.php');	
 }
+
+function usersEdit()
+{
+	$usersManager = new P4\model\UsersManager();
+	$users = $usersManager->listUsers();
+	require('view/backend/usersEditView.php');
+}
+
+function initAvatar($userId)
+{
+	if(is_numeric($userId))
+	{
+		$usersManager = new P4\model\UsersManager();
+		if ($users = $usersManager->exists($userId))
+		{
+			$users = $usersManager->initAvatarPath($userId);
+			header('location:index.php?action=pandOra&target=usersEdit');
+		}
+		else
+		{
+			echo 'l\'id n\'existe pas';
+		}
+	}
+	else
+	{
+		echo 'la valeur envoyé n\'est pas un chiffre';
+	}	
+}
+
+function upgradeUser($admin,$userId)
+{
+	$adminArray = array('0','1','2');
+	if(isset($userId) && ctype_digit($userId) && isset($admin) && ctype_digit($admin) && in_array($admin,$adminArray))
+	{
+		
+		$usersManager = new P4\model\UsersManager();
+		if ($users = $usersManager->exists($userId))
+		{
+			$users = $usersManager->upgradeUser($admin,$userId);
+			header('location:index.php?action=pandOra&target=usersEdit');
+		}
+		else
+		{
+			echo 'L\identifiant n\'existe pas';
+		}
+	}
+	else
+	{
+		echo 'Les données envoyées ne sont pas correctes';
+	}
+}
+
+function banUser($admin, $userId, $ban)
+{
+	$adminArray = array('0','1');
+	$banArray = array('0','1');
+	if(isset($userId) && ctype_digit($userId) && isset($admin) && ctype_digit($admin) && in_array($admin,$adminArray) && isset($ban) && ctype_digit($ban) && in_array($ban,$banArray))
+	{
+		
+		$usersManager = new P4\model\UsersManager();
+		if ($users = $usersManager->exists($userId))
+		{
+			if($ban == 1) // On veut donc autoriser cet utilisateur
+			{
+				$ban = 0;
+				$users = $usersManager->banUser($userId, $ban);
+				header('location:index.php?action=pandOra&target=usersEdit');
+				
+			}
+			elseif($ban == 0) // On veut bannir l'utilisateur
+			{
+				$ban = 1;
+				$users = $usersManager->banUser($userId, $ban);
+				header('location:index.php?action=pandOra&target=usersEdit');
+			}
+			
+			
+		}
+		else
+		{
+			echo 'L\identifiant n\'existe pas';
+		}
+	}
+	else
+	{
+		echo 'Les données envoyées ne sont pas correctes';
+	}
+}
+
+
 ?>

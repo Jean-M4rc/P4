@@ -101,6 +101,54 @@ class UsersManager extends Manager
 		$affectedUser=$req->execute(array($userId));
 		
 	}
+	
+	public function listUsers()
+	{
+		$db = $this->dbConnect();
+		$listUsers = $req = $db->query('
+		SELECT u.ID userID, u.login login, u.email email, DATE_FORMAT(u.date_sign, \'%d/%m/%Y \') AS date_sign_fr, u.admin admin, u.avatar_path avatar_path, u.ban ban,
+		COUNT(c.autor_id) commentsUser
+		FROM users u
+		LEFT JOIN comments c
+		ON c.autor_id = u.ID
+		GROUP BY u.ID
+		ORDER BY ban, date_sign DESC');		
+		return $listUsers;
+	}
+	
+	public function initAvatarPath($userId)
+	{
+		$db = $this->dbConnect();
+		$updatedUser = $db->prepare('UPDATE users SET avatar_path = :avatar_path  WHERE ID = :id');
+		$updatedUser->execute([
+		'avatar_path' => 'public/images/user_avatar/0.jpeg',
+		'id' => $userId
+		]);
+		
+		return $updatedUser;
+	}
+
+	public function upgradeUser($admin,$userId)
+	{
+		$db = $this->dbConnect();
+		$updatedUser = $db->prepare('UPDATE users SET admin = :admin  WHERE ID = :id');
+		$updatedUser->execute([
+		'admin' => $admin,
+		'id' => $userId
+		]);
+	}
+	
+	public function banUser($userId, $ban)
+	{
+		$db = $this->dbConnect();
+		$updatedUser = $db->prepare('UPDATE users SET ban = :ban  WHERE ID = :id');
+		$updatedUser->execute([
+		'ban' => $ban,
+		'id' => $userId
+		]);
+	}
+	
+
 }
 
 ?>

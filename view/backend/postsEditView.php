@@ -46,7 +46,7 @@
 	
 	<!-- Modal -- lookModal -->
 	<div class="modal fade" id="lookModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="LookModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h2 class="modal-title" id="exampleModalCenterTitle"><?= htmlspecialchars($data['title']) ?></h2>

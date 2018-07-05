@@ -133,7 +133,24 @@ try {
 							deletePost($_POST['postID']);
 						Break;
 						
+						case 'usersEdit':
+							usersEdit();
+						Break;
+						
+						case 'initAvatar':
+							initAvatar($_POST['userID']);
+						Break;
+
+						case 'upgradeUser':
+							upgradeUser($_POST['admin'],$_POST['userID']);
+						Break;
+						
+						case 'banUser':
+							banUser($_POST['admin'], $_POST['userID'], $_POST['ban']);
+						Break;
+						
 						default:
+						
 							adminHome();
 						Break;
 					}

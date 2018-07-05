@@ -34,7 +34,7 @@ class CommentsManager extends Manager
 		ON c.autor_id = u.ID
 		INNER JOIN posts p
 		ON c.post_id = p.ID
-		ORDER BY report DESC, date_comment DESC');
+		ORDER BY moderation, report DESC, date_comment DESC');
         return $comments;
 	}
 	

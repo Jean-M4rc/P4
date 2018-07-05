@@ -57,7 +57,7 @@ while ($comment = $comments->fetch())
 		<?php if(isset($_SESSION['login']))
 			{
 		?>
-		<form class="form-group col-6 col-sm-4" action="index.php?action=reportCom" method="post">
+		<form class="form-group col-6 col-sm-4 text-right" action="index.php?action=reportCom" method="post">
 			<div class="form-check">
 				<input type="hidden" name="comment_id" value="<?= $comment['comment_id']; ?>">
 				<input type="hidden" name="post_id" value="<?= $post['ID']; ?>"> 

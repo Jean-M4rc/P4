@@ -3,7 +3,7 @@
 <?php ob_start(); ?>
 <div class="w-90 m-auto">
 	<h1 class="text-center">Voici l'ensemble des commentaires :</h1>
-	<p class="text-center">Les commentaires signalés apparaissent premiers de manière antéchronologique.</p>
+	<p class="text-center">Les commentaires signalés apparaissent en premiers et de manière antéchronologique.</p>
 
 	<table class="table table-striped w-100">
 		<thead class="thead-dark">
