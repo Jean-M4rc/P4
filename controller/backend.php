@@ -231,7 +231,7 @@ function commentsEdit() // ici il faut ajouter la jointure autor_id nom de l'aut
 function usersEdit()
 {
 	$usersManager = new P4\model\UsersManager();
-	$users = $usersManager->listUsers();
+	$users = $usersManager->listUsersEdit();
 	require('view/backend/usersEditView.php');
 }
 

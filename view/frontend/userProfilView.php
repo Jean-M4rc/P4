@@ -17,7 +17,6 @@
 					<p class="card-text">Email : <?= $_SESSION['email'] ?></p>
 					<p class="card-text">Pays : <?= $_SESSION['country'] ?></p>
 					<p class="card-text">Compte créé le <?= $_SESSION['date_sign'] ?></p>
-					<p class="card-text">Nombre de messages postés : <span class="badge badge-pill badge-light">A définir <!--<?= $_SESSION['msgcount'] ?>--></span></p>
 				</div>
 				<div class="card-footer">
 				<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#signOutModal"><i class="fas fa-user-slash"></i> Supprimer mon profil</button>

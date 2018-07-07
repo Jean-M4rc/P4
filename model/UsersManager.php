@@ -102,7 +102,21 @@ class UsersManager extends Manager
 		
 	}
 	
-	public function listUsers()
+	public function usersList()
+	{
+		$db = $this->dbConnect();
+		$listUsers = $req = $db->query('
+		SELECT u.ID userID, u.login login, u.email email, DATE_FORMAT(u.date_sign, \'%d/%m/%Y \') AS date_sign_fr, u.admin admin, u.country country, u.avatar_path avatar_path,
+		COUNT(c.autor_id) commentsUser
+		FROM users u
+		LEFT JOIN comments c
+		ON c.autor_id = u.ID
+		GROUP BY u.ID
+		ORDER BY admin DESC, date_sign DESC');		
+		return $listUsers;
+	}
+	
+	public function listUsersEdit()
 	{
 		$db = $this->dbConnect();
 		$listUsers = $req = $db->query('

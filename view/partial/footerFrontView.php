@@ -1,23 +1,15 @@
-<footer>
-	<div class="card border-primary col-12 col-md-4 col-lg-3">
-		<div class="card-header">Mon dernier Récit</div>
-			<div class="card-body">
-				<h4 class="card-title">Le titre du dernier billet</h4>
-				<p class="card-text">Le résumé du dernier billet</p>
+<footer class="row">
+	<div class="card border-primary">
+		<div class="card-body">
+			<h4 class="card-title text-dark">Me suivre sur les réseaux</h4>
+			<div class="card-text text-center text-dark">
+				<a href="#"><i class="fab fa-facebook-square fa-3x m-1"></i></a>
+				<a href="#"><i class="fab fa-twitter-square fa-3x m-1"></i></a>
+				<a href="#"><i class="fab fa-google-plus-square fa-3x m-1"></i></a>
+				<a href="#"><i class="fab fa-flickr fa-3x m-1"></i></a>
+				<a href="#"><i class="fab fa-instagram fa-3x m-1"></i></a>
 			</div>
-	</div>
-	<div class="card border-primary col-12 col-md-4 col-lg-3">
-		<div class="card-header">Le dernier commentaire posté</div>
-		<div class="card-body">
-			<h4 class="card-title">L'auteur et le titre du billet</h4>
-			<p class="card-text">Le résumé du commentaire</p>
-		</div>
-	</div>
-	<div class="card border-primary col-12 col-md-4 col-lg-3">
-		<div class="card-header">Plus d'aventure ?</div>
-		<div class="card-body">
-			<h4 class="card-title">Me suivre sur les réseaux</h4>
-			<p class="card-text">Icone avec liens facebook etc</p>
+			<p class='card-text text-center text-dark pt-1'><i class="far fa-copyright"></i> 2018 Tous droits réservés.</p>
 		</div>
 	</div>
 </footer>

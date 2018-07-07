@@ -236,6 +236,10 @@ try {
 				}
 			Break;
 			
+			case 'usersList':
+				usersList();
+			Break;
+			
 			default :
 				homepage();
 			Break;

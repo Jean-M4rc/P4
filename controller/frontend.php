@@ -132,6 +132,13 @@ function logUser($login, $password, $cookied)
 
 		if ($isPasswordCorrect)
 		{
+			if($infoUser['ban']==1)
+			{
+				header('location:' . $adress .'src=userBanned');
+				require('view/partial/modalView.php');
+			}
+			else
+			{
 			// On défini que la session
 			$_SESSION['userId'] = $infoUser['ID'];
 			$_SESSION['login'] = $infoUser['login'];
@@ -142,20 +149,22 @@ function logUser($login, $password, $cookied)
 			$_SESSION['country'] = $infoUser['country'];
 			$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 			
-			if ($cookied == 1)
-			{
-				// On défini les cookies
-				setcookie('login', $infoUser['login'], time() + 365*24*3600, null, null, false, true);
-				setcookie('password', $infoUser['password'], time() + 365*24*3600, null, null, false, true);
-			}
-			else if ($cookied == 0)
-			{
-				// On efface les cookies par précaution
-				setcookie('login','');
-				setcookie('password','');			
-			}
+			
+				if ($cookied == 1)
+				{
+					// On défini les cookies
+					setcookie('login', $infoUser['login'], time() + 365*24*3600, null, null, false, true);
+					setcookie('password', $infoUser['password'], time() + 365*24*3600, null, null, false, true);
+				}
+				else if ($cookied == 0)
+				{
+					// On efface les cookies par précaution
+					setcookie('login','');
+					setcookie('password','');			
+				}
 			header('location:' . $adress .'src=success&log=logged');
 			require('view/partial/modalView.php');
+			}
 		}
 		else
 		{
@@ -468,6 +477,7 @@ function signOut($userId)
 		else
 		{
 			$adress = $_SERVER['HTTP_REFERER'];
+			
 			if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
 			{
 				$adress = 'http://localhost/P4/index.php?';
@@ -476,7 +486,17 @@ function signOut($userId)
 			{
 				$adress = $_SERVER['HTTP_REFERER'] . '&';
 			}
+			
 			header('location:' . $adress . 'action=userProfil&log=signOutError');
 		}
 }
+
+function usersList()
+{
+	$userManager = new P4\model\UsersManager();
+	$users = $userManager->usersList();
+	require('view/frontend/usersListView.php');
+}
+
+
 ?>
