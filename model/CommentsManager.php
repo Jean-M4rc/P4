@@ -2,7 +2,7 @@
 
 namespace P4\model; // la classe sera dans ce namespace
 
-require_once("model/Manager.php");
+//require_once("model/Manager.php");
 
 class CommentsManager extends Manager
 {

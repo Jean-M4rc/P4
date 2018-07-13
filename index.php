@@ -7,12 +7,14 @@
 
 session_start();
 
-// Auto-loader -------------------------
-//require_once('vendor/autoloadhome.php');
+define('BASEPATH', __DIR__);
 
-require_once('vendor/autoload.php');
-require_once('controller/frontend.php');
-require_once('controller/backend.php');
+// Auto-loader -------------------------
+require 'vendor/Autoloader.php';
+Autoloader::register();
+
+use P4\controller;
+use P4\model;
 
 // Routeur --------------
 
@@ -247,7 +249,7 @@ try {
 	}
 	else
 	{
-		homepage();
+		FrontEndController::homepage();
 	}
 
 }

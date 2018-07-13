@@ -3,11 +3,9 @@
 
 namespace P4\model; // la classe sera dans ce namespace
 
-
 require_once("model/Manager.php");
 
-class PostsManager extends Manager
-{
+class PostsManager extends Manager{
 	
 	public function getPosts()
 	{
