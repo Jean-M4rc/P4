@@ -14,7 +14,7 @@
         
     <body>
 		<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-			<a class="navbar-brand" href="http://localhost/P4/index.php">Jérôme Forteroche | <i class="fas fa-home"></i></a>
+			<a class="navbar-brand" href="http://jeanforteroche.code-one.fr/index.php">Jean Forteroche | <i class="fas fa-home"></i></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -22,13 +22,13 @@
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="http://localhost/P4/index.php?action=listPosts">Mes aventures</a>
+						<a class="nav-link" href="http://jeanforteroche.code-one.fr/index.php?action=listPosts">Mes aventures</a>
 					</li>
 	<?php
 	if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
 	?>
 					<li class="nav-item">
-						<a class="nav-link" href="http://localhost/P4/index.php?action=usersList">Membres</a>
+						<a class="nav-link" href="http://jeanforteroche.code-one.fr/index.php?action=usersList">Membres</a>
 					</li>
 	<?php
 	}
@@ -41,12 +41,12 @@
 			
 			if ($_SESSION['rule'] >= 1){
 	?>
-				<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
+				<a href='http://jeanforteroche.code-one.fr/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
 	<?php			
 			}
 	?>
 				
-				<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
+				<a href='http://jeanforteroche.code-one.fr/index.php?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
 				<button class="btn btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
 				
 
@@ -76,7 +76,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" action="http://localhost/P4/index.php?action=logOut"> 
+					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=logOut"> 
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">
@@ -98,7 +98,7 @@
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenteredForSignIn" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<form role="form" data-toggle="validator" method="post" action="http://localhost/P4/index.php?action=signin">
+					<form role="form" data-toggle="validator" method="post" action="http://jeanforteroche.code-one.fr/index.php?action=signin">
 						<fieldset>
 							<div class="modal-header">
 								<h2 class="modal-title">Rejoignez l'aventure !</h2>
@@ -131,7 +131,7 @@
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
+								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LdYUlwUAAAAAAC5xhS_Ta72loK4qTWf7ESVgpzJ"></div>
 								<br/>
 								<div class="alert alert-dismissible alert-primary">
 								  <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -162,7 +162,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" data-toggle="validator" action="http://localhost/P4/index.php?action=login">
+					<form method="post" data-toggle="validator" action="http://jeanforteroche.code-one.fr/index.php?action=login">
 						<fieldset>
 							<div class="modal-body">
 								<div class="form-group"><!-- Le log -->

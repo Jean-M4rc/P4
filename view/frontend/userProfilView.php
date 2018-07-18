@@ -25,7 +25,7 @@
 			<div class="jumbotron mb-3">
 				<h3 class="display-7">Renseigner les champs à modifier</h3>
 				<hr class="my-4">
-				<form role="form" method="post" data-toggle="validator" enctype="multipart/form-data" action="http://localhost/P4/index.php?action=updateProfil">
+				<form role="form" method="post" data-toggle="validator" enctype="multipart/form-data" action="http://jeanforteroche.code-one.fr/index.php?action=updateProfil">
 					<fieldset>
 						<!-- Update du pseudo -->
 						<div class="form-group">
@@ -92,7 +92,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form method="post" action="http://localhost/P4/index.php?action=signOut"> 
+						<form method="post" action=http://jeanforteroche.code-one.fr/index.php?action=signOut"> 
 							<fieldset>
 								<div class="modal-body">
 									<div class="alert alert-danger text-center" role="alert">

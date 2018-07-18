@@ -1,34 +1,51 @@
 <?php
-
-// ---------------------------------------------------------------------- //
-// --------- P4 --------------- CONTROLLER ------------------------------ //
-// ---------------------------------------------------------------------- //
+/**
+ * Controlleur Front-End
+ * 
+ * Permet de controler les différentes entrées saisies par l'utilisateur sur la partie "public" du blog.
+ * Renvoi demande ensuite aux différents managers les actions requises et appelle la vue correspodante.
+ * 
+ * @author Jean-Marc Voisin <jeanmarc.voisin.tai@gmail.com>
+ */
 
 // Chargement des classes du model
 require_once('model/PostsManager.php');
 require_once('model/CommentsManager.php');
 require_once('model/UsersManager.php');
 
-// Le controlleur front-end va proposer les différentes fonctions nécessaires pour les vues publiques.
-
-function homePage()
-{
+/**
+ * Fonction homepage() sert à afficher la page d'accueil du blog.
+ * Elle est appelée par défaut.
+ *
+ * @return homepageView;
+ */
+function homePage(){
 	require('view/frontend/homepageView.php');
 }
 
-function listPosts() // Première fonction de base listPosts() qui affiche tout les résumés de billets de la bdd
-{
-	$postsManager = new P4\model\PostsManager(); // Création d'un objet à partir de la classe. Utilisation du namespace
-	$posts = $postsManager->getPosts(); // Appel d'une méthode de cette classe pour cet objet.
-	require('view/frontend/ListPostsView.php'); // Appel de la vue correspondante.
+/**
+ * Fonction listPosts() sert à afficher la liste des récits sur la page 
+ * Elle est appelée quand on clique sur le lien "Mes aventures"
+ * 
+ * @return ListPostView;
+ */
+function listPosts(){
+	$postsManager = new P4\model\PostsManager();
+	$posts = $postsManager->getPosts();
+	require('view/frontend/ListPostsView.php');
 }
 
-function post($id)
-{
+/**
+ * Fonction post($id) permet d'afficher un récit en entier
+ * Elle est appelée quand on clique sur "En savoir plus" sur un récit dans la vue listPost
+ *
+ * @param int $id
+ * @return postView;
+ */
+function post($id){
 	$postsManager = new P4\model\PostsManager();
 	if ($postsManager->existsID($id))
 	{
-		// Si l'id est valide on affiche le post
 		$post = $postsManager->getPost($id);
 		$commentsManager = new P4\model\CommentsManager();
 		$comments = $commentsManager->getComments($id);
@@ -36,64 +53,76 @@ function post($id)
 	}
 	else
 	{
-		echo 'le post n\'existe pas';
+		header('location:http://jeanforteroche.code-one.fr/index.php?src=errorPostId');
+		require('view/partial/modalView.php');
 	}
 }
 
-function newUser($login, $mdp1, $mdp2, $email)
-{	
-	// Vérouillage des failles XSS
+/**
+ * Fonction de création d'utilisateur
+ * Cette fonction reçoit les informations du formuliare d'inscription
+ * Elle controle la qualité et la sécurité des données reçues
+ * Et elle valide l'inscription selon plusieurs critères
+ * Une fois l'inscription validé la fonction lance la session pour 
+ * permettre à l'utilisateur d'avoir accès au contenu réservé
+ *
+ * @param string $login
+ * @param string $mdp1
+ * @param string $mdp2
+ * @param string $email
+ * @return void
+ */
+function newUser($login, $mdp1, $mdp2, $email){
+
 	$login = htmlspecialchars($_POST['login']);
 	$mdp1 = htmlspecialchars($_POST['mdp1']);
 	$mdp2 = htmlspecialchars($_POST['mdp2']);
 	$email = htmlspecialchars($_POST['mail_user']);
 
-	// On instance un nouveau manager d'utilisateur pour appliquer ses fonctions
 	$userManager = new P4\model\UsersManager();
 	$adress = $_SERVER['HTTP_REFERER'];
-	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
-	{
-		$adress = 'http://localhost/P4/index.php?';
-	}
-	else
-	{
+
+	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/'){
+
+		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
+
+	} else {
+
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
 	
-	if ($userManager->exists($login))
-	{
-		// Si cette condition est vraie le pseudo est déjà utilisé
+	if ($userManager->exists($login)){
+
 		header('location:' . $adress . 'src=signformError&log=loginused');
 		require('view/partial/modalView.php');
-	}
-	else if (strlen($login)<3)
-	{
+
+	} else if (strlen($login)<3){
+
 		header('location:' . $adress . 'src=signformError&log=loginshort');
 		require('view/partial/modalView.php');
-	}
-	else if ($mdp1 != $mdp2) //Test du mot de passe identiques
-	{
+	
+	} else if ($mdp1 != $mdp2){
+
 		header('location:' . $adress . 'src=signformError&log=passwordmirror');
 		require('view/partial/modalView.php');
-	}
-	else if (strlen($mdp2)<=5) // Test de la longueur du mot de passe
-	{
+	
+	} else if (strlen($mdp2)<=5){
+
 		header('location:' . $adress . 'src=signformError&log=passwordshort');
 		require('view/partial/modalView.php');
-	}
-	else if ($userManager->existMail($email)) // Test de l'unicité de l'email
-	{
+	
+	} else if ($userManager->existMail($email)){
+
 		header('location:' . $adress . 'src=signformError&log=mailused');
 		require('view/partial/modalView.php');
 		
-	}
-	else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) // Test de la Regex sur l'email
-	{
+	} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)){
+
 		header('location:' . $adress . 'src=signformError&log=mailmirror');
 		require('view/partial/modalView.php');
-	}
-	else //Tout les test sont bons, ont hache le mdp et on insert
-	{ 
+
+	} else {
+
 		$password = password_hash($mdp2, PASSWORD_DEFAULT);
 		$affectedUser = $userManager->addNewUser($login, $password, $email);
 		$_SESSION['login'] = $login;
@@ -103,43 +132,49 @@ function newUser($login, $mdp1, $mdp2, $email)
 	}
 }
 
-function logUser($login, $password, $cookied)
-{
-	// Vérouillage des failles XSS
+/**
+ * Fonction logUser permet de se connecter au blog, cette fonction permet de
+ * reconnaitre les droits de l'utilisateur et d'utiliser un cookie de connexion
+ *
+ * @param string $login
+ * @param string $password
+ * @param int $cookied
+ * 
+ * @return user_logged;
+ */
+function logUser($login, $password, $cookied){
+
 	$login = htmlspecialchars($_POST['pseudo']);
 	$password = htmlspecialchars($_POST['mdp']);
 	
 	$userManager = new P4\model\UsersManager();
 	
 	$adress = $_SERVER['HTTP_REFERER'];
-	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+	
+	if (($adress === 'http://jeanforteroche.code-one.fr/index.php') || $adress === 'http://jeanforteroche.code-one.fr/')
 	{
-		$adress = 'http://localhost/P4/index.php?';
+		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
 	}
 	else
 	{
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
 	
-	// On appelle la méthode pour savoir si ce pseudo existe
 	if ($userManager->exists($login)){
 		
-		// true => on va chercher les infos dans la bdd
 		$infoUser = $userManager->userInfos($login);
 		
-		// Maintenant il faut comparer les mots de passes
 		$isPasswordCorrect = password_verify($password, $infoUser['password']);
 
-		if ($isPasswordCorrect)
-		{
-			if($infoUser['ban']==1)
-			{
+		if ($isPasswordCorrect){
+
+			if($infoUser['ban']==1){
+
 				header('location:' . $adress .'src=userBanned');
 				require('view/partial/modalView.php');
-			}
-			else
-			{
-			// On défini que la session
+			
+			} else {
+
 			$_SESSION['userId'] = $infoUser['ID'];
 			$_SESSION['login'] = $infoUser['login'];
 			$_SESSION['password'] = $infoUser['password'];
@@ -148,44 +183,57 @@ function logUser($login, $password, $cookied)
 			$_SESSION['rule'] =  $infoUser['admin'];
 			$_SESSION['country'] = $infoUser['country'];
 			$_SESSION['avatar_path'] = $infoUser['avatar_path'];
-			
-			
-				if ($cookied == 1)
-				{
-					// On défini les cookies
+						
+				if ($cookied == 1){
+				
 					setcookie('login', $infoUser['login'], time() + 365*24*3600, null, null, false, true);
 					setcookie('password', $infoUser['password'], time() + 365*24*3600, null, null, false, true);
-				}
-				else if ($cookied == 0)
-				{
-					// On efface les cookies par précaution
+				
+				} else if ($cookied == 0){
+
 					setcookie('login','');
 					setcookie('password','');			
 				}
+
 			header('location:' . $adress .'src=success&log=logged');
 			require('view/partial/modalView.php');
 			}
-		}
-		else
-		{
+		
+		} else {
+
 			header('location:' . $adress . 'src=logInError');
 			require('view/partial/modalView.php');
 		}
-	}
-	else // Le pseudo n'existe pas on affiche le message d'erreur
-	{
+	
+	} else {
+
 		header('location:' . $adress . 'src=logInError');
 		require('view/partial/modalView.php');
 	}
 }
 
-function userProfil()
-{
+/**
+ * Fonction qui permet d'afficher la vue de
+ * personnalisation du profil de l'utilisateur
+ *
+ * @return void
+ */
+function userProfil(){
+
 	require('view/frontend/userProfilView.php');
 }
 
-function sessionUser($login)
-{
+/**
+ * Fonction qui défini les données de l'utilisateur en $_SESSION
+ * à partir de son $login. Cela permet de garder des informations
+ * de personnalisation facilement accessibles.
+ *
+ * @param string $login
+ * 
+ * @return void
+ */
+function sessionUser($login){
+
 	$userManager = new P4\model\UsersManager();
 	$infoUser = $userManager->userInfos($login);
 	
@@ -199,195 +247,179 @@ function sessionUser($login)
 	$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 }
 
-function updatingUser($userId) // Mise à jour des informations de l'utilisateur
-{
+/**
+ * Fonction de mise à jour des infos de l'utilisateur.
+ * Dans la vue de personnalisation l'utilisateur peut remplir un formulaire
+ * pour modifier ses informations. Ici nous controlons la validié de ses nouvelles informations.
+ * Aussi nous traitons de la photo de profil et procédons à un redimensionnement.
+ * Pour cela nous prenons la dimension la plus grande (hauteur ou largeur) et nous la ramenons à 75px.
+ * Nous gardons le rapport hauteur/largeur pour préserver l'image.
+ *
+ * @param int $userId
+ * 
+ * @return void
+ */
+function updatingUser($userId){
+
 	$userManager = new P4\model\UsersManager();
 	
-	// Test de toutes les valeurs
-	
-	// Test du pseudo ////////////////////////////////////////////////////////////////
-	
-	if(isset($_POST['pseudo'])&& strlen($_POST['pseudo'])!=0)
-	{
-		// Si le pseudo est renseigné, vérifié qu'il est différent de l'ancien et qu'il est libre et acceptable
+	// Test log
+	if(isset($_POST['pseudo'])&& strlen($_POST['pseudo'])!=0){
 		
-		if(strlen($_POST['pseudo'])>3) // Le pseudo est assez long
-		{
-			if ($_POST['pseudo'] != $_SESSION['login']) // Le pseudo est différent de l'ancien
-			{
-				if($userManager->exists($_POST['pseudo'])) // Le pseudo est déjà utilisé
-				{
-					header('location:index.php?action=userProfil&error=loginused');
-				}
-				else // Le pseudo est libre et valide on le sauvegarde juste dans la variable
-				{
+		if(strlen($_POST['pseudo'])>3){
+
+			if ($_POST['pseudo'] != $_SESSION['login']){
+
+				if($userManager->exists($_POST['pseudo'])){
+
+					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=loginused');
+				
+				} else {
+
 					$pseudo = htmlspecialchars($_POST['pseudo']);
 				}
-			}
-			else
-			{
-				// Le pseudo n'a pas changé
+			
+			} else {
+				
 				$pseudo = $_SESSION['login'];
 			}
-		}
-		else
-		{
-			header('location:index.php?action=userProfil&error=loginshort');
-		}
-	}
-	else
-	{
-		$pseudo = $_SESSION['login']; // Pas de nouveau pseudo on conserve l'ancien
-	} 
-	// Fin du Test  ------  Le pseudo est testé /////////////////////////
-	
-	// Test du mail ////////////////////////
-	
-	if(isset($_POST['email'])&& strlen($_POST['email'])!=0)
-	{
-		// Si le mail est renseigné, vérifié qu'il est différent de l'ancien, libre, et au bon format
 		
-		if ($_POST['email'] != $_SESSION['email']) // Le mail est différent de l'ancien
-		{
-			if ($userManager->existMail($_POST['email'])) // Le mail est déjà utilisé
-			{
-				header('location:index.php?action=userProfil&error=mailused');
-				// Faire une modal pour l'erreur
-			}
-			else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) // Le mail est libre on vérifie son format
-			{
-				// Le mail n'est pas au bon format
-				header('location:index.php?action=userProfil&error=mailmirror');
-			}
-			else // Tout est bon pour l'email on le sauvegarde
-			{
+		} else {
+
+			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=loginshort');
+		}
+	
+	} else {
+
+		$pseudo = $_SESSION['login'];
+	} 
+	
+	// Test email
+	if(isset($_POST['email'])&& strlen($_POST['email'])!=0){
+
+		if ($_POST['email'] != $_SESSION['email']){
+
+			if ($userManager->existMail($_POST['email'])){
+
+				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=mailused');
+
+			} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])){
+
+				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=mailmirror');
+
+			} else {
+
 				$email = htmlspecialchars($_POST['email']);
 			}
-		}
-		else
-		{
+
+		} else {
+
 			$email = $_SESSION['email'];
 		}
-	}
-	else
-	{
+	} else {
+
 		$email = $_SESSION['email'];
 	}
-	// Fin du Test ---- Le mail est testé ////////////////////
 	
-	// Test des mots de passe ///////////////////////////////////
-	
-	if(isset($_POST['mdp1'])&& strlen($_POST['mdp1'])!=0 && isset($_POST['mdp2'])&& strlen($_POST['mdp2'])!=0 && isset($_POST['mdp3'])&& strlen($_POST['mdp3'])!=0)// Les 3 champs de mot de passe sont remplis
-	{
-		if ($_POST['mdp1'] != $_POST['mdp2'])
-		{
-			// Les mots de passe sont différents
-			header('location:index.php?action=userProfil&error=passwordmirror');
-		}
-		else // Les mots de passe sont identiques, vérification du mot de passe de l'user
-		{
-			// Maintenant il faut comparer les mots de passes
+	// Test password
+	if(isset($_POST['mdp1'])&& strlen($_POST['mdp1'])!=0 && isset($_POST['mdp2'])&& strlen($_POST['mdp2'])!=0 && isset($_POST['mdp3'])&& strlen($_POST['mdp3'])!=0){
+
+		if ($_POST['mdp1'] != $_POST['mdp2']){
+
+			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=passwordmirror');
+		
+		} else {
+
 			$isPasswordCorrect = password_verify($_POST['mdp2'], $_SESSION['password']);
 			
-			if($isPasswordCorrect) // C'est le bon mot de passe
-			{
-				if(strlen($_POST['mdp3'])>=6)// On vérifie la longueur du mdp3  et on le hash
-				{
+			if($isPasswordCorrect){
+
+				if(strlen($_POST['mdp3'])>=6){
+
 					$mdp3 = htmlspecialchars($_POST['mdp3']);
 					$password = password_hash($mdp3, PASSWORD_DEFAULT);
+				
+				} else {
+
+					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=passwordshort');
 				}
-				else
-				{
-					// Le mot de passe est trop court
-					header('location:index.php?action=userProfil&error=passwordshort');
-				}
-			}
-			else
-			{
-				// Le mot de passe initial n'est pas le bon
-				header('location:index.php?action=userProfil&error=passwordwrong');
+
+			} else {
+
+				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=passwordwrong');
 			}
 		}
-	}
-	else
-	{
+
+	} else {
+
 		$password = $_SESSION['password'];
 	}
-	// Fin du test ----- Les mots de passe sont testés /////////////////
 	
-	// Test du pays //////////////////////////////////
-	if(isset($_POST['country'])&&strlen($_POST['country'])!=0)
-	{
+	// Test Country
+	if(isset($_POST['country'])&&strlen($_POST['country'])!=0){
+
 		$country = htmlspecialchars($_POST['country']);
-	}
-	else
-	{
+	
+	} else {
+
 		$country = $_SESSION['country'];
 	}
-	// Fin du Test ----- Le pays est testé /////////////
 	
-	// Test de l'image et redimensionnement pour pouvoir être afficher en fenêtre ////////////
-	if (isset($_POST['deleteUserAvatar']))
-	{
+	// Suppression ou Upload et redim de l'image envoyée
+	if (isset($_POST['deleteUserAvatar'])){
+
 		$avatar_path = 'public/images/user_avatar/0.jpeg';
-	}
-	else if (isset($_FILES['userImage']) && !empty($_FILES['userImage']))
-	{
-		if ($_FILES['userImage']['error'] == 0)
-		{
-			if ($_FILES['userImage']['size'] <= 2097152)
-			{	
+	
+	} else if (isset($_FILES['userImage']) && !empty($_FILES['userImage'])){
+
+		if ($_FILES['userImage']['error'] == 0){
+
+			if ($_FILES['userImage']['size'] <= 2097152){
+
 				$userImage = $_FILES['userImage']['name'];
 				
-				// On défini les extensions acceptées
 				$ListeExtension = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif');
 				$ListeExtensionIE = array('jpg' => 'image/pjpg', 'jpeg'=>'image/pjpeg');
 				
-				// On cherche l'extension du fichier
 				$ExtensionPresumee = explode('.', $userImage);
 				$ExtensionPresumee = strtolower($ExtensionPresumee[count($ExtensionPresumee)-1]);
 				
-				if ($ExtensionPresumee == 'jpg' || $ExtensionPresumee == 'jpeg' || $ExtensionPresumee == 'pjpg' || $ExtensionPresumee == 'pjpeg' || $ExtensionPresumee == 'gif' || $ExtensionPresumee == 'png') // L'extension est valide
-				{
+				if ($ExtensionPresumee == 'jpg' || $ExtensionPresumee == 'jpeg' || $ExtensionPresumee == 'pjpg' || $ExtensionPresumee == 'pjpeg' || $ExtensionPresumee == 'gif' || $ExtensionPresumee == 'png'){
+					
 					$userImage = getimagesize($_FILES['userImage']['tmp_name']);
 				
-					if ($userImage['mime'] == $ListeExtension[$ExtensionPresumee]  || $userImage['mime'] == $ListeExtensionIE[$ExtensionPresumee])
-					{
-						// Ici nous allons procéder au redimensionnement, nous devons récrire ce block pour les 2 autres format gif et png
-						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
-						{
+					if ($userImage['mime'] == $ListeExtension[$ExtensionPresumee]  || $userImage['mime'] == $ListeExtensionIE[$ExtensionPresumee]){
+						
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg'){
+
 							$newUserImage = imagecreatefromjpeg($_FILES['userImage']['tmp_name']);
-						}
-						else if ($userImage['mime'] == 'image/png')
-						{
+						
+						} else if ($userImage['mime'] == 'image/png'){
+
 							$newUserImage = imagecreatefrompng($_FILES['userImage']['tmp_name']);
-						}
-						else if ($userImage['mime'] == 'image/gif')
-						{
+						
+						} else if ($userImage['mime'] == 'image/gif'){
+
 							$newUserImage = imagecreatefromgif($_FILES['userImage']['tmp_name']);
-						}
-						else
-						{
-							//le type MIME ne correspond pas
-							header('location:index.php?action=userProfil&error=imagewrong');
+						
+						} else {
+
+							header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 						}
 						
-						// Nous avons créé la nouvelle image en fonction de son extension nous poursuivons le traitement
 						$sizeNewUserImage = getimagesize($_FILES['userImage']['tmp_name']);
-						
-						// On détermine le ratio si la dimension la plus grande
-	
+							
 						$width = $sizeNewUserImage[0];
 						$height = $sizeNewUserImage[1];
 						$avatarSide = 75;
-						if ($width >= $height)
-						{
+						if ($width >= $height){
+
 							$newWidth = $avatarSide;
 							$Reduction = (($newWidth * 100) / $width);
 							$newHeight = (($height * $Reduction)/100);
-						}
-						else if ($height > $width)
-						{
+						
+						} else if ($height > $width){
+
 							$newHeight = $avatarSide;
 							$Reduction = (($newHeight * 100) / $height);
 							$newWidth = (($width * $Reduction)/100);
@@ -398,92 +430,90 @@ function updatingUser($userId) // Mise à jour des informations de l'utilisateur
 						imagedestroy($newUserImage);
 
 						
-						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg')
-						{
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg'){
+
 							imagejpeg($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
-						}
-						else if ($userImage['mime'] == 'image/png')
-						{
+						
+						} else if ($userImage['mime'] == 'image/png'){
+
 							imagepng($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 6);
-						}
-						else if ($userImage['mime'] == 'image/gif')
-						{
+						
+						} else if ($userImage['mime'] == 'image/gif'){
+
 							imagegif($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
 						}
 
 						$avatar_path = 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee;
+					
+					} else {
+		
+						header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 					}
-					else
-					{
-						// Le type MIME n'est pas bon
-						header('location:index.php?action=userProfil&error=imagewrong');
-					}
+				
+				} else {
+		
+					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 				}
-				else
-				{
-					// l'extension du fichier n'est pas valide
-					header('location:index.php?action=userProfil&error=imagewrong');
-				}
+
+			} else {
+
+				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagesize');
 			}
-			else
-			{
-				// L'image est trop grande
-				header('location:index.php?action=userProfil&error=imagesize');
-			}
-		}
-		else if ($_FILES['userImage']['error'] == 4)// Le code erreur 4 signifie pas de fichier
-		{
-			// Pas de fichier donc on garde l'ancien chemin
+		
+		} else if ($_FILES['userImage']['error'] == 4){// Le code erreur 4 signifie pas de fichier
+		
 			$avatar_path = $_SESSION['avatar_path'];
+		
+		} else {
+	
+			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=uploaderror');
 		}
-		else
-		{
-			// Le téléchargement a rencontré une erreur.
-			header('location:index.php?action=userProfil&error=uploaderror');
-		}
-	}
-	else
-	{
-		// Pas de fichier envoyé -- partie probablement inutile
+
+	} else {
+
 		$avatar_path = $_SESSION['avatar_path'];
 	}
 	
 	
-	//Maintenant toutes les valeurs sont testés on peut lancer la requete d'upload avec tout les paramètres
+	//Test OK -> Upload
 	$userManager->updateUserInfo($_SESSION['userId'], $pseudo, $email, $password, $country, $avatar_path);
 	sessionUser($pseudo);
-	header('location:index.php?action=userProfil&success=true');
-	// Faire la modal de succès
+	header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&success=true');
 }
 
-function signOut($userId)
-{
+/**
+ * Fonction de désincription du blog
+ * Permet à l'utilisateur de supprimer son compte du blog
+ *
+ * @param int $userId
+ * @return void
+ */
+function signOut($userId){
+
 	$password = htmlspecialchars($_POST['password']);
 	
 	$isPasswordCorrect = password_verify($password, $_SESSION['password']);
 
-		if ($isPasswordCorrect)
-		{
-			// On peut effacer l'entrée du membre
+		if ($isPasswordCorrect){
+
 			$userManager = new P4\model\UsersManager();
 			$userManager->deleteUser($_SESSION['userId']);
 			
-			// On efface les cookies et on détruit la session
 			session_destroy();
 			setcookie('login','');
 			setcookie('password','');
 			header('Location:index.php');
-		}
-		else
-		{
+		
+		} else {
+
 			$adress = $_SERVER['HTTP_REFERER'];
 			
-			if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
-			{
-				$adress = 'http://localhost/P4/index.php?';
-			}
-			else
-			{
+			if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/'){
+
+				$adress = 'http://jeanforteroche.code-one.fr/index.php?';
+			
+			} else {
+			
 				$adress = $_SERVER['HTTP_REFERER'] . '&';
 			}
 			
@@ -491,8 +521,14 @@ function signOut($userId)
 		}
 }
 
-function usersList()
-{
+/**
+ * Fonction qui permet d'affiicher la liste des membres quand on clique
+ * sur le line "Membres"
+ *
+ * @return void
+ */
+function usersList(){
+
 	$userManager = new P4\model\UsersManager();
 	$users = $userManager->usersList();
 	require('view/frontend/usersListView.php');

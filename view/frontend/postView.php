@@ -7,7 +7,7 @@
 
 <div id="top" class="jumbotron">
 	<div class="d-flex m-auto">
-	<a href="index.php?action=listPosts"><button class="btn btn-secondary btn-lg"><i class="fas fa-chevron-circle-left fa-2x  align-middle"></i><span class="d-none d-md-inline"> - Retour aux récits</span></button></a>
+	<a href="http://jeanforteroche.code-one.fr/index.php?action=listPosts"><button class="btn btn-secondary btn-lg"><i class="fas fa-chevron-circle-left fa-2x  align-middle"></i><span class="d-none d-md-inline"> - Retour aux récits</span></button></a>
 	<a href="#comments" class="btn btn-primary btn-lg ml-auto"><i class="fas fa-comment-dots fa-2x  align-middle"></i><span class="d-none d-md-inline"> - Voir les commentaires</spann><a/>
 	</div>
 	<div>
@@ -16,14 +16,14 @@
 	<hr class="my-4">
 	</div>
 	<div class="d-flex m-auto">
-	<a href="index.php?action=listPosts"><button class="btn btn-secondary btn-lg"><i class="fas fa-chevron-circle-left fa-2x  align-middle"></i><span class="d-none d-md-inline"> - Retour aux récits</span></button></a>
+	<a href="http://jeanforteroche.code-one.fr/index.php?action=listPosts"><button class="btn btn-secondary btn-lg"><i class="fas fa-chevron-circle-left fa-2x  align-middle"></i><span class="d-none d-md-inline"> - Retour aux récits</span></button></a>
 	<a href="#top" class="btn btn-primary btn-lg ml-auto"><i class="fas fa-angle-double-up fa-2x"></i><span class="d-none d-md-inline"> - Retour au titre</spann><a/>
 	</div>
 
 	<div id="comments">
 		<h2>Commentaires</h2>
 
-		<form action="index.php?action=addComment" method="post">
+		<form action="http://jeanforteroche.code-one.fr/index.php?action=addComment" method="post">
 			<div class="form-group">
 				<label for="comment">Commentaire :</label><br/>
 				<textarea class="form-control" id="comment" name="comment" <?php if(!isset($_SESSION['login'])){ echo "disabled";} ?> required></textarea>
@@ -48,16 +48,16 @@ while ($comment = $comments->fetch())
 ?>
 	<div class="row">
 		<div class="media mx-auto col-6 col-sm-8">
-		  <div class="d-none d-sm-block"><a href="index.php?action=usersList"><img class="align-self-center mr-3" src="<?= $comment['user_avatar']; ?>" alt="Avatar de l'abonné"></a></div>
+		  <div class="d-none d-sm-block"><a href="http://jeanforteroche.code-one.fr/index.php?action=usersList"><img class="align-self-center mr-3" src="<?= $comment['user_avatar']; ?>" alt="Avatar de l'abonné"></a></div>
 		  <div class="media-body">
-			<h5 class="mt-0"><a href="index.php?action=usersList"><?= $comment['user_login'] ?></a> <small class="text-muted">le <?= $comment['date_comment_fr'] ?></small></h5>
+			<h5 class="mt-0"><a href="http://jeanforteroche.code-one.fr/index.php?action=usersList"><?= $comment['user_login'] ?></a> <small class="text-muted">le <?= $comment['date_comment_fr'] ?></small></h5>
 			<p class="lead"><?= $comment['comment']; ?></p>
 		  </div>
 		</div>
 		<?php if(isset($_SESSION['login']))
 			{
 		?>
-		<form class="form-group col-6 col-sm-4 text-right" action="index.php?action=reportCom" method="post">
+		<form class="form-group col-6 col-sm-4 text-right" action="http://jeanforteroche.code-one.fr/index.php?action=reportCom" method="post">
 			<div class="form-check">
 				<input type="hidden" name="comment_id" value="<?= $comment['comment_id']; ?>">
 				<input type="hidden" name="post_id" value="<?= $post['ID']; ?>"> 

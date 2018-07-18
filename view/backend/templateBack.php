@@ -44,7 +44,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" action="http://localhost/P4/index.php?action=logOut"> 
+					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=logOut"> 
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">

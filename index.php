@@ -35,7 +35,7 @@ try {
 				session_destroy();
 				setcookie('login','');
 				setcookie('password','');
-				header('Location:http://localhost/P4/index.php');
+				header('Location:http://jeanforteroche.code-one.fr/index.php');
 				exit();
 			Break;
 			
@@ -256,9 +256,9 @@ catch(Exception $e){
 	$msgError = $e->getMessage();
 	$adress = $_SERVER['HTTP_REFERER'];
 	
-	if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
+	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/')
 	{
-		$adress = 'http://localhost/P4/index.php?';
+		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
 	}
 	else
 	{

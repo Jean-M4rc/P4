@@ -65,7 +65,7 @@
 				</div>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=initAvatar">
+					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=initAvatar">
 						<input type="hidden" value="<?= $data['userID']; ?>" name="userID"/>
 						<button type="submit" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i><span class="d-none d-sm-inline"> Réinitiliser l'avatar</span></button>
 					</form>
@@ -86,7 +86,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=upgradeUser"> 
+				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=upgradeUser"> 
 					<fieldset>
 						<div class="modal-body">
 							<p class="lead">L'abonné <span class="text-success"><?= $data['login']; ?></span> possède le rang <span class="text-info"><?php if($data['admin']==0){echo'Abonné';}elseif($data['admin']==1){echo'Modérateur';}elseif($data['admin']==2){echo 'Administarteur';}else{echo'indéfini, contactez-moi au plus vite ^^';}?></span></p><br/>
@@ -129,7 +129,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=banUser"> 
+				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=banUser"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold lead" role="alert">

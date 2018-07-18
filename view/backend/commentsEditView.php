@@ -61,7 +61,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=CommentEdit&tag=reportComment">
+					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=reportComment">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -88,7 +88,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=CommentEdit&tag=moderation">
+					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=moderation">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -110,7 +110,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="index.php?action=CommentEdit&tag=delete"> 
+				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=delete"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold" role="alert">

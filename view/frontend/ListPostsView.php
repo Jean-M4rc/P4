@@ -17,7 +17,7 @@ while($data = $posts->fetch()){
 				<p class="card-text"><?= $data['resume'] ?></p>
 			</div>
 			<div class="card-footer text-center">
-				<a href="index.php?action=post&id=<?= $data['ID'] ?>"><button class="btn btn-primary btn-lg"><i class="fas fa-book-open fa-2x align-middle"></i><span class="d-none d-sm-inline"> - Lire cette aventure</span></button></a>
+				<a href="http://jeanforteroche.code-one.fr/index.php?action=post&id=<?= $data['ID'] ?>"><button class="btn btn-primary btn-lg"><i class="fas fa-book-open fa-2x align-middle"></i><span class="d-none d-sm-inline"> - Lire cette aventure</span></button></a>
 			</div>
 		</div>
 

@@ -75,7 +75,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=updatePost"> 
+				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=updatePost"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="form-group">
@@ -109,7 +109,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=deletePost"> 
+				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=deletePost"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold" role="alert">
