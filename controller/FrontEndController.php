@@ -6,13 +6,12 @@
 
 namespace P4\controller;
 
-//require_once('controller\Controller.php');
+require_once('controller\Controller.php');
 // Chargement des classes du model
-//require_once('model/PostsManager.php');
-//require_once('model/CommentsManager.php');
-//require_once('model/UsersManager.php');
+require_once('model\PostsManager.php');
+require_once('model\CommentsManager.php');
+require_once('model\UsersManager.php');
 
-// Le controlleur front-end va proposer les différentes fonctions nécessaires pour les vues publiques.
 class FrontEndController extends Controller{
 
 	public static function homePage(){
@@ -20,18 +19,18 @@ class FrontEndController extends Controller{
 	}
 
 	public static function listPosts(){// Première fonction de base listPosts() qui affiche tout les résumés de billets de la bdd
-		$postsManager = new P4\model\PostsManager(); // Création d'un objet à partir de la classe. Utilisation du namespace
+		$postsManager = new \P4\model\PostsManager(); // Création d'un objet à partir de la classe. Utilisation du namespace
 		$posts = $postsManager->getPosts(); // Appel d'une méthode de cette classe pour cet objet.
 		require('view/frontend/ListPostsView.php'); // Appel de la vue correspondante.
 	}
 
 	public static function post($id){
-		$postsManager = new P4\model\PostsManager();
+		$postsManager = new \P4\model\PostsManager();
 		if ($postsManager->existsID($id))
 		{
 			// Si l'id est valide on affiche le post
 			$post = $postsManager->getPost($id);
-			$commentsManager = new P4\model\CommentsManager();
+			$commentsManager = new \P4\model\CommentsManager();
 			$comments = $commentsManager->getComments($id);
 			require('view/frontend/postView.php');
 		}
@@ -49,7 +48,7 @@ class FrontEndController extends Controller{
 		$email = htmlspecialchars($_POST['mail_user']);
 
 		// On instance un nouveau manager d'utilisateur pour appliquer ses fonctions
-		$userManager = new P4\model\UsersManager();
+		$userManager = new \P4\model\UsersManager();
 		$adress = $_SERVER['HTTP_REFERER'];
 		if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
 		{
@@ -108,7 +107,7 @@ class FrontEndController extends Controller{
 		$login = htmlspecialchars($_POST['pseudo']);
 		$password = htmlspecialchars($_POST['mdp']);
 		
-		$userManager = new P4\model\UsersManager();
+		$userManager = new \P4\model\UsersManager();
 		
 		$adress = $_SERVER['HTTP_REFERER'];
 		if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
@@ -196,8 +195,7 @@ class FrontEndController extends Controller{
 		$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 	}
 
-	public static function updatingUser($userId) // Mise à jour des informations de l'utilisateur
-	{
+	public static function updatingUser($userId){
 		$userManager = new P4\model\UsersManager();
 		
 		// Test de toutes les valeurs

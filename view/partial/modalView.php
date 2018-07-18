@@ -314,13 +314,13 @@
 					$titleModal = "Felicitations";
 					$contentStyle = "text-success text-center";
 					$contentModal = "Votre récit a bien été mis à jour";
-					Break;
+					break;
 					
 					case 'errorpostup':
 					$titleModal = "Attention";
 					$contentStyle = "text-danger text-center";
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
-					Break;
+					break;
 				}
 				
 			?>
@@ -352,13 +352,13 @@
 					$titleModal = "Felicitations";
 					$contentStyle = "text-success text-center";
 					$contentModal = "Votre récit a bien été supprimé.";
-					Break;
+					break;
 					
 					case 'fail':
 					$titleModal = "Attention";
 					$contentStyle = "text-danger text-center";
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
-					Break;
+					break;
 				}
 			?>
 				<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
@@ -390,13 +390,13 @@
 				$titleModal = "Felicitations";
 				$contentStyle = "text-success text-center";
 				$contentModal = "Votre récit est bien ajouté";
-				Break;
+				break;
 				
 				case 'errorPost':
 				$titleModal = "Erreur";
 				$contentStyle = "text-danger text-center";
 				$contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
-				Break;
+				break;
 			}
 		?>
 			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">

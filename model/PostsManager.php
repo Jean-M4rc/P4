@@ -75,4 +75,3 @@ class PostsManager extends Manager{
 		
 	}
 }
-?>
