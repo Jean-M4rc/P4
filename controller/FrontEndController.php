@@ -12,6 +12,10 @@ require_once('model\PostsManager.php');
 require_once('model\CommentsManager.php');
 require_once('model\UsersManager.php');
 
+use P4\model\UsersManager;
+use P4\model\CommentsManager;
+use P4\model\PostsManager;
+
 class FrontEndController extends Controller{
 
 	public static function homePage(){
@@ -48,7 +52,7 @@ class FrontEndController extends Controller{
 		$email = htmlspecialchars($_POST['mail_user']);
 
 		// On instance un nouveau manager d'utilisateur pour appliquer ses fonctions
-		$userManager = new \P4\model\UsersManager();
+		$userManager = new UsersManager();
 		$adress = $_SERVER['HTTP_REFERER'];
 		if (($adress == 'http://localhost/P4/index.php') || $adress == 'http://localhost/P4/')
 		{
@@ -182,7 +186,7 @@ class FrontEndController extends Controller{
 	}
 
 	public static function sessionUser($login){
-		$userManager = new P4\model\UsersManager();
+		$userManager = new UsersManager();
 		$infoUser = $userManager->userInfos($login);
 		
 		$_SESSION['userId'] = $infoUser['ID'];
@@ -196,7 +200,8 @@ class FrontEndController extends Controller{
 	}
 
 	public static function updatingUser($userId){
-		$userManager = new P4\model\UsersManager();
+
+		$userManager = new UsersManager();
 		
 		// Test de toutes les valeurs
 		
@@ -446,7 +451,7 @@ class FrontEndController extends Controller{
 		
 		//Maintenant toutes les valeurs sont testés on peut lancer la requete d'upload avec tout les paramètres
 		$userManager->updateUserInfo($_SESSION['userId'], $pseudo, $email, $password, $country, $avatar_path);
-		sessionUser($pseudo);
+		FrontEndController::sessionUser($pseudo);
 		header('location:index.php?action=userProfil&success=true');
 		// Faire la modal de succès
 	}
@@ -486,7 +491,7 @@ class FrontEndController extends Controller{
 	}
 
 	public static function usersList(){
-		$userManager = new P4\model\UsersManager();
+		$userManager = new UsersManager();
 		$users = $userManager->usersList();
 		require('view/frontend/usersListView.php');
 	}

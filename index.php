@@ -9,23 +9,26 @@ session_start();
 
 //define('BASEPATH', __DIR__);
 
-// Auto-loader -------------------------
-require 'vendor/Autoloader.php';
+
+
 require 'controller/BackEndController.php';
 require 'controller/FrontEndController.php';
+require 'vendor/autoload.php';
 
+// Auto-loader -------------------------
+//require 'vendor/Autoloader.php';
 //Autoloader::register();
 
-use P4\controller;
-use P4\model;
+use P4\controller\FrontEndController;
+use P4\controller\BackEndController;
 
 // Routeur --------------
 
 try {
 	
-	if(isset($_COOKIE['login'])&&!isset($_SESSION['login'])) // Si le cookie existe mais que la session n'existe pas
+	if(isset($_COOKIE['login'])&&!isset($_SESSION['login']))
 	{
-		sessionUser($_COOKIE['login']);
+		FrontEndController::sessionUser($_COOKIE['login']);
 	}
 	
 	if(isset($_GET['action']))
@@ -33,7 +36,7 @@ try {
 		switch ($_GET['action'])
 		{
 			case 'signOut':
-				signOut($_SESSION['userId']);
+				FrontEndController::signOut($_SESSION['userId']);
 			break;
 			
 			case 'logOut':
@@ -45,7 +48,7 @@ try {
 			break;
 			
 			case 'listPosts':
-				P4\controller\FrontEndController::listPosts();
+				FrontEndController::listPosts();
 			break;
 			
 			case 'signin':
@@ -59,7 +62,7 @@ try {
 						if (!empty($_POST['login']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2']) && !empty($_POST['mail_user']))
 						{
 							// On appelle la méthode newUser du controleur pour vérifier et appeller le model et vérifier les données
-							newUser($_POST['login'], $_POST['mdp1'], $_POST['mdp2'], $_POST['mail_user']);
+							FrontEndController::newUser($_POST['login'], $_POST['mdp1'], $_POST['mdp2'], $_POST['mail_user']);
 						}
 						else // L'un des champs est vide
 						{
@@ -82,11 +85,11 @@ try {
 				{
 					if (isset($_POST['CA']))
 					{
-						P4\controller\FrontEndController::logUser($_POST['pseudo'], $_POST['mdp'], 1);
+						FrontEndController::logUser($_POST['pseudo'], $_POST['mdp'], 1);
 					}
 					else
 					{
-						P4\controller\FrontEndController::logUser($_POST['pseudo'], $_POST['mdp'], 0);
+						FrontEndController::logUser($_POST['pseudo'], $_POST['mdp'], 0);
 					}
 				}
 				else // L'un des champs est vide
@@ -97,19 +100,19 @@ try {
 			
 			case 'userProfil':
 				// On appelle le controlleur pour aller chercher les infos et la vue correspondante
-				userProfil();
+				FrontEndController::userProfil();
 			break;
 			
 			case 'updateProfil':
 				// On lance le controleur en authentifiant le membre avec son id
-				updatingUser($_SESSION['userId']);
-				userProfil();
+				FrontEndController::updatingUser($_SESSION['userId']);
+				FrontEndController::userProfil();
 			break;
 			
 			case 'addNewPost':
 				$post = $_POST['newPost'];
 				$title = htmlspecialchars($_POST['postTitle']);
-				newPost($title,$post);
+				BackEndController::newPost($title,$post);
 			break;
 			
 			case 'pandOra':
@@ -117,56 +120,56 @@ try {
 					switch ($_GET['target'])
 					{
 						case 'postCreate':
-							P4\controller\BackEndController::createPostView();
+							BackEndController::createPostView();
 						break;
 						
 						case 'postsEdit':
-							P4\controller\BackEndController::postsBackView();
+							BackEndController::postsBackView();
 						break;
 						
 						case 'commentsEdit':
-							P4\controller\BackEndController::commentsEdit();
+							BackEndController::commentsEdit();
 						break;
 						
 						case 'updatePost':
-							P4\controller\BackEndController::updatePost($_POST['postID'],$_POST['postTitle'],$_POST['postContent']);
+							BackEndController::updatePost($_POST['postID'],$_POST['postTitle'],$_POST['postContent']);
 						break;
 						
 						case 'deletePost':
-							P4\controller\BackEndController::deletePost($_POST['postID']);
+							BackEndController::deletePost($_POST['postID']);
 						break;
 						
 						case 'usersEdit':
-							P4\controller\BackEndController::usersEdit();
+							BackEndController::usersEdit();
 						break;
 						
 						case 'initAvatar':
-							P4\controller\BackEndController::initAvatar($_POST['userID']);
+							BackEndController::initAvatar($_POST['userID']);
 						break;
 
 						case 'upgradeUser':
-							P4\controller\BackEndController::upgradeUser($_POST['admin'],$_POST['userID']);
+							BackEndController::upgradeUser($_POST['admin'],$_POST['userID']);
 						break;
 						
 						case 'banUser':
-							P4\controller\BackEndController::banUser($_POST['admin'], $_POST['userID'], $_POST['ban']);
+							BackEndController::banUser($_POST['admin'], $_POST['userID'], $_POST['ban']);
 						break;
 						
 						default:
-							P4\controller\BackEndController::adminHome();
+							BackEndController::adminHome();
 						break;
 					}
 				}
 				else
 				{
-					P4\controller\BackEndController::adminHome();
+					BackEndController::adminHome();
 				}
 			break;
 			
 			case 'post':
 				if(isset($_GET['id']))
 				{
-					P4\controller\FrontEndController::post($_GET['id']);
+					FrontEndController::post($_GET['id']);
 				}
 				else
 				{
@@ -177,7 +180,7 @@ try {
 			case 'addComment':
 				if(isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['autorId']))
 				{
-					addComment($_POST['comment'],$_POST['postId'],$_POST['autorId']);
+					BackEndController::addComment($_POST['comment'],$_POST['postId'],$_POST['autorId']);
 				}
 				else
 				{
@@ -189,7 +192,7 @@ try {
 			case 'reportCom':
 				if(isset($_POST['comment_id']) && isset($_POST['post_id']) && isset($_POST['report']) && ($_POST['report']==1))
 				{
-					reportComment($_POST['comment_id'], $_POST['post_id']);
+					BackEndController::reportComment($_POST['comment_id'], $_POST['post_id']);
 				}
 				else
 				{
@@ -204,7 +207,7 @@ try {
 						case 'reportComment':
 							if(isset($_POST['comment_id']) && isset($_POST['comment_report']))
 							{
-								reportCommentAdmin($_POST['comment_id'],$_POST['comment_report']);
+								BackEndController::reportCommentAdmin($_POST['comment_id'],$_POST['comment_report']);
 							}
 							else
 							{
@@ -215,7 +218,7 @@ try {
 						case 'moderation':
 							if(isset($_POST['comment_id']) && isset($_POST['comment_moderation']))
 							{
-								moderationComment($_POST['comment_id'],$_POST['comment_moderation']);
+								BackEndController::moderationComment($_POST['comment_id'],$_POST['comment_moderation']);
 							}
 							else
 							{
@@ -226,7 +229,7 @@ try {
 						case 'delete':
 							if(isset($_POST['comment_id']))
 							{
-								deleteComment($_POST['comment_id']);
+								BackEndController::deleteComment($_POST['comment_id']);
 							}
 							else
 							{
@@ -239,17 +242,17 @@ try {
 			break;
 			
 			case 'usersList':
-				usersList();
+				FrontEndController::usersList();
 			break;
 			
 			default :
-				P4\Controller\FrontEndController::homepage();
+				FrontEndController::homepage();
 			break;
 		}
 	}
 	else
 	{
-		P4\Controller\FrontEndController::homepage();
+		FrontEndController::homepage();
 	}
 
 }

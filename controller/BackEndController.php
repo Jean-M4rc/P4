@@ -4,9 +4,13 @@ namespace P4\controller;
 
 // Chargement des classes du model
 require_once('controller/Controller.php');
-require_once('model/PostsManager.php');
-require_once('model/CommentsManager.php');
-require_once('model/UsersManager.php');
+//require_once('model/PostsManager.php');
+//require_once('model/CommentsManager.php');
+//require_once('model/UsersManager.php');
+
+use P4\model\CommentsManager;
+use P4\model\PostsManager;
+use P4\model\UsersManager;
 
 class BackEndController extends Controller{
 	
@@ -24,7 +28,7 @@ class BackEndController extends Controller{
 			// On crée un résumé du récit
 			$resume = strip_tags(substr($post,0,300) . '...','<br>');
 			// On peut appeler le model et la vue pour sauvegarder ce nouveau récit
-			$postsManager = new \P4\model\PostsManager();
+			$postsManager = new PostsManager();
 			$postsManager->addPost($title, $post, $resume);
 			header('location:index.php?action=pandOra&log=successPost');
 		}
@@ -35,7 +39,7 @@ class BackEndController extends Controller{
 	}
 
 	public static function postsBackView(){
-		$postsManager = new \P4\model\PostsManager();
+		$postsManager = new PostsManager();
 		$posts = $postsManager->getPosts();
 		require('view/backend/postsEditView.php');
 		
@@ -43,7 +47,7 @@ class BackEndController extends Controller{
 
 	public static function updatePost($postID, $postTitle, $postContent){
 		// On controle les valeurs et on update
-		$postManager = new \P4\model\PostsManager;
+		$postManager = new PostsManager;
 		
 		// Test d'un Id valide
 		if (is_numeric($postID))
@@ -78,8 +82,8 @@ class BackEndController extends Controller{
 		}	
 	}
 
-	public static function deletePost($postID){// On doit aussi supprimer les commentaires du post en question
-		$postManager = new \P4\model\PostsManager;
+	public static function deletePost($postID){
+		$postManager = new PostsManager;
 		
 		if (is_numeric($postID) && $postManager->existsID($postID))
 		{
@@ -96,13 +100,13 @@ class BackEndController extends Controller{
 		//Test des valeurs $comment, de l'existence de postid et de autorId
 		$comment = nl2br(htmlspecialchars($comment));
 		
-		$postManager = new \P4\model\PostsManager();
+		$postManager = new PostsManager();
 		if ($postManager->existsID($postId))
 		{
-			$userManager = new \P4\model\UsersManager();
+			$userManager = new UsersManager();
 			if (($userManager->exists($autorId)))
 			{
-				$commentManager = new P4\model\CommentsManager();
+				$commentManager = new CommentsManager();
 				$commentManager->addComment($postId, $autorId, $comment);
 				header('location:index.php?action=post&id=' . $postId .'#comments');
 			}
@@ -124,7 +128,7 @@ class BackEndController extends Controller{
 
 	public static function reportComment($id, $postId){
 		// test de l'existence du com
-		$commentManager = new \P4\model\CommentsManager();
+		$commentManager = new CommentsManager();
 		if ($commentManager->existsID($id))
 		{
 			// update du report
@@ -139,7 +143,7 @@ class BackEndController extends Controller{
 
 	public static function reportCommentAdmin($comment_id,$report){
 		// test de l'existence du com
-		$commentManager = new \P4\model\CommentsManager();
+		$commentManager = new CommentsManager();
 		if ($commentManager->existsID($comment_id))
 		{
 			// update du report
@@ -170,7 +174,7 @@ class BackEndController extends Controller{
 
 	public static function moderationComment($comment_id, $moderation){
 		// test de l'existence du com
-		$commentManager = new P4\model\CommentsManager();
+		$commentManager = new CommentsManager();
 		if ($commentManager->existsID($comment_id))
 		{
 			// update du report
@@ -200,9 +204,8 @@ class BackEndController extends Controller{
 	}
 
 	public static function deleteComment($comment_id){
-		echo 'on est dans le controlleur back dans reportcommentadmin';
-		// test de l'existence du com
-		$commentManager = new P4\model\CommentsManager();
+		
+		$commentManager = new CommentsManager();
 		if ($commentManager->existsID($comment_id))
 		{
 			$commentManager->deletComment($comment_id);
@@ -214,14 +217,14 @@ class BackEndController extends Controller{
 		}
 	}
 
-	public static function commentsEdit(){// ici il faut ajouter la jointure autor_id nom de l'autor et la requete de récit pour afficher les noms de récits dans le filtres
-		$commentManager = new \P4\model\CommentsManager();
+	public static function commentsEdit(){
+		$commentManager = new CommentsManager();
 		$com = $commentManager->getAllComments(); 
 		require('view/backend/commentsEditView.php');	
 	}
 
 	public static function usersEdit(){
-		$usersManager = new \P4\model\UsersManager();
+		$usersManager = new UsersManager();
 		$users = $usersManager->listUsersEdit();
 		require('view/backend/usersEditView.php');
 	}
@@ -229,7 +232,7 @@ class BackEndController extends Controller{
 	public static function initAvatar($userId){
 		if(is_numeric($userId))
 		{
-			$usersManager = new \P4\model\UsersManager();
+			$usersManager = new UsersManager();
 			if ($users = $usersManager->exists($userId))
 			{
 				$users = $usersManager->initAvatarPath($userId);
@@ -251,7 +254,7 @@ class BackEndController extends Controller{
 		if(isset($userId) && ctype_digit($userId) && isset($admin) && ctype_digit($admin) && in_array($admin,$adminArray))
 		{
 			
-			$usersManager = new \P4\model\UsersManager();
+			$usersManager = new UsersManager();
 			if ($users = $usersManager->exists($userId))
 			{
 				$users = $usersManager->upgradeUser($admin,$userId);
@@ -274,7 +277,7 @@ class BackEndController extends Controller{
 		if(isset($userId) && ctype_digit($userId) && isset($admin) && ctype_digit($admin) && in_array($admin,$adminArray) && isset($ban) && ctype_digit($ban) && in_array($ban,$banArray))
 		{
 			
-			$usersManager = new \P4\model\UsersManager();
+			$usersManager = new UsersManager();
 			if ($users = $usersManager->exists($userId))
 			{
 				if($ban == 1) // On veut donc autoriser cet utilisateur

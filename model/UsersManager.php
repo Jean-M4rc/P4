@@ -14,6 +14,7 @@
 namespace P4\model;
 
 class UsersManager extends Manager{
+	
 	public function addNewUser($login, $password, $email){
 		// Ici on fait la création d'un abonné. On créer l'entrée dans la base de données.
 		// Ici l'écriture en BDD
