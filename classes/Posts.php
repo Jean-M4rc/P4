@@ -1,9 +1,11 @@
 <?php
 /**
- * @todo Faire de cette classe le modèle des objets posts avec les attributs suivants : ID, title, date_create, content, resume.
- * Les fonctionnalités des objets posts, faire le résumé d'eux mêmes, transformé la date en fr
- * Le manager de post ne contient pas de méthode incohérente avec la class posts.
+ * Class Posts qui permet de définir les récits du blog
+ * 
+ * @author Jean-Marc Voisin <jeanmarc.voisin.tai@gmail.com>
  */
+
+ namespace P4\classes;
 
 class Posts{
      
