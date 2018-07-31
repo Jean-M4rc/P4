@@ -17,19 +17,20 @@ require_once('controller/backend.php');
 // Routeur --------------
 
 try {
-	
-	if(isset($_COOKIE['login'])&&!isset($_SESSION['login'])) // Si le cookie existe mais que la session n'existe pas
-	{
+
+	// Si le cookie existe mais que la session n'existe pas
+	if(isset($_COOKIE['login'])&&!isset($_SESSION['login'])){
+
 		sessionUser($_COOKIE['login']);
 	}
 	
-	if(isset($_GET['action']))
-	{
-		switch ($_GET['action'])
-		{
+	if(isset($_GET['action'])){
+
+		switch ($_GET['action']){
+
 			case 'signOut':
 				signOut($_SESSION['userId']);
-			Break;
+				break;
 			
 			case 'logOut':
 				session_destroy();
@@ -37,131 +38,145 @@ try {
 				setcookie('password','');
 				header('Location:http://jeanforteroche.code-one.fr/index.php');
 				exit();
-			Break;
+				break;
 			
 			case 'listPosts':
 				listPosts();
-			Break;
+				break;
 			
 			case 'signin':
-				if(!empty($_POST['g-recaptcha-response'])) // On vérifie si le captcha est rempli
-				{
+
+				// On vérifie si le captcha est rempli
+				if(!empty($_POST['g-recaptcha-response'])){
+
 					$recaptcha = new \ReCaptcha\ReCaptcha('6LcRllwUAAAAAMjUbssUHjzFQ8Pyl65Nm-bo1SvL');
 					$resp = $recaptcha->verify($_POST['g-recaptcha-response']);
-					
-					if ($resp->isSuccess()) // On vérifie si le captcha non vide est bon
-					{ //s'il est bon on vérifie la présence de tout les champs
-						if (!empty($_POST['login']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2']) && !empty($_POST['mail_user']))
-						{
+
+					// On vérifie si le captcha non vide est bon
+					if ($resp->isSuccess()){
+						
+						// S'il est bon on vérifie la présence de tout les champs
+						if (!empty($_POST['login']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2']) && !empty($_POST['mail_user'])){
+
 							// On appelle la méthode newUser du controleur pour vérifier et appeller le model et vérifier les données
 							newUser($_POST['login'], $_POST['mdp1'], $_POST['mdp2'], $_POST['mail_user']);
-						}
-						else // L'un des champs est vide
-						{
+						
+						} else {
+							
+							// L'un des champs est vide
 							throw new Exception('Tous les champs ne sont pas remplis !');
 						}
 					}
-					else // Le captcha est faux
-					{
+					else {
+						// Le captcha est faux
 						throw new Exception('Le captcha est invalide');
 					}
-				}
-				else // Le captcha est vide
-				{
+				
+				} else {
+					
+					// Le captcha est vide
 					throw new Exception('Le captcha est n\'est pas rempli');
 				}
-			Break;
+
+				break;
 			
 			case 'login':
-				if (!empty($_POST['pseudo']) && !empty($_POST['mdp']))
-				{
-					if (isset($_POST['CA'])) // Connexion automatique ou pas
-					{
+
+				// Si tout les champs sont remplis
+				if (!empty($_POST['pseudo']) && !empty($_POST['mdp'])){
+
+					// Connexion automatique ou pas
+					if (isset($_POST['CA'])){
+
 						// 1 = setcookies
 						logUser($_POST['pseudo'], $_POST['mdp'], 1);
-					}
-					else
-					{
+					
+					} else {
+
 						// 0 = !setcookies
 						logUser($_POST['pseudo'], $_POST['mdp'], 0);
 					}
-				}
-				else // L'un des champs est vide
-				{
+				
+				} else {
+					
+					// L'un des champs est vide
 					throw new Exception('L\'identifiant ou le mot de passe n\'est pas valide !');
 				}
-			Break;
+				break;
 			
 			case 'userProfil':
+
 				// On appelle le controlleur pour aller chercher les infos et la vue correspondante
 				userProfil();
-			Break;
+				break;
 			
 			case 'updateProfil':
+
 				// On lance le controleur en authentifiant le membre avec son id
 				updatingUser($_SESSION['userId']);
 				userProfil();
-			Break;
+				break;
 			
 			case 'addNewPost':
+
 				$post = $_POST['newPost'];
 				$title = htmlspecialchars($_POST['postTitle']);
 				newPost($title,$post);
-			Break;
+				break;
 			
 			case 'pandOra':
+
 				if (isset($_GET['target'])){
-					switch ($_GET['target'])
-					{
+
+					switch ($_GET['target']){
+
 						case 'postCreate':
 							createPostView();
-						Break;
+							break;
 						
 						case 'postsEdit':
 							postsBackView();
-						Break;
+							break;
 						
 						case 'commentsEdit':
 							commentsEdit();
-						Break;
+							break;
 						
 						case 'updatePost':
 							updatePost($_POST['postID'],$_POST['postTitle'],$_POST['postContent']);
-						Break;
+							break;
 						
 						case 'deletePost':
 							deletePost($_POST['postID']);
-						Break;
+							break;
 						
 						case 'usersEdit':
 							usersEdit();
-						Break;
+							break;
 						
 						case 'initAvatar':
 							initAvatar($_POST['userID']);
-						Break;
+							break;
 
 						case 'upgradeUser':
 							upgradeUser($_POST['admin'],$_POST['userID']);
-						Break;
+							break;
 						
 						case 'banUser':
 							banUser($_POST['admin'], $_POST['userID'], $_POST['ban']);
-						Break;
+							break;
 						
-						default:
-						
+						default:						
 							adminHome();
-						Break;
+							break;
 					}
-				}
-				else
-				{
+				} else {
 					adminHome();
 				}
-			Break;
+				break;
 			
 			case 'post':
+
 				if(isset($_GET['id']))
 				{
 					post($_GET['id']);
@@ -170,79 +185,85 @@ try {
 				{
 					throw new Exception('Le post n\'est pas sélectionné !');
 				}
-			Break;
+				break;
 			
 			case 'addComment':
-				if(isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['autorId']))
-				{
+
+				if(isset($_POST['comment']) && isset($_POST['postId']) && isset($_POST['autorId'])){
+
 					addComment($_POST['comment'],$_POST['postId'],$_POST['autorId']);
-				}
-				else
-				{
+				
+				} else {
+
 					throw new Exception('Le commentaire ne peut pas être ajouté !');
 				}
 			
-			Break;
+				break;
 			
 			case 'reportCom':
-				if(isset($_POST['comment_id']) && isset($_POST['post_id']) && isset($_POST['report']) && ($_POST['report']==1))
-				{
+
+				if(isset($_POST['comment_id']) && isset($_POST['post_id']) && isset($_POST['report']) && ($_POST['report']==1)){
+
 					reportComment($_POST['comment_id'], $_POST['post_id']);
-				}
-				else
-				{
+				
+				} else {
+
 					throw new Exception('Le commentaire ne peut pas être signalé !');
 				}
-			Break;
+				break;
 			
 			case 'CommentEdit':
+
 				if (isset($_GET['tag'])){
-					switch ($_GET['tag'])
-					{
+					switch ($_GET['tag']){
+
 						case 'reportComment':
-							if(isset($_POST['comment_id']) && isset($_POST['comment_report']))
-							{
+							if(isset($_POST['comment_id']) && isset($_POST['comment_report'])){
+
 								reportCommentAdmin($_POST['comment_id'],$_POST['comment_report']);
-							}
-							else
-							{
+							
+							} else {
+
+								//modal d'erreur de report à faire
 								echo 'ils manquent des infos pour le signalement';
 							}
-						break;
+							break;
 						
 						case 'moderation':
-							if(isset($_POST['comment_id']) && isset($_POST['comment_moderation']))
-							{
+							if(isset($_POST['comment_id']) && isset($_POST['comment_moderation'])){
+
 								moderationComment($_POST['comment_id'],$_POST['comment_moderation']);
-							}
-							else
-							{
+							
+							} else {
+
+								//modal d'erreur de modération à faire
 								echo 'ils manquent des infos pour la modération';
 							}						
-						Break;
+							break;
 						
 						case 'delete':
-							if(isset($_POST['comment_id']))
-							{
+							if(isset($_POST['comment_id'])){
+
 								deleteComment($_POST['comment_id']);
-							}
-							else
-							{
+							
+							} else {
+
+								// modal d'erreur de suppression à faire
 								echo 'ils manquent des infos pour la suppression';
 							}
-						Break;
+							break;
 						
 					}
 				}
-			Break;
+				break;
 			
 			case 'usersList':
 				usersList();
-			Break;
+				break;
 			
 			default :
 				homepage();
-			Break;
+				break;
 		}
 	}
 	else
@@ -256,12 +277,12 @@ catch(Exception $e){
 	$msgError = $e->getMessage();
 	$adress = $_SERVER['HTTP_REFERER'];
 	
-	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/')
-	{
+	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/'){
+
 		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
-	}
-	else
-	{
+	
+	} else {
+
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
 	
