@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controlleur Front-End
  * 
@@ -19,7 +20,8 @@ require_once('model/UsersManager.php');
  *
  * @return homepageView;
  */
-function homePage(){
+function homePage()
+{
 	require('view/frontend/homepageView.php');
 }
 
@@ -29,7 +31,8 @@ function homePage(){
  * 
  * @return ListPostView;
  */
-function listPosts(){
+function listPosts()
+{
 	$postsManager = new P4\model\PostsManager();
 	$posts = $postsManager->getPosts();
 	require('view/frontend/ListPostsView.php');
@@ -42,17 +45,15 @@ function listPosts(){
  * @param int $id
  * @return postView;
  */
-function post($id){
+function post($id)
+{
 	$postsManager = new P4\model\PostsManager();
-	if ($postsManager->existsID($id))
-	{
+	if ($postsManager->existsID($id)) {
 		$post = $postsManager->getPost($id);
 		$commentsManager = new P4\model\CommentsManager();
 		$comments = $commentsManager->getComments($id);
 		require('view/frontend/postView.php');
-	}
-	else
-	{
+	} else {
 		header('location:http://jeanforteroche.code-one.fr/index.php?src=errorPostId');
 		require('view/partial/modalView.php');
 	}
@@ -72,7 +73,8 @@ function post($id){
  * @param string $email
  * @return void
  */
-function newUser($login, $mdp1, $mdp2, $email){
+function newUser($login, $mdp1, $mdp2, $email)
+{
 
 	$login = htmlspecialchars($_POST['login']);
 	$mdp1 = htmlspecialchars($_POST['mdp1']);
@@ -82,7 +84,7 @@ function newUser($login, $mdp1, $mdp2, $email){
 	$userManager = new P4\model\UsersManager();
 	$adress = $_SERVER['HTTP_REFERER'];
 
-	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/'){
+	if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/') {
 
 		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
 
@@ -90,33 +92,33 @@ function newUser($login, $mdp1, $mdp2, $email){
 
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
-	
-	if ($userManager->exists($login)){
+
+	if ($userManager->exists($login)) {
 
 		header('location:' . $adress . 'src=signformError&log=loginused');
 		require('view/partial/modalView.php');
 
-	} else if (strlen($login)<3){
+	} else if (strlen($login) < 3) {
 
 		header('location:' . $adress . 'src=signformError&log=loginshort');
 		require('view/partial/modalView.php');
-	
-	} else if ($mdp1 != $mdp2){
+
+	} else if ($mdp1 != $mdp2) {
 
 		header('location:' . $adress . 'src=signformError&log=passwordmirror');
 		require('view/partial/modalView.php');
-	
-	} else if (strlen($mdp2)<=5){
+
+	} else if (strlen($mdp2) <= 5) {
 
 		header('location:' . $adress . 'src=signformError&log=passwordshort');
 		require('view/partial/modalView.php');
-	
-	} else if ($userManager->existMail($email)){
+
+	} else if ($userManager->existMail($email)) {
 
 		header('location:' . $adress . 'src=signformError&log=mailused');
 		require('view/partial/modalView.php');
-		
-	} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)){
+
+	} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) {
 
 		header('location:' . $adress . 'src=signformError&log=mailmirror');
 		require('view/partial/modalView.php');
@@ -127,7 +129,7 @@ function newUser($login, $mdp1, $mdp2, $email){
 		$affectedUser = $userManager->addNewUser($login, $password, $email);
 		$_SESSION['login'] = $login;
 		sessionUser($_SESSION['login']);
-		header('location:' . $adress .'src=signformSuccess&log=signed');
+		header('location:' . $adress . 'src=signformSuccess&log=signed');
 		require('view/partial/modalView.php');
 	}
 }
@@ -142,69 +144,67 @@ function newUser($login, $mdp1, $mdp2, $email){
  * 
  * @return user_logged;
  */
-function logUser($login, $password, $cookied){
+function logUser($login, $password, $cookied)
+{
 
 	$login = htmlspecialchars($_POST['pseudo']);
 	$password = htmlspecialchars($_POST['mdp']);
-	
+
 	$userManager = new P4\model\UsersManager();
-	
+
 	$adress = $_SERVER['HTTP_REFERER'];
-	
-	if (($adress === 'http://jeanforteroche.code-one.fr/index.php') || $adress === 'http://jeanforteroche.code-one.fr/')
-	{
+
+	if (($adress === 'http://jeanforteroche.code-one.fr/index.php') || $adress === 'http://jeanforteroche.code-one.fr/') {
 		$adress = 'http://jeanforteroche.code-one.fr/index.php?';
-	}
-	else
-	{
+	} else {
 		$adress = $_SERVER['HTTP_REFERER'] . '&';
 	}
-	
-	if ($userManager->exists($login)){
-		
+
+	if ($userManager->exists($login)) {
+
 		$infoUser = $userManager->userInfos($login);
-		
+
 		$isPasswordCorrect = password_verify($password, $infoUser['password']);
 
-		if ($isPasswordCorrect){
+		if ($isPasswordCorrect) {
 
-			if($infoUser['ban']==1){
+			if ($infoUser['ban'] == 1) {
 
-				header('location:' . $adress .'src=userBanned');
+				header('location:' . $adress . 'src=userBanned');
 				require('view/partial/modalView.php');
-			
+
 			} else {
 
-			$_SESSION['userId'] = $infoUser['ID'];
-			$_SESSION['login'] = $infoUser['login'];
-			$_SESSION['password'] = $infoUser['password'];
-			$_SESSION['date_sign'] = $infoUser['date_sign'];
-			$_SESSION['email'] = $infoUser['email'];
-			$_SESSION['rule'] =  $infoUser['admin'];
-			$_SESSION['country'] = $infoUser['country'];
-			$_SESSION['avatar_path'] = $infoUser['avatar_path'];
-						
-				if ($cookied == 1){
-				
-					setcookie('login', $infoUser['login'], time() + 365*24*3600, null, null, false, true);
-					setcookie('password', $infoUser['password'], time() + 365*24*3600, null, null, false, true);
-				
-				} else if ($cookied == 0){
+				$_SESSION['userId'] = $infoUser['ID'];
+				$_SESSION['login'] = $infoUser['login'];
+				$_SESSION['password'] = $infoUser['password'];
+				$_SESSION['date_sign'] = $infoUser['date_sign'];
+				$_SESSION['email'] = $infoUser['email'];
+				$_SESSION['rule'] = $infoUser['admin'];
+				$_SESSION['country'] = $infoUser['country'];
+				$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 
-					setcookie('login','');
-					setcookie('password','');			
+				if ($cookied == 1) {
+
+					setcookie('login', $infoUser['login'], time() + 365 * 24 * 3600, null, null, false, true);
+					setcookie('password', $infoUser['password'], time() + 365 * 24 * 3600, null, null, false, true);
+
+				} else if ($cookied == 0) {
+
+					setcookie('login', '');
+					setcookie('password', '');
 				}
 
-			header('location:' . $adress .'src=success&log=logged');
-			require('view/partial/modalView.php');
+				header('location:' . $adress . 'src=success&log=logged');
+				require('view/partial/modalView.php');
 			}
-		
+
 		} else {
 
 			header('location:' . $adress . 'src=logInError');
 			require('view/partial/modalView.php');
 		}
-	
+
 	} else {
 
 		header('location:' . $adress . 'src=logInError');
@@ -218,7 +218,8 @@ function logUser($login, $password, $cookied){
  *
  * @return void
  */
-function userProfil(){
+function userProfil()
+{
 
 	require('view/frontend/userProfilView.php');
 }
@@ -232,17 +233,18 @@ function userProfil(){
  * 
  * @return void
  */
-function sessionUser($login){
+function sessionUser($login)
+{
 
 	$userManager = new P4\model\UsersManager();
 	$infoUser = $userManager->userInfos($login);
-	
+
 	$_SESSION['userId'] = $infoUser['ID'];
 	$_SESSION['login'] = $infoUser['login'];
 	$_SESSION['password'] = $infoUser['password'];
 	$_SESSION['date_sign'] = $infoUser['date_sign'];
 	$_SESSION['email'] = $infoUser['email'];
-	$_SESSION['rule'] =  $infoUser['admin'];
+	$_SESSION['rule'] = $infoUser['admin'];
 	$_SESSION['country'] = $infoUser['country'];
 	$_SESSION['avatar_path'] = $infoUser['avatar_path'];
 }
@@ -259,51 +261,52 @@ function sessionUser($login){
  * 
  * @return void
  */
-function updatingUser($userId){
+function updatingUser($userId)
+{
 
 	$userManager = new P4\model\UsersManager();
 	
 	// Test log
-	if(isset($_POST['pseudo'])&& strlen($_POST['pseudo'])!=0){
-		
-		if(strlen($_POST['pseudo'])>3){
+	if (isset($_POST['pseudo']) && strlen($_POST['pseudo']) != 0) {
 
-			if ($_POST['pseudo'] != $_SESSION['login']){
+		if (strlen($_POST['pseudo']) > 3) {
 
-				if($userManager->exists($_POST['pseudo'])){
+			if ($_POST['pseudo'] != $_SESSION['login']) {
+
+				if ($userManager->exists($_POST['pseudo'])) {
 
 					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=loginused');
-				
+
 				} else {
 
 					$pseudo = htmlspecialchars($_POST['pseudo']);
 				}
-			
+
 			} else {
-				
+
 				$pseudo = $_SESSION['login'];
 			}
-		
+
 		} else {
 
 			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=loginshort');
 		}
-	
+
 	} else {
 
 		$pseudo = $_SESSION['login'];
 	} 
 	
 	// Test email
-	if(isset($_POST['email'])&& strlen($_POST['email'])!=0){
+	if (isset($_POST['email']) && strlen($_POST['email']) != 0) {
 
-		if ($_POST['email'] != $_SESSION['email']){
+		if ($_POST['email'] != $_SESSION['email']) {
 
-			if ($userManager->existMail($_POST['email'])){
+			if ($userManager->existMail($_POST['email'])) {
 
 				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=mailused');
 
-			} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])){
+			} else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['email'])) {
 
 				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=mailmirror');
 
@@ -322,23 +325,23 @@ function updatingUser($userId){
 	}
 	
 	// Test password
-	if(isset($_POST['mdp1'])&& strlen($_POST['mdp1'])!=0 && isset($_POST['mdp2'])&& strlen($_POST['mdp2'])!=0 && isset($_POST['mdp3'])&& strlen($_POST['mdp3'])!=0){
+	if (isset($_POST['mdp1']) && strlen($_POST['mdp1']) != 0 && isset($_POST['mdp2']) && strlen($_POST['mdp2']) != 0 && isset($_POST['mdp3']) && strlen($_POST['mdp3']) != 0) {
 
-		if ($_POST['mdp1'] != $_POST['mdp2']){
+		if ($_POST['mdp1'] != $_POST['mdp2']) {
 
 			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=passwordmirror');
-		
+
 		} else {
 
 			$isPasswordCorrect = password_verify($_POST['mdp2'], $_SESSION['password']);
-			
-			if($isPasswordCorrect){
 
-				if(strlen($_POST['mdp3'])>=6){
+			if ($isPasswordCorrect) {
+
+				if (strlen($_POST['mdp3']) >= 6) {
 
 					$mdp3 = htmlspecialchars($_POST['mdp3']);
 					$password = password_hash($mdp3, PASSWORD_DEFAULT);
-				
+
 				} else {
 
 					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=passwordshort');
@@ -356,102 +359,102 @@ function updatingUser($userId){
 	}
 	
 	// Test Country
-	if(isset($_POST['country'])&&strlen($_POST['country'])!=0){
+	if (isset($_POST['country']) && strlen($_POST['country']) != 0) {
 
 		$country = htmlspecialchars($_POST['country']);
-	
+
 	} else {
 
 		$country = $_SESSION['country'];
 	}
 	
 	// Suppression ou Upload et redim de l'image envoyée
-	if (isset($_POST['deleteUserAvatar'])){
+	if (isset($_POST['deleteUserAvatar'])) {
 
 		$avatar_path = 'public/images/user_avatar/0.jpeg';
-	
-	} else if (isset($_FILES['userImage']) && !empty($_FILES['userImage'])){
 
-		if ($_FILES['userImage']['error'] == 0){
+	} else if (isset($_FILES['userImage']) && !empty($_FILES['userImage'])) {
 
-			if ($_FILES['userImage']['size'] <= 2097152){
+		if ($_FILES['userImage']['error'] == 0) {
+
+			if ($_FILES['userImage']['size'] <= 2097152) {
 
 				$userImage = $_FILES['userImage']['name'];
-				
+
 				$ListeExtension = array('jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif');
-				$ListeExtensionIE = array('jpg' => 'image/pjpg', 'jpeg'=>'image/pjpeg');
-				
+				$ListeExtensionIE = array('jpg' => 'image/pjpg', 'jpeg' => 'image/pjpeg');
+
 				$ExtensionPresumee = explode('.', $userImage);
-				$ExtensionPresumee = strtolower($ExtensionPresumee[count($ExtensionPresumee)-1]);
-				
-				if ($ExtensionPresumee == 'jpg' || $ExtensionPresumee == 'jpeg' || $ExtensionPresumee == 'pjpg' || $ExtensionPresumee == 'pjpeg' || $ExtensionPresumee == 'gif' || $ExtensionPresumee == 'png'){
-					
+				$ExtensionPresumee = strtolower($ExtensionPresumee[count($ExtensionPresumee) - 1]);
+
+				if ($ExtensionPresumee == 'jpg' || $ExtensionPresumee == 'jpeg' || $ExtensionPresumee == 'pjpg' || $ExtensionPresumee == 'pjpeg' || $ExtensionPresumee == 'gif' || $ExtensionPresumee == 'png') {
+
 					$userImage = getimagesize($_FILES['userImage']['tmp_name']);
-				
-					if ($userImage['mime'] == $ListeExtension[$ExtensionPresumee]  || $userImage['mime'] == $ListeExtensionIE[$ExtensionPresumee]){
-						
-						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg'){
+
+					if ($userImage['mime'] == $ListeExtension[$ExtensionPresumee] || $userImage['mime'] == $ListeExtensionIE[$ExtensionPresumee]) {
+
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg') {
 
 							$newUserImage = imagecreatefromjpeg($_FILES['userImage']['tmp_name']);
-						
-						} else if ($userImage['mime'] == 'image/png'){
+
+						} else if ($userImage['mime'] == 'image/png') {
 
 							$newUserImage = imagecreatefrompng($_FILES['userImage']['tmp_name']);
-						
-						} else if ($userImage['mime'] == 'image/gif'){
+
+						} else if ($userImage['mime'] == 'image/gif') {
 
 							$newUserImage = imagecreatefromgif($_FILES['userImage']['tmp_name']);
-						
+
 						} else {
 
 							header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 						}
-						
+
 						$sizeNewUserImage = getimagesize($_FILES['userImage']['tmp_name']);
-							
+
 						$width = $sizeNewUserImage[0];
 						$height = $sizeNewUserImage[1];
 						$avatarSide = 75;
-						if ($width >= $height){
+						if ($width >= $height) {
 
 							$newWidth = $avatarSide;
 							$Reduction = (($newWidth * 100) / $width);
-							$newHeight = (($height * $Reduction)/100);
-						
-						} else if ($height > $width){
+							$newHeight = (($height * $Reduction) / 100);
+
+						} else if ($height > $width) {
 
 							$newHeight = $avatarSide;
 							$Reduction = (($newHeight * 100) / $height);
-							$newWidth = (($width * $Reduction)/100);
+							$newWidth = (($width * $Reduction) / 100);
 						}
-						
-						$userAvatar = imagecreatetruecolor($newWidth, $newHeight) or die ("Erreur");
+
+						$userAvatar = imagecreatetruecolor($newWidth, $newHeight) or die("Erreur");
 						imagecopyresampled($userAvatar, $newUserImage, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
 						imagedestroy($newUserImage);
 
-						
-						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg'){
+
+						if ($userImage['mime'] == 'image/jpg' || $userImage['mime'] == 'image/jpeg' || $userImage['mime'] == 'image/pjpg' || $userImage['mime'] == 'image/pjpeg') {
 
 							imagejpeg($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
-						
-						} else if ($userImage['mime'] == 'image/png'){
+
+						} else if ($userImage['mime'] == 'image/png') {
 
 							imagepng($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 6);
-						
-						} else if ($userImage['mime'] == 'image/gif'){
+
+						} else if ($userImage['mime'] == 'image/gif') {
 
 							imagegif($userAvatar, 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee, 100);
 						}
 
 						$avatar_path = 'public/images/user_avatar/' . $_SESSION['userId'] . '.' . $ExtensionPresumee;
-					
+
 					} else {
-		
+
 						header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 					}
-				
+
 				} else {
-		
+
 					header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagewrong');
 				}
 
@@ -459,13 +462,13 @@ function updatingUser($userId){
 
 				header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=imagesize');
 			}
-		
-		} else if ($_FILES['userImage']['error'] == 4){// Le code erreur 4 signifie pas de fichier
-		
+
+		} else if ($_FILES['userImage']['error'] == 4) {// Le code erreur 4 signifie pas de fichier
+
 			$avatar_path = $_SESSION['avatar_path'];
-		
+
 		} else {
-	
+
 			header('location:http://jeanforteroche.code-one.fr/index.php?action=userProfil&error=uploaderror');
 		}
 
@@ -488,37 +491,38 @@ function updatingUser($userId){
  * @param int $userId
  * @return void
  */
-function signOut($userId){
+function signOut($userId)
+{
 
 	$password = htmlspecialchars($_POST['password']);
-	
+
 	$isPasswordCorrect = password_verify($password, $_SESSION['password']);
 
-		if ($isPasswordCorrect){
+	if ($isPasswordCorrect) {
 
-			$userManager = new P4\model\UsersManager();
-			$userManager->deleteUser($_SESSION['userId']);
-			
-			session_destroy();
-			setcookie('login','');
-			setcookie('password','');
-			header('Location:index.php');
-		
+		$userManager = new P4\model\UsersManager();
+		$userManager->deleteUser($_SESSION['userId']);
+
+		session_destroy();
+		setcookie('login', '');
+		setcookie('password', '');
+		header('Location:index.php');
+
+	} else {
+
+		$adress = $_SERVER['HTTP_REFERER'];
+
+		if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/') {
+
+			$adress = 'http://jeanforteroche.code-one.fr/index.php?';
+
 		} else {
 
-			$adress = $_SERVER['HTTP_REFERER'];
-			
-			if (($adress == 'http://jeanforteroche.code-one.fr/index.php') || $adress == 'http://jeanforteroche.code-one.fr/'){
-
-				$adress = 'http://jeanforteroche.code-one.fr/index.php?';
-			
-			} else {
-			
-				$adress = $_SERVER['HTTP_REFERER'] . '&';
-			}
-			
-			header('location:' . $adress . 'action=userProfil&log=signOutError');
+			$adress = $_SERVER['HTTP_REFERER'] . '&';
 		}
+
+		header('location:' . $adress . 'action=userProfil&log=signOutError');
+	}
 }
 
 /**
@@ -527,7 +531,8 @@ function signOut($userId){
  *
  * @return void
  */
-function usersList(){
+function usersList()
+{
 
 	$userManager = new P4\model\UsersManager();
 	$users = $userManager->usersList();
