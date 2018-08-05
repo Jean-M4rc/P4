@@ -200,10 +200,11 @@ class BackEndController{
 	public static function deleteComment($comment_id){
 		
 		$commentManager = new CommentsManager();
+		
 		if ($commentManager->existsID($comment_id))
 		{
 			$commentManager->deletComment($comment_id);
-			header('location:index.php?action=pandOra&target=commentsEdit');
+			header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit');
 		}
 		else
 		{

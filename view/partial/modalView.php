@@ -229,7 +229,8 @@
 					$titleModal = "Attention";
 					$contentModal = 'Le téléchargement a échoué.';
 				break;
-			}?>
+			}
+	?>
 				<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -280,7 +281,7 @@
 		{
 			$titleModal = "Félicitations";
 			$contentModal = "Votre profil a été mis à jour.";
-		?>	
+	?>	
 			<div class="modal modalTemp" tabindex="-1" role="dialog" style="display:block">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
@@ -299,7 +300,7 @@
 					</div>
 				</div>
 			</div>
-		<?php
+	<?php
 		}
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'pandOra')

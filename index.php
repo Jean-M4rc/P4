@@ -2,7 +2,7 @@
 
 // ------------------------------------------------------------------ //
 // ------------------------ INDEX.PHP ------------------------------- //
-// ----------- P4 ------- LE ROUTEUR DU SITE ------------------------ //
+// ------------------------------------------------------------------ //
 // ------------------------------------------------------------------ //
 
 session_start();
@@ -52,12 +52,12 @@ try {
 					$recaptcha = new \ReCaptcha\ReCaptcha($GLOBALS['secretKey']);
 					$resp = $recaptcha->verify($_POST['g-recaptcha-response']);
 
-					if ($resp->isSuccess()) { 
-						
+					if ($resp->isSuccess()) {
+
 						if (!empty($_POST['login']) && !empty($_POST['mdp1']) && !empty($_POST['mdp2']) && !empty($_POST['mail_user'])) {
-							
+
 							FrontEndController::newUser($_POST['login'], $_POST['mdp1'], $_POST['mdp2'], $_POST['mail_user']);
-						
+
 						} else {
 
 							throw new Exception('Tous les champs ne sont pas remplis !');
@@ -145,6 +145,39 @@ try {
 						case 'banUser':
 							BackEndController::banUser($_POST['admin'], $_POST['userID'], $_POST['ban']);
 							break;
+						case 'reportComment':
+							if (isset($_POST['comment_id']) && isset($_POST['comment_report'])) {
+
+								BackEndController::reportCommentAdmin($_POST['comment_id'], $_POST['comment_report']);
+
+							} else {
+
+								throw new Exception('ils manquent des infos pour le signalement');
+
+							}
+							break;
+						
+						case 'moderationCom':
+							if (isset($_POST['comment_id']) && isset($_POST['comment_moderation'])) {
+
+								BackEndController::moderationComment($_POST['comment_id'], $_POST['comment_moderation']);
+
+							} else {
+
+								throw new Exception('ils manquent des infos pour la modération');
+							}
+							break;
+						
+						case 'deleteCom':
+							if (isset($_POST['comment_id'])) {
+
+								BackEndController::deleteComment($_POST['comment_id']);
+
+							} else {
+
+								throw new Exception('ils manquent des infos pour la suppression');
+							}
+							break;
 
 						default:
 							BackEndController::adminHome();
@@ -190,49 +223,6 @@ try {
 				}
 				break;
 
-			case 'CommentEdit':
-				if (isset($_GET['tag'])) {
-
-					switch ($_GET['tag']) {
-
-						case 'reportComment':
-							if (isset($_POST['comment_id']) && isset($_POST['comment_report'])) {
-
-								BackEndController::reportCommentAdmin($_POST['comment_id'], $_POST['comment_report']);
-
-							} else {
-
-								throw new Exception('ils manquent des infos pour le signalement');
-
-							}
-							break;
-
-						case 'moderation':
-							if (isset($_POST['comment_id']) && isset($_POST['comment_moderation'])) {
-
-								BackEndController::moderationComment($_POST['comment_id'], $_POST['comment_moderation']);
-
-							} else {
-
-								throw new Exception('ils manquent des infos pour la modération');
-							}
-							break;
-
-						case 'delete':
-							if (isset($_POST['comment_id'])) {
-
-								BackEndController::deleteComment($_POST['comment_id']);
-
-							} else {
-
-								throw new Exception('ils manquent des infos pour la suppression');
-							}
-							break;
-
-					}
-				}
-				break;
-
 			case 'usersList':
 				FrontEndController::usersList();
 				break;
@@ -252,7 +242,7 @@ try {
 
 	if ($adress == $GLOBALS['url']) {
 
-		$adress = $GLOBALS['url'] .'?';
+		$adress = $GLOBALS['url'] . '?';
 
 	} else {
 
@@ -262,4 +252,3 @@ try {
 
 	header('Location:' . $adress . 'Exception=' . $msgError . '');
 }
-?> 

@@ -8,7 +8,6 @@
 	<table class="table table-striped w-100">
 		<thead class="thead-dark">
 			<tr class="text-center">
-				<!--<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>-->
 				<th class="d-none d-sm-table-cell align-middle"scope="col">Auteur</th>
 				<th class="d-none d-xl-table-cell align-middle" scope="col">Date</th>
 				<th class="d-none d-sm-table-cell align-middle" scope="col">Titre du récit</th>
@@ -44,9 +43,8 @@
 					</div>
 				</td>
 			</tr>			
-	<!--  ----  Modals ---- -->
 	
-	<!-- Modal -- reportModal -->
+	<!-- reportModal -->
 	<div class="modal fade" id="reportModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="reportModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -61,7 +59,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=CommentEdit&tag=reportComment">
+					<form method="post" action="index.php?action=pandOra&target=reportComment">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -73,7 +71,7 @@
 	</div>
 	<!-- End reportModal -->
 	
-	<!-- Modal -- moderateModal -->
+	<!-- moderateModal -->
 	<div class="modal fade" id="moderateModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
 			<div class="modal-content">
@@ -88,7 +86,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=CommentEdit&tag=moderation">
+					<form method="post" action="index.php?action=pandOra&target=moderationCom">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -98,9 +96,9 @@
 			</div>
 		</div>
 	</div>
-	<!-- End LookModal -->
+	<!-- End moderateModal -->
 	
-	<!-- Modal -- deleteModal -->
+	<!-- deleteModal -->
 	<div class="modal fade" id="deleteModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -110,7 +108,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="index.php?action=CommentEdit&tag=delete"> 
+				<form method="post" action="index.php?action=pandOra&target=deleteCom"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold" role="alert">

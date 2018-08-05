@@ -12,7 +12,7 @@ while($data = $posts->fetch()){
 ?>
 		<div class="card border-primary d-inline-block align-top mx-auto my-2" style="width:21rem;">
 			<div class="card-header">Ajouté le <?= $data['date_create_fr']; ?></div>
-			<div class="card-body">
+			<div class="card-body" style="height:220px">
 				<h4 class="card-title"><?= $data['title']; ?></h4>
 				<p class="card-text"><?= $data['resume'] ?></p>
 			</div>
