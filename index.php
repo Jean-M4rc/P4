@@ -8,6 +8,7 @@
 session_start();
 
 require 'const.php';
+require 'model/Manager.php';
 require 'model/PostsManager.php';
 require 'model/CommentsManager.php';
 require 'model/UsersManager.php';

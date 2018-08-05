@@ -3,8 +3,6 @@
 
 namespace P4\model; // la classe sera dans ce namespace
 
-require_once("model/Manager.php");
-
 class PostsManager extends Manager{
 	
 	public function getPosts()
@@ -34,7 +32,7 @@ class PostsManager extends Manager{
 	{
 		$db = $this->dbConnect();
 		
-		$req = $db->prepare('INSERT INTO posts(title, content, resume) VALUES (:title,:content, :resume)');
+		$req = $db->prepare('INSERT INTO posts(title, content, resume, date_create) VALUES (:title,:content, :resume, NOW())');
 		$req->execute(array(
 			'title' => $title,
 			'content' => $content,
