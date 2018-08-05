@@ -131,7 +131,7 @@
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LcRllwUAAAAACkks2ZBKPn38QORzdjCjFxB_uVZ"></div>
+								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="<?= $GLOBALS['siteKey']; ?>"></div>
 								<br/>
 								<div class="alert alert-dismissible alert-primary">
 								  <button type="button" class="close" data-dismiss="alert">&times;</button>

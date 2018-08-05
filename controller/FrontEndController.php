@@ -62,42 +62,41 @@ class FrontEndController
 		{
 			// Si cette condition est vraie le pseudo est déjà utilisé
 			header('location:' . $adress . 'src=signformError&log=loginused');
-			require('view/partial/modalView.php');
+	
 		}
 		else if (strlen($login)<3)
 		{
 			header('location:' . $adress . 'src=signformError&log=loginshort');
-			require('view/partial/modalView.php');
+			
 		}
 		else if ($mdp1 != $mdp2) //Test du mot de passe identiques
 		{
 			header('location:' . $adress . 'src=signformError&log=passwordmirror');
-			require('view/partial/modalView.php');
+			
 		}
 		else if (strlen($mdp2)<=5) // Test de la longueur du mot de passe
 		{
 			header('location:' . $adress . 'src=signformError&log=passwordshort');
-			require('view/partial/modalView.php');
+			
 		}
 		else if ($userManager->existMail($email)) // Test de l'unicité de l'email
 		{
 			header('location:' . $adress . 'src=signformError&log=mailused');
-			require('view/partial/modalView.php');
+			
 			
 		}
 		else if (!preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) // Test de la Regex sur l'email
 		{
 			header('location:' . $adress . 'src=signformError&log=mailmirror');
-			require('view/partial/modalView.php');
+			
 		}
 		else //Tout les test sont bons, ont hache le mdp et on insert
 		{ 
 			$password = password_hash($mdp2, PASSWORD_DEFAULT);
 			$affectedUser = $userManager->addNewUser($login, $password, $email);
 			$_SESSION['login'] = $login;
-			sessionUser($_SESSION['login']);
+			self::sessionUser($_SESSION['login']);
 			header('location:' . $adress .'src=signformSuccess&log=signed');
-			require('view/partial/modalView.php');
 		}
 	}
 
