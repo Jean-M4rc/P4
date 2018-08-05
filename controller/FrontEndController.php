@@ -6,17 +6,12 @@
 
 namespace P4\controller;
 
-require_once('controller\Controller.php');
-// Chargement des classes du model
-require_once('model\PostsManager.php');
-require_once('model\CommentsManager.php');
-require_once('model\UsersManager.php');
-
 use P4\model\UsersManager;
 use P4\model\CommentsManager;
 use P4\model\PostsManager;
 
-class FrontEndController extends Controller{
+class FrontEndController
+{
 
 	public static function homePage(){
 		require('view/frontend/homepageView.php');

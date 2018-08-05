@@ -11,6 +11,9 @@ session_start();
 
 
 
+require 'model/PostsManager.php';
+require 'model/CommentsManager.php';
+require 'model/UsersManager.php';
 require 'controller/BackEndController.php';
 require 'controller/FrontEndController.php';
 require 'vendor/autoload.php';

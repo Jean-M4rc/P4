@@ -2,17 +2,11 @@
 
 namespace P4\controller;
 
-// Chargement des classes du model
-require_once('controller/Controller.php');
-//require_once('model/PostsManager.php');
-//require_once('model/CommentsManager.php');
-//require_once('model/UsersManager.php');
-
 use P4\model\CommentsManager;
 use P4\model\PostsManager;
 use P4\model\UsersManager;
 
-class BackEndController extends Controller{
+class BackEndController{
 	
 	public static function adminHome(){
 		require('view/backend/homeAdminView.php');
