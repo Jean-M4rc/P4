@@ -7,7 +7,6 @@ namespace P4\model;
  */
 class UsersManager extends Manager{
 	
-
 	/**
 	 * Ajoute un abonné dans la base de données.
 	 *
