@@ -244,5 +244,3 @@ class UsersManager extends Manager{
 		]);
 	}
 }
-
-?>
