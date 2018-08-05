@@ -11,7 +11,6 @@ use P4\model\UsersManager;
  */
 class BackEndController
 {
-
 	/**
 	 * Affiche la vue d'accueil de l'administration
 	 *
@@ -261,7 +260,7 @@ class BackEndController
 	 * @param int $comment_id
 	 * @return void
 	 */
-	public static function deleteComment($comment_id)
+	public static function deleteComment($comment_id) // 1 modal ici
 	{
 		$commentManager = new CommentsManager();
 
@@ -286,7 +285,6 @@ class BackEndController
 		$com = $commentManager->getAllComments();
 		require('view/backend/commentsEditView.php');
 	}
-
 
 	/**
 	 * Affiche l'ensemble des abonnés pour les gérer.
