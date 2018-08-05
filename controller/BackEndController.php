@@ -87,7 +87,8 @@ class BackEndController
 
 					if (!empty($postContent) && strlen($postContent) > 20 && is_string($postContent)) {
 
-						$postManager->updatePost($postID, $postTitle, $postContent);
+						$resume = strip_tags(substr($postContent, 0, 200) . '...', '<br>');
+						$postManager->updatePost($postID, $postTitle, $postContent, $resume);
 						header('location:' . $GLOBALS['url'] . '?action=pandOra&target=postsEdit&log=successpostup');
 					} else {
 
