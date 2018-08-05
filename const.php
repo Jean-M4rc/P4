@@ -6,7 +6,10 @@
 $GLOBALS = [
     'url' => 'http://localhost/P4/index.php',
     'secretKey' => '6LdYUlwUAAAAAIo8RnwqIR_tJ2aW2zNKI2jTxnqi',
-    'siteKey' => '6LdYUlwUAAAAAAC5xhS_Ta72loK4qTWf7ESVgpzJ'
-
-
+    'siteKey' => '6LdYUlwUAAAAAAC5xhS_Ta72loK4qTWf7ESVgpzJ',
+    'host' => 'localhost',
+    'dbname' => 'p4',
+    'charset' => 'utf8',
+    'user' => 'root',
+    'password' => ''
 ];

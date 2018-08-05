@@ -43,7 +43,7 @@ class BackEndController
 	{
 		if (isset($post) && is_string($post) && !empty($post) && isset($title) && is_string($title)) {
 			
-			$resume = strip_tags(substr($post, 0, 300) . '...', '<br>');
+			$resume = strip_tags(substr($post, 0, 200) . '...', '<br>');
 			$postsManager = new PostsManager();
 			$postsManager->addPost($title, $post, $resume);
 			header('location:' . $GLOBALS['url'] . '?action=pandOra&log=successPost');
