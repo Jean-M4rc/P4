@@ -63,7 +63,7 @@
 	<!-- End LogOutModal -->
 
 <?php 
-	include('view/partial/modalView.php');
+	include('helper/modalindex.php');
 	echo $content;
 	include('view/partial/footerBackView.php');
 ?>

@@ -200,7 +200,7 @@
 		<!-- End logInModal -->
 		
 <?php 
-	include('view/partial/modalView.php');
+	include('helper/modalindex.php'); //view/partial/modalView.php');
 	echo $content;
 	include('view/partial/footerFrontView.php');
 ?>
