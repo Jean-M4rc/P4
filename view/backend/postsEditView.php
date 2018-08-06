@@ -9,23 +9,20 @@
 	<table class="table table-striped w-100">
 		<thead class="thead-dark">
 			<tr class="text-center">
-				<!--<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>-->
 				<th class="align-middle"scope="col">Titre du récit</th>
 				<th class="d-none d-sm-table-cell align-middle" scope="col">Date de création du récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Voir le récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Modifier le récit</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Supprimer le récit</th>
-				<th class="d-table-cell d-lg-none align-middle" scope="col" style="width:140px">Actions</th> <!-- lui doit etre caché en vue large -->
+				<th class="d-table-cell d-lg-none align-middle" scope="col" style="width:140px">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
-
 <?php
     while ($data = $posts->fetch())
     {
 ?>
 			<tr class="text-dark text-center">
-				<!--<td class="d-none d-sm-table-cell align-middle"><?= htmlspecialchars($data['ID'])?></td>-->
 				<td class="align-middle"><?= htmlspecialchars($data['title'])?></td>
 				<td class="d-none d-sm-table-cell align-middle">Le <?= htmlspecialchars($data['date_create_fr'])?></td>
 				<td class="d-none d-lg-table-cell align-middle"><button class="btn btn-outline-info" type="button" data-toggle="modal" data-target="#lookModal<?= $data['ID'] ?>"><i class="fas fa-search-plus"></i> Plus d'infos</button></td>
@@ -42,9 +39,8 @@
 					</div>
 				</td>
 			</tr>			
-	<!--  ----  Modals ---- -->
 	
-	<!-- Modal -- lookModal -->
+	<!-- lookModal -->
 	<div class="modal fade" id="lookModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="LookModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 			<div class="modal-content">
@@ -65,7 +61,7 @@
 	</div>
 	<!-- End LookModal -->
 	
-	<!-- Modal -- updateModal -->
+	<!-- updateModal -->
 	<div class="modal fade" id="updateModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
 			<div class="modal-content">
@@ -75,7 +71,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=updatePost"> 
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=updatePost"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="form-group">
@@ -99,7 +95,7 @@
 	</div>
 	<!-- End LookModal -->
 	
-	<!-- Modal -- deleteModal -->
+	<!-- deleteModal -->
 	<div class="modal fade" id="deleteModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -109,7 +105,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=deletePost"> 
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=deletePost"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold" role="alert">

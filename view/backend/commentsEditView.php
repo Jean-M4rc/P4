@@ -1,7 +1,9 @@
 <?php $title='Administration des commentaires'; ?>
 
 <?php ob_start(); ?>
+
 <div class="w-90 m-auto">
+
 	<h1 class="text-center">Voici l'ensemble des commentaires :</h1>
 	<p class="text-center">Les commentaires signalés apparaissent en premiers et de manière antéchronologique.</p>
 
@@ -49,7 +51,14 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?php if ($data['comment_report']==0){ echo "Signaler le commentaire";} else { echo "Lever le signalement";} ?></h2>
+					<h2 class="modal-title" id="exampleModalCenterTitle">
+						<?php
+						if ($data['comment_report']==0){
+							echo "Signaler le commentaire";
+						} else {
+							echo "Lever le signalement";
+						} ?>
+					</h2>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -59,7 +68,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=pandOra&target=reportComment">
+					<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=reportComment">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -86,7 +95,7 @@
 					<p>Commentaire : <?= $data['comment']; ?></p>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="index.php?action=pandOra&target=moderationCom">
+					<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=moderationCom">
 						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
 						<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
@@ -108,7 +117,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="index.php?action=pandOra&target=deleteCom"> 
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=deleteCom"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold" role="alert">

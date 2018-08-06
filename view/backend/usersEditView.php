@@ -9,18 +9,16 @@
 	<table class="table table-striped mw-70">
 		<thead class="thead-dark">
 			<tr class="text-center">
-				<!--<th class="d-none d-sm-table-cell align-middle" scope="col">Numéro de récit</th>-->
 				<th class="align-middle"scope="col">Pseudo de l'abonné</th>			
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Toutes les informations de l'abonné</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Modifier le rang</th>
 				<th class="d-none d-lg-table-cell align-middle" scope="col">Bannissement</th>
-				<th class="d-table-cell d-lg-none align-middle" scope="col" style="width:140px">Actions</th> <!-- lui doit etre caché en vue large -->
+				<th class="d-table-cell d-lg-none align-middle" scope="col" style="width:140px">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
 
 <?php
-
     while ($data = $users->fetch())
     {
 ?>
@@ -39,10 +37,9 @@
 						<button class="btn btn-outline-danger" type="button" data-toggle="modal" data-target="#banModal<?= $data['userID'] ?>"><?php if($data['ban']==0){echo'<i class="fas fa-times-circle"></i>';}elseif($data['ban']==1){echo'<i class="far fa-check-circle"></i>';}else{echo'Erreur';}?></button>
 					</div>
 				</td>
-			</tr>			
-	<!--  ----  Modals ---- -->
+			</tr>
 
-	<!-- Modal -- infoModal -->
+	<!-- infoModal -->
 	<div class="modal fade" id="infoModal<?= $data['userID'] ?>" tabindex="-1" role="dialog" aria-labelledby="infoModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -65,7 +62,7 @@
 				</div>
 				</div>
 				<div class="modal-footer">
-					<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=initAvatar">
+					<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=initAvatar">
 						<input type="hidden" value="<?= $data['userID']; ?>" name="userID"/>
 						<button type="submit" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i><span class="d-none d-sm-inline"> Réinitiliser l'avatar</span></button>
 					</form>
@@ -86,7 +83,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=upgradeUser"> 
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=upgradeUser"> 
 					<fieldset>
 						<div class="modal-body">
 							<p class="lead">L'abonné <span class="text-success"><?= $data['login']; ?></span> possède le rang <span class="text-info"><?php if($data['admin']==0){echo'Abonné';}elseif($data['admin']==1){echo'Modérateur';}elseif($data['admin']==2){echo 'Administarteur';}else{echo'indéfini, contactez-moi au plus vite ^^';}?></span></p><br/>
@@ -119,7 +116,7 @@
 	</div>
 	<!-- End upgradeModal -->
 	
-	<!-- Modal -- banModal -->
+	<!-- banModal -->
 	<div class="modal fade" id="banModal<?= $data['userID'] ?>" tabindex="-1" role="dialog" aria-labelledby="banModalCenter" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -129,7 +126,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" action="http://localhost/P4/index.php?action=pandOra&target=banUser"> 
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=banUser"> 
 					<fieldset>
 						<div class="modal-body">
 							<div class="alert alert-danger text-center font-weight-bold lead" role="alert">
@@ -140,7 +137,6 @@
 									<h5 class="card-title"><?= $data['login']; ?></h5>
 									<p class="card-text">Inscrit depuis le <?= $data['date_sign_fr']; ?></p>
 								</div>
-								
 							</div>
 						</div>
 						<div class="modal-footer d-block">
@@ -169,10 +165,10 @@
 ?>
 		</tbody>
 	</table>
-	
 </div>
+
 <?php
-	$users ->closeCursor(); // Termine le traitement de la requête
+$users ->closeCursor(); // Termine le traitement de la requête
+$content = ob_get_clean();
+require('view/backend/templateBack.php');
 ?>
-<?php $content = ob_get_clean(); ?>
-<?php require('view/backend/templateBack.php'); ?>
