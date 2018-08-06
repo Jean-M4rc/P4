@@ -31,7 +31,7 @@
     <body>
 
 <?php
-include('view/partial/adminNav.php');
+	include('view/partial/adminNav.php');
 ?>
 	
 	<!-- Modal logOutModal -->
@@ -52,7 +52,7 @@ include('view/partial/adminNav.php');
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+							<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
 							<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
 						</div>
 					</fieldset>
@@ -63,13 +63,9 @@ include('view/partial/adminNav.php');
 	<!-- End LogOutModal -->
 
 <?php 
-include('view/partial/modalView.php');
-?>
-
-<?= $content ?>
-
-<?php
-include('view/partial/footerBackView.php');
+	include('view/partial/modalView.php');
+	echo $content;
+	include('view/partial/footerBackView.php');
 ?>
 
     </body>

@@ -9,12 +9,10 @@
 		<link href="public/css/lux.min.css" rel="stylesheet" />
         <link href="public/css/style.css" rel="stylesheet" />
 		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-		
-    </head>
-        
+    </head> 
     <body>
 		<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-			<a class="navbar-brand" href="http://localhost/P4/index.php">Jérôme Forteroche | <i class="fas fa-home"></i></a>
+			<a class="navbar-brand" href="<?= $GLOBALS['url'] ?>">Jérôme Forteroche | <i class="fas fa-home"></i></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -22,51 +20,44 @@
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a class="nav-link" href="http://localhost/P4/index.php?action=listPosts">Mes aventures</a>
+						<a class="nav-link" href="<?= $GLOBALS['url'] ?>?action=listPosts">Mes aventures</a>
 					</li>
-	<?php
-	if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
-	?>
+<?php
+	if (isset($_SESSION['login'])||isset($_COOKIE['login'])) {
+?>
 					<li class="nav-item">
-						<a class="nav-link" href="http://localhost/P4/index.php?action=usersList">Membres</a>
+						<a class="nav-link" href="<?= $GLOBALS['url'] ?>?action=usersList">Membres</a>
 					</li>
-	<?php
+<?php
 	}
-	?>
+?>
 				</ul>
 				<div class="btngroup">
-	<?php
-		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
-		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
-			
-			if ($_SESSION['rule'] >= 1){
-	?>
-				<a href='http://localhost/P4/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
-	<?php			
-			}
-	?>
-				
-				<a href='http://localhost/P4/index.php?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
-				<button class="btn btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-				
+<?php
+	if (isset($_SESSION['login'])||isset($_COOKIE['login'])) {
 
-	<?php
-		// S'il n'est pas connecté on affiche le menu de base
-		} else {
-	?>
-				<button class="btn btn-outline-secondary mr-1 my-1" type="button" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user-plus"></i> Inscription</button>
-				<button class="btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button>
-					
-	<?php
+		if ($_SESSION['rule'] >= 1) {
+?>
+					<a href='<?= $GLOBALS['url'] ?>?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
+<?php			
 		}
-	?>	
+?>
+				
+					<a href='<?= $GLOBALS['url'] ?>?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
+					<button class="btn btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+<?php
+	} else {
+?>
+					<button class="btn btn-outline-secondary mr-1 my-1" type="button" data-toggle="modal" data-target="#signInModal"><i class="fas fa-user-plus"></i> Inscription</button>
+					<button class="btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logInModal"><i class="fas fa-user-check"></i> Connexion</button>				
+<?php
+	}
+?>	
 				</div>
 			</div>
 		</nav>
-		
-		<!--  ----  Modals ---- -->
-		
-		<!-- Modal -- logOutModal -->
+	
+		<!-- logOutModal -->
 		<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="LogOutModalCenter" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -76,7 +67,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" action="http://localhost/P4/index.php?action=logOut"> 
+					<form method="post" action="<?= $GLOBALS['url'] ?>?action=logOut"> 
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">
@@ -84,7 +75,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+								<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
 								<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
 							</div>
 						</fieldset>
@@ -94,54 +85,60 @@
 		</div>
 		<!-- End LogOutModal -->
 
-		<!-- Modal -- signInModal -->
+		<!-- signInModal -->
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenteredForSignIn" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<form role="form" data-toggle="validator" method="post" action="http://localhost/P4/index.php?action=signin">
+					<form role="form" data-toggle="validator" method="post" action="<?= $GLOBALS['url'] ?>?action=signin">
 						<fieldset>
 							<div class="modal-header">
 								<h2 class="modal-title">Rejoignez l'aventure !</h2>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-							</div><!-- modal header -->
+							</div>
 							<div class="modal-body">
-								<div class="form-group"><!-- le login -->
+								<!-- le login -->
+								<div class="form-group">
 									<label for="login" class="control-label">Pseudo :</label>
 									<input class="form-control" id="login" name="login" type="text" pattern=".{3,}" data-error="Votre pseudo est trop court !" required>
 									<div class="help-block">Minimum 3 caractères</div>
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="form-group"><!-- le mot de passe -->
+								<!-- le mot de passe -->
+								<div class="form-group">
 									<label for="mdp1" class="control-label">Mot de passe : </label>
 									<input class="form-control" id="mdp1" name="mdp1" type="password" pattern=".{6,}" data-error="Votre mot de passe est trop court !" required>
 									<div class="help-block">Minimum 6 caractères</div>
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="form-group"><!-- la confirmation du mot de passe -->
+								<!-- la confirmation du mot de passe -->
+								<div class="form-group">
 									<label for="mdp2" class="control-label">Confirmez votre mot de passe : </label>
 									<input class="form-control" data-match="#mdp1" id="mdp2" name="mdp2" type="password" data-match-error="Les mots de passes ne correspondent pas !"required>
 									<div class="help-block with-errors"></div>
 									
 								</div>
-								<div class="form-group"><!-- le mail -->
+								<!-- le mail -->
+								<div class="form-group">
 									<label for="mail" class="control-label">Votre adresse mail :</label>
 									<input class="form-control" id="mail" name="mail_user" type="email" aria-describedby="emailHelp" data-error="Attention, votre adresse email n'est pas valide" required>
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
+								<!-- Google ReCaptcha -->
 								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="<?= $GLOBALS['siteKey']; ?>"></div>
 								<br/>
+								<!-- infobox -->
 								<div class="alert alert-dismissible alert-primary">
 								  <button type="button" class="close" data-dismiss="alert">&times;</button>
 								  <h4 class="alert-heading">Attention</h4>
 								  <p class="mb-0">Ce site est susceptible d'utiliser des cookies.</p>
 								</div>
-							</div><!-- modal-body -->
+							</div>
 							<div class="modal-footer">
 								<div class="form-group">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
 									<input type="submit" class="btn btn-primary" id="submit" value="Envoyer votre demande d'inscription">
 								</div>
 							</div>
@@ -152,7 +149,7 @@
 		</div>
 		<!-- End signInModal -->
 		
-		<!-- Modal -- logInModal -->
+		<!-- logInModal -->
 		<div class="modal fade" id="logInModal" tabindex="-1" role="dialog" aria-labelledby="LogInModalCenter" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -162,19 +159,22 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<form method="post" data-toggle="validator" action="http://localhost/P4/index.php?action=login">
+					<form method="post" data-toggle="validator" action="<?= $GLOBALS['url'] ?>?action=login">
 						<fieldset>
 							<div class="modal-body">
-								<div class="form-group"><!-- Le log -->
+								<!-- Le log -->
+								<div class="form-group">
 									<label for="pseudo" class="control-label">Pseudo : </label>
 									<input id="pseudo" class="form-control" name="pseudo" type="text" pattern=".{3,}" data-error="Votre pseudo est trop court !" required />
 									<div class="help-block with-errors"></div>
 								</div>
-								<div class="form-group"><!-- le mot de passe -->
+								<!-- le mot de passe -->
+								<div class="form-group">
 									<label class="control-label">Mot de passe : </label>
 									<input id="mdp" class="form-control" name="mdp" type="password" pattern=".{6,}" data-error="Votre mot de passe est trop court !" required />
 									<div class="help-block with-errors"></div>
 								</div>
+								<!-- cookiebox -->
 								<div class="alert alert-primary">
 									<h4 class="alert-heading">Attention</h4>
 									<div class="form-group">
@@ -189,7 +189,7 @@
 								</div>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+								<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
 								<input class="btn btn-primary" id="submit" type="submit" value="Connexion">
 							</div>
 						</fieldset>
@@ -199,15 +199,11 @@
 		</div>
 		<!-- End logInModal -->
 		
-		<?php 
-		include('view/partial/modalView.php');
-		?>
-
-        <?= $content ?>
-		
-		<?php
-		include('view/partial/footerFrontView.php');
-		?>
+<?php 
+	include('view/partial/modalView.php');
+	echo $content;
+	include('view/partial/footerFrontView.php');
+?>
 
     </body>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

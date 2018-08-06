@@ -1,6 +1,7 @@
-<?php $title='Administration des commentaires'; ?>
-
-<?php ob_start(); ?>
+<?php
+	$title='Administration des commentaires';
+	ob_start();
+?>
 
 <div class="w-90 m-auto">
 
@@ -23,8 +24,7 @@
 		<tbody>
 		
 <?php
-    while ($data = $com->fetch())
-    {
+    while ($data = $com->fetch()) {
 ?>
 			<tr class="text-dark text-center">
 				<td class="d-none d-sm-table-cell align-middle"><?= $data['user_login']?></td>
@@ -46,111 +46,111 @@
 				</td>
 			</tr>			
 	
-	<!-- reportModal -->
-	<div class="modal fade" id="reportModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="reportModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">
-						<?php
-						if ($data['comment_report']==0){
-							echo "Signaler le commentaire";
-						} else {
-							echo "Lever le signalement";
-						} ?>
-					</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p class="lead">Auteur : <?= $data['user_login']; ?></p>
-					<p>Commentaire : <?= $data['comment']; ?></p>
-				</div>
-				<div class="modal-footer">
-					<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=reportComment">
-						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
-						<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
-						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
-						<button type="submit" class="btn btn-primary">Confirmer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End reportModal -->
-	
-	<!-- moderateModal -->
-	<div class="modal fade" id="moderateModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?php if ($data['comment_moderation']==0){ echo "Modérer le commentaire";} else { echo "Lever la modération";} ?></h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p class="lead">Auteur : <?= $data['user_login']; ?></p>
-					<p>Commentaire : <?= $data['comment']; ?></p>
-				</div>
-				<div class="modal-footer">
-					<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=moderationCom">
-						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
-						<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
-						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
-						<button type="submit" class="btn btn-primary">Confirmer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End moderateModal -->
-	
-	<!-- deleteModal -->
-	<div class="modal fade" id="deleteModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Suppression</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=deleteCom"> 
-					<fieldset>
+			<!-- reportModal -->
+			<div class="modal fade" id="reportModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="reportModalCenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title" id="exampleModalCenterTitle">
+								<?php
+								if ($data['comment_report']==0){
+									echo "Signaler le commentaire";
+								} else {
+									echo "Lever le signalement";
+								} ?>
+							</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
 						<div class="modal-body">
-							<div class="alert alert-danger text-center font-weight-bold" role="alert">
-							Etes-vous sûr de vouloir supprimer ce commentaire ? 
-							</div>
-							<div class="card mx-auto text-white bg-primary mb-3" style="width: 18rem;">
-								<div class="card-body">
-									<h5 class="card-title">Auteur : <?= $data['user_login']?></h5>
-									<p class="card-text">Commentaire : <?= $data['comment']; ?></p>
-								</div>
-							</div>
+							<p class="lead">Auteur : <?= $data['user_login']; ?></p>
+							<p>Commentaire : <?= $data['comment']; ?></p>
 						</div>
 						<div class="modal-footer">
-							<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
-							<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
-							<input class="btn btn-primary" id="submit" type="submit" value="Supprimer">
+							<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=reportComment">
+								<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
+								<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
+								<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
+								<button type="submit" class="btn btn-primary">Confirmer</button>
+							</form>
 						</div>
-					</fieldset>
-				</form>
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	<!-- End LookModal -->
+			<!-- End reportModal -->
+		
+			<!-- moderateModal -->
+			<div class="modal fade" id="moderateModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title" id="exampleModalCenterTitle"><?php if ($data['comment_moderation']==0){ echo "Modérer le commentaire";} else { echo "Lever la modération";} ?></h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p class="lead">Auteur : <?= $data['user_login']; ?></p>
+							<p>Commentaire : <?= $data['comment']; ?></p>
+						</div>
+						<div class="modal-footer">
+							<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=moderationCom">
+								<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
+								<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
+								<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
+								<button type="submit" class="btn btn-primary">Confirmer</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End moderateModal -->
+		
+			<!-- deleteModal -->
+			<div class="modal fade" id="deleteModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="modal-title" id="exampleModalCenterTitle">Suppression</h2>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=deleteCom"> 
+							<fieldset>
+								<div class="modal-body">
+									<div class="alert alert-danger text-center font-weight-bold" role="alert">
+									Etes-vous sûr de vouloir supprimer ce commentaire ? 
+									</div>
+									<div class="card mx-auto text-white bg-primary mb-3" style="width: 18rem;">
+										<div class="card-body">
+											<h5 class="card-title">Auteur : <?= $data['user_login']?></h5>
+											<p class="card-text">Commentaire : <?= $data['comment']; ?></p>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
+									<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
+									<input class="btn btn-primary" id="submit" type="submit" value="Supprimer">
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			</div>
+			<!-- End LookModal -->
 	
 <?php
     }
 ?>
 		</tbody>
 	</table>
-	
 </div>
+
 <?php
-	$com->closeCursor(); // Termine le traitement de la requête
+	$com->closeCursor();
+	$content = ob_get_clean();
+	require 'view/backend/templateBack.php';
 ?>
-<?php $content = ob_get_clean(); ?>
-<?php require('view/backend/templateBack.php'); ?>
