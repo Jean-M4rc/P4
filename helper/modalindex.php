@@ -156,7 +156,7 @@ if (isset($_GET['src'])) {
 
 				case 'success':
                     $contentModal = "Votre récit a bien été supprimé.";
-                    require 'view/partial/succesModal.php';
+                    require 'view/partial/successModal.php';
 					break;
 
 				case 'fail':
