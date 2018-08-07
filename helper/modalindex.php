@@ -171,7 +171,7 @@ if (isset($_GET['src'])) {
 
 			case 'successPost':
                 $contentModal = "Votre récit est bien ajouté";
-                require 'view/partial/succesModal.php';
+                require 'view/partial/successModal.php';
 				break;
 
 			case 'errorPost':

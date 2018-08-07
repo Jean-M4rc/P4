@@ -12,7 +12,7 @@
     </head> 
     <body>
 		<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-			<a class="navbar-brand" href="<?= $GLOBALS['url'] ?>">Jérôme Forteroche | <i class="fas fa-home"></i></a>
+			<a class="navbar-brand" href="<?= $GLOBALS['url'] ?>">Jean Forteroche | <i class="fas fa-home"></i></a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -200,7 +200,7 @@
 		<!-- End logInModal -->
 		
 <?php 
-	include('helper/modalindex.php'); //view/partial/modalView.php');
+	include('helper/modalindex.php');
 	echo $content;
 	include('view/partial/footerFrontView.php');
 ?>
