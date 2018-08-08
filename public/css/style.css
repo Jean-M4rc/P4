@@ -42,7 +42,7 @@ h1{
 }
 footer{
 	display:flex;
-	justify-content:space-around;
+	justify-content:center;
 	padding-top:20px;
 	background-color:#343a40;
 	padding-bottom:20px;
