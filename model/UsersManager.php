@@ -5,8 +5,8 @@ namespace P4\model;
 /**
  * Classe qui permet le CRUD des abonnés.
  */
-class UsersManager extends Manager{
-	
+class UsersManager extends Manager
+{
 	/**
 	 * Ajoute un abonné dans la base de données.
 	 *

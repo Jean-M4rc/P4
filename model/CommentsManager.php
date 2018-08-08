@@ -1,6 +1,6 @@
 <?php
 
-namespace P4\model; // la classe sera dans ce namespace
+namespace P4\model;
 
 /**
  * Classe qui gère le CRUD des commentaires.

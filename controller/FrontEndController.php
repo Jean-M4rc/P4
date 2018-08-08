@@ -40,7 +40,7 @@ class FrontEndController
 	 * @param int $id
 	 * @return void
 	 */
-	public static function post($id) //----------------- une modal -----------------------
+	public static function post($id)
 	{
 		$postsManager = new \P4\model\PostsManager();
 
@@ -53,7 +53,7 @@ class FrontEndController
 
 		} else {
 
-			header('location:' . $GLOBALS['url'] . '?action=listPosts&');//---------------------------------------------------------------------------------------------------
+			header('location:' . $GLOBALS['url'] . '?action=listPosts&errorPost');
 		}
 	}
 
@@ -455,6 +455,19 @@ class FrontEndController
 			
 			header('location:' . $GLOBALS['url'] . '?action=userProfil&log=signOutError');
 		}
+	}
+
+	/**
+	 * Supprime les cookies et la session
+	 *
+	 * @return void
+	 */
+	public static function logOut()
+	{
+		session_destroy();
+		setcookie('login', '');
+		setcookie('password', '');
+		header('Location:' . $GLOBALS['url']);
 	}
 
 	/**

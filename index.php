@@ -35,11 +35,7 @@ try {
 				break;
 
 			case 'logOut':
-				session_destroy();
-				setcookie('login', '');
-				setcookie('password', '');
-				header('Location:' . $GLOBALS['url']);
-				exit();
+				FrontEndController::logOut();
 				break;
 
 			case 'listPosts':
@@ -49,8 +45,8 @@ try {
 			case 'signin':
 
 				if (!empty($_POST['g-recaptcha-response'])) {
-
-					$recaptcha = new \ReCaptcha\ReCaptcha($GLOBALS['secretKey']);
+					
+					$recaptcha = new \ReCaptcha\ReCaptcha($GLOBALS['secretKey']); //TODO: trouver une solution plus propre
 					$resp = $recaptcha->verify($_POST['g-recaptcha-response']);
 
 					if ($resp->isSuccess()) {

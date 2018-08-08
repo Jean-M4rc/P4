@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Routeur des modals d'informations (helper)
-*/
+ */
 
 if (isset($_GET['src'])) {
 
@@ -123,13 +124,13 @@ if (isset($_GET['src'])) {
 	} else if (isset($_GET['log']) && $_GET['log'] == 'signOutError') {
 
 		$contentModal = "Le mot de passe n'est pas valide.";
-        $targetModal = "#signOutModal";
-        require 'view/partial/targetFailModal.php';
+		$targetModal = "#signOutModal";
+		require 'view/partial/targetFailModal.php';
 
 	} else if (isset($_GET['success']) && $_GET['success'] == 'true') {
-		
-        $contentModal = "Votre profil a été mis à jour.";
-        require 'view/partial/successModal.php';
+
+		$contentModal = "Votre profil a été mis à jour.";
+		require 'view/partial/successModal.php';
 
 	}
 } else if (isset($_GET['action']) && $_GET['action'] == 'pandOra') {
@@ -141,13 +142,13 @@ if (isset($_GET['src'])) {
 			switch ($_GET['log']) {
 
 				case 'successpostup':
-                    $contentModal = "Votre récit a bien été mis à jour";
-                    require 'view/partial/successModal.php';
+					$contentModal = "Votre récit a bien été mis à jour";
+					require 'view/partial/successModal.php';
 					break;
 
 				case 'errorpostup':
-                    $contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
-                    require 'view/partial/failModal.php';
+					$contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
+					require 'view/partial/failModal.php';
 					break;
 			}
 		} else if (isset($_GET['postdown'])) {
@@ -155,29 +156,79 @@ if (isset($_GET['src'])) {
 			switch ($_GET['postdown']) {
 
 				case 'success':
-                    $contentModal = "Votre récit a bien été supprimé.";
-                    require 'view/partial/successModal.php';
+					$contentModal = "Votre récit a bien été supprimé.";
+					require 'view/partial/successModal.php';
 					break;
 
 				case 'fail':
-                    $contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
-                    require 'view/partial/failModal.php';
+					$contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
+					require 'view/partial/failModal.php';
 					break;
 			}
 		}
+	} else if (isset($_GET['target']) && $_GET['target'] == 'commentsEdit') {
+
+		if (isset($_GET['errorId'])) {
+
+			$contentModal = 'Le commentaire n\'a pas pu être identifié';
+			require 'view/partial/failModal.php';
+
+		} else if (isset($_GET['errorCommentReport'])) {
+
+			$contentModal = 'Le commentaire n\'a pas pu être signalé/dé-signalé';
+			require 'view/partial/failModal.php';
+
+		} else if (isset($_GET['errorCommentModeration'])) {
+
+			$contentModal = 'Le commentaire n\'a pas pu être modéré/dé-modéré';
+			require 'view/partial/failModal.php';
+		}
+
+
+	} else if (isset($_GET['target']) && $_GET['target'] == 'usersEdit') {
+
+		if (isset($_GET['errorId'])) {
+
+			$contentModal = 'L\'utilisateur pas pu être identifié';
+			require 'view/partial/failModal.php';
+
+		} else if (isset($_GET['errorData'])) {
+
+			$contentModal = 'Les données ne sont pas valides';
+			require 'view/partial/failModal.php';
+		}
+
 	} else if (isset($_GET['log'])) {
 
 		switch ($_GET['log']) {
 
 			case 'successPost':
-                $contentModal = "Votre récit est bien ajouté";
-                require 'view/partial/successModal.php';
+				$contentModal = "Votre récit est bien ajouté";
+				require 'view/partial/successModal.php';
 				break;
 
 			case 'errorPost':
-                $contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
-                require 'view/partial/failModal.php';
+				$contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
+				require 'view/partial/failModal.php';
 				break;
 		}
 	}
+} else if (isset($_GET['action']) && $_GET['action'] == 'listPosts') {
+
+	if (isset($_GET['errorPost'])){
+		$contentModal = "Le post n'existe pas.";
+		require 'view/partial/failModal.php';
+	}
+
+} else if (isset($_GET['action']) && $_GET['action'] == 'post') {
+
+	if (isset($_GET['errorUser'])){
+		$contentModal = 'Une erreur est survenu dans votre identification';
+		require 'view/partial/failModal.php';
+	
+	} else if (isset($_GET['errorPostId'])){
+		$contentModal = 'Une erreur est survenue ce récit n\'extiste pas';
+		require 'view/partial/failModal.php';
+	}
 }
+

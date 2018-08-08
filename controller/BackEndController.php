@@ -136,7 +136,7 @@ class BackEndController
 	 * @param int $autorId
 	 * @return void
 	 */
-	public static function addComment($comment, $postId, $autorId) // 2 modal à faire ici ----------------------------------------------------
+	public static function addComment($comment, $postId, $autorId)
 	{
 		$comment = nl2br(htmlspecialchars($comment));
 		$postManager = new PostsManager();
@@ -150,17 +150,11 @@ class BackEndController
 				$commentManager = new CommentsManager();
 				$commentManager->addComment($postId, $autorId, $comment);
 				header('location:' . $GLOBALS['url'] . '?action=post&id=' . $postId . '#comments');
-
 			} else {
-				echo $postId;
-				echo $autorId;
-				echo 'Le compte utilisateur est erroné';
-
+				header('location:' . $GLOBALS['url'] . '?action=post&id=' . $postId . '&errorUser');
 			}
 		} else {
-			echo $postId;
-			echo $autorId;
-			echo 'Le postId n\'existe pas';
+			header('location:' . $GLOBALS['url'] . '?action=post&id=' . $postId . '$errorPostId');
 		}
 	}
 
@@ -171,7 +165,7 @@ class BackEndController
 	 * @param int $postId
 	 * @return void
 	 */
-	public static function reportComment($id, $postId) //Peut-être plus cohérent dans le FrontEndController
+	public static function reportComment($id, $postId) //TODO : Peut-être plus cohérent dans le FrontEndController
 	{
 		$commentManager = new CommentsManager();
 
@@ -193,7 +187,7 @@ class BackEndController
 	 * @param int $report
 	 * @return void
 	 */
-	public static function reportCommentAdmin($comment_id, $report) // 2 modal à faire ici ------------------------------------------
+	public static function reportCommentAdmin($comment_id, $report)
 	{
 		$commentManager = new CommentsManager();
 
@@ -213,11 +207,11 @@ class BackEndController
 
 			} else {
 
-				echo 'la valeur $report n\'est pas correcte';
+				header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit&errorCommentReport');
 			}
 		} else {
 
-			echo 'l\'id du com n\'est pas bonne';
+			header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit&errorID');
 		}
 	}
 
@@ -228,7 +222,7 @@ class BackEndController
 	 * @param int $moderation
 	 * @return void
 	 */
-	public static function moderationComment($comment_id, $moderation) // 2 modal à faire ici ------------------------------------------
+	public static function moderationComment($comment_id, $moderation)
 	{
 		$commentManager = new CommentsManager();
 		if ($commentManager->existsID($comment_id)) {
@@ -246,12 +240,10 @@ class BackEndController
 				header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit');
 
 			} else {
-
-				echo 'la valeur $moderation n\'est pas correcte';
+				header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit&errorCommentModeration');
 			}
 		} else {
-
-			echo 'l\'id du com n\'est pas bonne';
+			header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit&errorID');
 		}
 	}
 
@@ -261,7 +253,7 @@ class BackEndController
 	 * @param int $comment_id
 	 * @return void
 	 */
-	public static function deleteComment($comment_id) // 1 modal ici
+	public static function deleteComment($comment_id)
 	{
 		$commentManager = new CommentsManager();
 
@@ -271,7 +263,7 @@ class BackEndController
 
 		} else {
 
-			echo 'l\'id du com n\'est pas bonne';
+			header('location:' . $GLOBALS['url'] . '?action=pandOra&target=commentsEdit&errorID');
 		}
 	}
 
@@ -305,7 +297,7 @@ class BackEndController
 	 * @param int $userId
 	 * @return void
 	 */
-	public static function initAvatar($userId) // 2 modal à faire ici -----------------------------------------
+	public static function initAvatar($userId)
 	{
 		if (is_numeric($userId)) {
 
@@ -317,12 +309,10 @@ class BackEndController
 				header('location:' . $GLOBALS['url'] . '?action=pandOra&target=usersEdit');
 				
 			} else {
-
-				echo 'l\'id n\'existe pas';
+				header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorId');
 			}
 		} else {
-
-			echo 'la valeur envoyé n\'est pas un chiffre';
+			header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorId');
 		}
 	}
 
@@ -333,7 +323,7 @@ class BackEndController
 	 * @param int $userId
 	 * @return void
 	 */
-	public static function upgradeUser($admin, $userId)  // 2 modal à faire ici ------------------------------------------
+	public static function upgradeUser($admin, $userId)
 	{
 		$adminArray = array('0', '1', '2');
 
@@ -346,12 +336,10 @@ class BackEndController
 				header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit');
 				
 			} else {
-
-				echo 'L\identifiant n\'existe pas';
+				header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorId');
 			}
 		} else {
-
-			echo 'Les données envoyées ne sont pas correctes';
+			header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorId');
 		}
 	}
 
@@ -363,7 +351,7 @@ class BackEndController
 	 * @param int $ban
 	 * @return void
 	 */
-	public static function banUser($admin, $userId, $ban) // 2 modal à faire ici ------------------------------------------
+	public static function banUser($admin, $userId, $ban)
 	{
 		$adminArray = array('0', '1');
 		$banArray = array('0', '1');
@@ -386,12 +374,10 @@ class BackEndController
 					header('location:' . $GLOBALS['url'] . '?action=pandOra&target=usersEdit');
 				}
 			} else {
-
-				echo 'L\identifiant n\'existe pas';
+				header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorId');
 			}
 		} else {
-
-			echo 'Les données envoyées ne sont pas correctes';
+			header('location:' . $GLOBALS['url'] .'?action=pandOra&target=usersEdit&errorData');
 		}
 	}
 }
