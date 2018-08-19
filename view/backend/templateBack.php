@@ -7,9 +7,9 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link href="public/css/lux.min.css" rel="stylesheet" />
         <link href="public/css/style.css" rel="stylesheet" />
-		<!-- ici rajout pour test des modif tinymce -->
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<script src='vendor/Tiny/tinymce/tinymce.min.js'></script>
+		<!-- Caractéristiques du WYSIWYG -->
 		<script>
 			tinymce.init({
 				selector: 'textarea',
@@ -29,8 +29,10 @@
 		</script>
     </head>
     <body>
-	<?php
+
+<?php
 	include('view/partial/adminNav.php');
+<<<<<<< HEAD
 	?>
 		<!--  ----  Modals ---- -->
 		
@@ -57,20 +59,43 @@
 							</div>
 						</fieldset>
 					</form>
+=======
+?>
+	
+	<!-- Modal logOutModal -->
+	<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="LogOutModalCenter" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="exampleModalCenterTitle">Déconnexion</h2>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+>>>>>>> poo_transform
 				</div>
+				<form method="post" action="<?= $GLOBALS['url'] ?>?action=logOut"> 
+					<fieldset>
+						<div class="modal-body">
+							<div class="alert alert-danger text-center" role="alert">
+							Confirmez votre déconnexion. Vous effacerez aussi vos cookies par cette action. Vous pourrez vous reconnecter ultérieurement. 
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
+							<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
+						</div>
+					</fieldset>
+				</form>
 			</div>
 		</div>
-		<!-- End LogOutModal -->
+	</div>
+	<!-- End LogOutModal -->
 
-		<?php 
-		include('view/partial/modalView.php');
-		?>
-
-        <?= $content ?>
-		
-		<?php
-		include('view/partial/footerBackView.php');
-		?>
+<?php 
+	include('helper/modalindex.php');
+	echo $content;
+	include('view/partial/footerBackView.php');
+?>
 
     </body>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

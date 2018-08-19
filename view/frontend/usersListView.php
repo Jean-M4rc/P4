@@ -1,14 +1,15 @@
-<?php $title='Les Membres'; ?>
-
-<?php ob_start(); ?>
+<?php
+	$title='Les Membres';
+	ob_start();
+?>
 
 <h1>Voici Les membres inscrits sur le blog</h1>
 <p class="lead text-center">Les membres sont affichés du rang le plus élevé au plus faible et du plus récents au plus anciens.</p>
 
 <div class="container bg-dark my-2">
-<div class="row">
+	<div class="row">
 <?php
-while($data = $users->fetch()){
+	while($data = $users->fetch()) {
 ?>
 		<div class="card text-white text-center bg-primary my-3 mx-auto" style="width: 20rem;">
 			<div class="card-body">
@@ -21,12 +22,13 @@ while($data = $users->fetch()){
 				<p class="card-text">Nombre de commentaires postés : <span class="badge badge-pill badge-light"><?= $data['commentsUser'] ?></span></p>
 			</div>
 		</div>
-
 <?php
-}
-$users->closeCursor();
+	}
+	$users->closeCursor();
 ?>
+	</div>
 </div>
-</div>
-<?php $content = ob_get_clean(); ?>
-<?php require('templateFront.php'); ?>
+<?php
+	$content = ob_get_clean();
+	require 'templateFront.php';
+?>
