@@ -32,34 +32,6 @@
 
 <?php
 	include('view/partial/adminNav.php');
-<<<<<<< HEAD
-	?>
-		<!--  ----  Modals ---- -->
-		
-		<!-- Modal -- logOutModal -->
-		<div class="modal fade" id="logOutModal" tabindex="-1" role="dialog" aria-labelledby="LogOutModalCenter" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2 class="modal-title" id="exampleModalCenterTitle">Déconnexion</h2>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=logOut"> 
-						<fieldset>
-							<div class="modal-body">
-								<div class="alert alert-danger text-center" role="alert">
-								Confirmez votre déconnexion. Vous effacerez aussi vos cookies par cette action. Vous pourrez vous reconnecter ultérieurement. 
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-								<input class="btn btn-primary" id="submit" type="submit" value="Déconnexion">
-							</div>
-						</fieldset>
-					</form>
-=======
 ?>
 	
 	<!-- Modal logOutModal -->
@@ -71,7 +43,6 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
->>>>>>> poo_transform
 				</div>
 				<form method="post" action="<?= $GLOBALS['url'] ?>?action=logOut"> 
 					<fieldset>

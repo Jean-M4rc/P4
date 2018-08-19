@@ -40,41 +40,6 @@ ob_start();
 				</td>
 			</tr>			
 	
-<<<<<<< HEAD
-	<!-- Modal -- lookModal -->
-	<div class="modal fade" id="lookModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="LookModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?= htmlspecialchars($data['title']) ?></h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-				<?= $data['content'] ?>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End LookModal -->
-	
-	<!-- Modal -- updateModal -->
-	<div class="modal fade" id="updateModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Corriger quelque chose ?</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=updatePost"> 
-					<fieldset>
-=======
 			<!-- lookModal -->
 			<div class="modal fade" id="lookModal<?= $data['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="LookModalCenter" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -85,7 +50,6 @@ ob_start();
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
->>>>>>> poo_transform
 						<div class="modal-body">
 						<?= $data['content'] ?>
 						</div>
@@ -94,20 +58,6 @@ ob_start();
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD
-				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=deletePost"> 
-					<fieldset>
-						<div class="modal-body">
-							<div class="alert alert-danger text-center font-weight-bold" role="alert">
-							Etes-vous sûr de vouloir supprimer ce récit ? 
-							</div>
-							<div class="card mx-auto text-white bg-primary mb-3" style="width: 18rem;">
-								<div class="card-body">
-									<h5 class="card-title"><?= $data['title']; ?></h5>
-									<p class="card-text"><?= $data['resume']; ?></p>
-								</div>
-							</div>
-=======
 			</div>
 			<!-- End LookModal -->
 			
@@ -120,7 +70,6 @@ ob_start();
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
->>>>>>> poo_transform
 						</div>
 						<form method="post" action="<?= $GLOBALS['url'] ?>?action=pandOra&target=updatePost"> 
 							<fieldset>

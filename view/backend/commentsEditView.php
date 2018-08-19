@@ -46,74 +46,6 @@
 				</td>
 			</tr>			
 	
-<<<<<<< HEAD
-	<!-- Modal -- reportModal -->
-	<div class="modal fade" id="reportModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="reportModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?php if ($data['comment_report']==0){ echo "Signaler le commentaire";} else { echo "Lever le signalement";} ?></h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p class="lead">Auteur : <?= $data['user_login']; ?></p>
-					<p>Commentaire : <?= $data['comment']; ?></p>
-				</div>
-				<div class="modal-footer">
-					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=reportComment">
-						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
-						<input type="hidden"  name="comment_report" value="<?= $data['comment_report']; ?>">
-						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
-						<button type="submit" class="btn btn-primary">Confirmer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End reportModal -->
-	
-	<!-- Modal -- moderateModal -->
-	<div class="modal fade" id="moderateModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="updateModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle"><?php if ($data['comment_moderation']==0){ echo "Modérer le commentaire";} else { echo "Lever la modération";} ?></h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<p class="lead">Auteur : <?= $data['user_login']; ?></p>
-					<p>Commentaire : <?= $data['comment']; ?></p>
-				</div>
-				<div class="modal-footer">
-					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=moderation">
-						<input type="hidden" name="comment_id" value="<?= $data['comment_id'] ?>">
-						<input type="hidden"  name="comment_moderation" value="<?= $data['comment_moderation']; ?>">
-						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
-						<button type="submit" class="btn btn-primary">Confirmer</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End LookModal -->
-	
-	<!-- Modal -- deleteModal -->
-	<div class="modal fade" id="deleteModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Suppression</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=CommentEdit&tag=delete"> 
-					<fieldset>
-=======
 			<!-- reportModal -->
 			<div class="modal fade" id="reportModal<?= $data['comment_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="reportModalCenter" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -158,7 +90,6 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
->>>>>>> poo_transform
 						<div class="modal-body">
 							<p class="lead">Auteur : <?= $data['user_login']; ?></p>
 							<p>Commentaire : <?= $data['comment']; ?></p>

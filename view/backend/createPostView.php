@@ -3,15 +3,8 @@
 	ob_start();
 ?>
 
-<<<<<<< HEAD
-<?php ob_start(); ?>
-
-	<h1 class="text-center my-3">Un nouveau récit ?</h2>
-	<form id="newPostForm" method="post" action="http://jeanforteroche.code-one.fr/index.php?action=addNewPost" data-toggle="validator" role="form">
-=======
 	<h1 class="text-center my-3">Un nouveau récit ?</h1>
 	<form id="newPostForm" method="post" action="<?= $GLOBALS['url'] ?>?action=addNewPost" data-toggle="validator" role="form">
->>>>>>> poo_transform
 		<fieldset>
 
 			<div class="form-group-row mb-3">

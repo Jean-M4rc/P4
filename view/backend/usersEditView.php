@@ -39,54 +39,6 @@
 				</td>
 			</tr>
 
-<<<<<<< HEAD
-	<!-- Modal -- infoModal -->
-	<div class="modal fade" id="infoModal<?= $data['userID'] ?>" tabindex="-1" role="dialog" aria-labelledby="infoModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Informations de l'abonné</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-				<p class="lead">
-					Pseudo : <span class="text-success"><?= $data['login'];?></span><br/><br/>
-					Inscrit depuis le : <span class="text-dark"><?= $data['date_sign_fr'];?></span><br/><br/>
-					Adresse Mail : <span class="text-info"><?= $data['email'];?></span><br/><br/>
-					Rang : <span class="text-warning"><?php if($data['admin']==0){echo'Abonné(e)';}elseif($data['admin']==1){echo'Modérateur';}elseif($data['admin']==2){echo 'Administrateur';}else{echo'indéfini, contactez-moi au plus vite ^^';}?></span><br/><br/>
-					Nombre de commentaire postés : <span class="text-dark"><?= $data['commentsUser'];?></span><br/><br/>			
-				</p>
-				<div class="modal-body text-center">
-					<img src="<?= $data['avatar_path']; ?>" alt="avatar de l'abonné" width="30%">
-				</div>
-				</div>
-				<div class="modal-footer">
-					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=initAvatar">
-						<input type="hidden" value="<?= $data['userID']; ?>" name="userID"/>
-						<button type="submit" class="btn btn-outline-primary"><i class="fas fa-redo-alt"></i><span class="d-none d-sm-inline"> Réinitiliser l'avatar</span></button>
-					</form>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End infoModal -->
-		
-	<!-- Modal -- upgradeModal -->
-	<div class="modal fade" id="upgradeModal<?= $data['userID'] ?>" tabindex="-1" role="dialog" aria-labelledby="upgradeModalCenter" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-lg" role="dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h2 class="modal-title" id="exampleModalCenterTitle">Modifier le rang de l'abonné</h2>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=upgradeUser"> 
-					<fieldset>
-=======
 			<!-- infoModal -->
 			<div class="modal fade" id="infoModal<?= $data['userID'] ?>" tabindex="-1" role="dialog" aria-labelledby="infoModalCenter" aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered" role="document">
@@ -97,7 +49,6 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
->>>>>>> poo_transform
 						<div class="modal-body">
 						<p class="lead">
 							Pseudo : <span class="text-success"><?= $data['login'];?></span><br/><br/>
@@ -162,18 +113,6 @@
 						</form>
 					</div>
 				</div>
-<<<<<<< HEAD
-				<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=pandOra&target=banUser"> 
-					<fieldset>
-						<div class="modal-body">
-							<div class="alert alert-danger text-center font-weight-bold lead" role="alert">
-							Etes-vous sûr de vouloir <?php if($data['ban']==0){echo'bannir';}elseif($data['ban']==1){echo'autoriser';}else{echo'Erreur';}?> cet utilisateur ? 
-							</div>
-							<div class="card mx-auto text-white bg-primary mb-3" style="width: 18rem;">
-								<div class="card-body">
-									<h5 class="card-title"><?= $data['login']; ?></h5>
-									<p class="card-text">Inscrit depuis le <?= $data['date_sign_fr']; ?></p>
-=======
 			</div>
 			<!-- End upgradeModal -->
 			
@@ -212,7 +151,6 @@
 									<?php if($data['admin']==2){echo'<br/><p class="alert alert-danger text-center font-weight-bold" role="alert">
 									Vous ne pouvez pas bannir un administrateur, rétrogradez-le avant.</p>';}?>
 									</div>
->>>>>>> poo_transform
 								</div>
 								
 							</fieldset>

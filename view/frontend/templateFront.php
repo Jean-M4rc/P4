@@ -12,11 +12,7 @@
     </head> 
     <body>
 		<nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-<<<<<<< HEAD
-			<a class="navbar-brand" href="http://jeanforteroche.code-one.fr/index.php">Jean Forteroche | <i class="fas fa-home"></i></a>
-=======
 			<a class="navbar-brand" href="<?= $GLOBALS['url'] ?>">Jean Forteroche | <i class="fas fa-home"></i></a>
->>>>>>> poo_transform
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -24,46 +20,21 @@
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-<<<<<<< HEAD
-						<a class="nav-link" href="http://jeanforteroche.code-one.fr/index.php?action=listPosts">Mes aventures</a>
-=======
 						<a class="nav-link" href="<?= $GLOBALS['url'] ?>?action=listPosts">Mes aventures</a>
->>>>>>> poo_transform
 					</li>
 <?php
 	if (isset($_SESSION['login'])||isset($_COOKIE['login'])) {
 ?>
 					<li class="nav-item">
-<<<<<<< HEAD
-						<a class="nav-link" href="http://jeanforteroche.code-one.fr/index.php?action=usersList">Membres</a>
-=======
 						<a class="nav-link" href="<?= $GLOBALS['url'] ?>?action=usersList">Membres</a>
->>>>>>> poo_transform
 					</li>
 <?php
 	}
 ?>
 				</ul>
 				<div class="btngroup">
-<<<<<<< HEAD
-	<?php
-		// Si le visiteur est connecté par sa session ou son cookie on modifie le menu de navigation
-		if (isset($_SESSION['login'])||isset($_COOKIE['login'])){
-			
-			if ($_SESSION['rule'] >= 1){
-	?>
-				<a href='http://jeanforteroche.code-one.fr/index.php?action=pandOra'><button class="btn btn-outline-success mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Administration</button></a>
-	<?php			
-			}
-	?>
-				
-				<a href='http://jeanforteroche.code-one.fr/index.php?action=userProfil'><button class="btn btn-outline-secondary mr-1 my-1" type="button"><i class="fas fa-user-edit"></i> Mon profil</button></a>
-				<button class="btn btn btn-outline-secondary my-1" type="button" data-toggle="modal" data-target="#logOutModal"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
-				
-=======
 <?php
 	if (isset($_SESSION['login'])||isset($_COOKIE['login'])) {
->>>>>>> poo_transform
 
 		if ($_SESSION['rule'] >= 1) {
 ?>
@@ -96,11 +67,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-<<<<<<< HEAD
-					<form method="post" action="http://jeanforteroche.code-one.fr/index.php?action=logOut"> 
-=======
 					<form method="post" action="<?= $GLOBALS['url'] ?>?action=logOut"> 
->>>>>>> poo_transform
 						<fieldset>
 							<div class="modal-body">
 								<div class="alert alert-danger text-center" role="alert">
@@ -122,11 +89,7 @@
 		<div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenteredForSignIn" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-<<<<<<< HEAD
-					<form role="form" data-toggle="validator" method="post" action="http://jeanforteroche.code-one.fr/index.php?action=signin">
-=======
 					<form role="form" data-toggle="validator" method="post" action="<?= $GLOBALS['url'] ?>?action=signin">
->>>>>>> poo_transform
 						<fieldset>
 							<div class="modal-header">
 								<h2 class="modal-title">Rejoignez l'aventure !</h2>
@@ -163,12 +126,8 @@
 									<small id="emailHelp" class="form-text text-muted">Nous ne transmettrons jamais votre adresse mail à un tiers.</small>
 									<div class="help-block with-errors"></div>
 								</div>
-<<<<<<< HEAD
-								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="6LdYUlwUAAAAAAC5xhS_Ta72loK4qTWf7ESVgpzJ"></div>
-=======
 								<!-- Google ReCaptcha -->
 								<div class="g-recaptcha d-flex justify-content-center" data-sitekey="<?= $GLOBALS['siteKey']; ?>"></div>
->>>>>>> poo_transform
 								<br/>
 								<!-- infobox -->
 								<div class="alert alert-dismissible alert-primary">
@@ -200,11 +159,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-<<<<<<< HEAD
-					<form method="post" data-toggle="validator" action="http://jeanforteroche.code-one.fr/index.php?action=login">
-=======
 					<form method="post" data-toggle="validator" action="<?= $GLOBALS['url'] ?>?action=login">
->>>>>>> poo_transform
 						<fieldset>
 							<div class="modal-body">
 								<!-- Le log -->

@@ -17,19 +17,6 @@
 				<p class="card-text">Pays : <?= $_SESSION['country'] ?></p>
 				<p class="card-text">Compte créé le <?= $_SESSION['date_sign'] ?></p>
 			</div>
-<<<<<<< HEAD
-			<div class="jumbotron mb-3">
-				<h3 class="display-7">Renseigner les champs à modifier</h3>
-				<hr class="my-4">
-				<form role="form" method="post" data-toggle="validator" enctype="multipart/form-data" action="http://jeanforteroche.code-one.fr/index.php?action=updateProfil">
-					<fieldset>
-						<!-- Update du pseudo -->
-						<div class="form-group">
-							<label for="pseudo">Votre pseudo</label>
-							<input class="form-control" name="pseudo" type="text" pattern=".{3,}" data-error="Votre nouveau pseudo est trop court !" placeholder="<?= $_SESSION['login'] ?>">
-							<div class="help-block">Minimum 3 caractères</div>
-							<div class="help-block with-errors"></div>
-=======
 			<div class="card-footer">
 			<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#signOutModal"><i class="fas fa-user-slash"></i> Supprimer mon profil</button>
 			</div>
@@ -57,7 +44,6 @@
 						<div class="form-group col-sm-12 col-md-4">
 							<label for="mdp1">Entrez votre ancien mot de passe</label>
 							<input class="form-control" id="password1" name="mdp1" type="password">
->>>>>>> poo_transform
 						</div>
 						<div class="form-group col-sm-12 col-md-4">							
 							<label for="mdp2">Répétez votre ancien mot de passe</label>
@@ -115,27 +101,6 @@
 							<label for="password">Entrez votre mot de passe</label>
 							<input class="form-control" id="password" name="password" type="password">
 						</div>
-<<<<<<< HEAD
-						<form method="post" action=http://jeanforteroche.code-one.fr/index.php?action=signOut"> 
-							<fieldset>
-								<div class="modal-body">
-									<div class="alert alert-danger text-center" role="alert">
-									Etes-vous sûr de vouloir supprimer votre profil ?<br/>
-									Toutes vos données (sauf vos commentaires) seront effacées. 
-									</div>
-									<div class="form-group">
-										<label for="password">Entrez votre mot de passe</label>
-										<input class="form-control" id="password" name="password" type="password">
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-									<input class="btn btn-primary" id="submit" type="submit" value="Supprimer">
-								</div>
-							</fieldset>
-						</form>
-=======
->>>>>>> poo_transform
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>

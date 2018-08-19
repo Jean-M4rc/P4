@@ -19,11 +19,7 @@
 				<p class="card-text"><?= $data['resume'] ?></p>
 			</div>
 			<div class="card-footer text-center">
-<<<<<<< HEAD
-				<a href="http://jeanforteroche.code-one.fr/index.php?action=post&id=<?= $data['ID'] ?>"><button class="btn btn-primary btn-lg"><i class="fas fa-book-open fa-2x align-middle"></i><span class="d-none d-sm-inline"> - Lire cette aventure</span></button></a>
-=======
 				<a href="<?= $GLOBALS['url'] ?>?action=post&id=<?= $data['ID'] ?>"><button class="btn btn-primary btn-lg"><i class="fas fa-book-open fa-2x align-middle"></i><span class="d-none d-sm-inline"> - Lire cette aventure</span></button></a>
->>>>>>> poo_transform
 			</div>
 		</div>
 
