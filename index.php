@@ -104,6 +104,11 @@ try {
 				break;
 
 			case 'pandOra':
+
+				if($_SESSION['rule']!==2 && $_SESSON['rule']!==3){
+					header('location:index.php');
+				}
+
 				if (isset($_GET['target'])) {
 
 					switch ($_GET['target']) {
