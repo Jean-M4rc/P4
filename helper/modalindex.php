@@ -46,7 +46,7 @@ if (isset($_GET['src'])) {
 
 		$contentModal = "Votre identifiant ou votre mot de passe est erroné.";
 		$targetModal = "#logInModal";
-		require 'view/partial/targetFailModal.php';
+		require './view/partial/targetFailModal.php';
 
 	} else if ($_GET['src'] == 'success') {
 
@@ -62,12 +62,12 @@ if (isset($_GET['src'])) {
 				$contentModal = '<h5 class="font-weight-bold">Bonjour ' . $_SESSION['login'] . ' !</h5><br/><p><span class="text-success font-weight-bold">Vous êtes désormais connecté.</span><br/></p><p class="text-dark">Vous pouvez vous déconnecter en cliquant sur le bouton "Déconnexion" dans le menu de navigation.</p>';
 				break;
 		}
-		require 'view/partial/successModal.php';
+		require './view/partial/successModal.php';
 
 	} else if ($_GET['src'] == 'userBanned') {
 
 		$contentModal = "Vous n'êtes plus autorisé à vous connecter sur ce site, vous êtes banni.";
-		require 'view/partial/failModal.php';
+		require './view/partial/failModal.php';
 	}
 } else if (isset($_GET['Exception'])) {
 
@@ -143,12 +143,12 @@ if (isset($_GET['src'])) {
 
 				case 'successpostup':
 					$contentModal = "Votre récit a bien été mis à jour";
-					require 'view/partial/successModal.php';
+					require './view/partial/successModal.php';
 					break;
 
 				case 'errorpostup':
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été mis à jour";
-					require 'view/partial/failModal.php';
+					require './view/partial/failModal.php';
 					break;
 			}
 		} else if (isset($_GET['postdown'])) {
@@ -157,12 +157,12 @@ if (isset($_GET['src'])) {
 
 				case 'success':
 					$contentModal = "Votre récit a bien été supprimé.";
-					require 'view/partial/successModal.php';
+					require './view/partial/successModal.php';
 					break;
 
 				case 'fail':
 					$contentModal = "Une erreur est survenue. Votre récit n'a pas été supprimé.";
-					require 'view/partial/failModal.php';
+					require './view/partial/failModal.php';
 					break;
 			}
 		}
@@ -171,17 +171,17 @@ if (isset($_GET['src'])) {
 		if (isset($_GET['errorId'])) {
 
 			$contentModal = 'Le commentaire n\'a pas pu être identifié';
-			require 'view/partial/failModal.php';
+			require './view/partial/failModal.php';
 
 		} else if (isset($_GET['errorCommentReport'])) {
 
 			$contentModal = 'Le commentaire n\'a pas pu être signalé/dé-signalé';
-			require 'view/partial/failModal.php';
+			require './view/partial/failModal.php';
 
 		} else if (isset($_GET['errorCommentModeration'])) {
 
 			$contentModal = 'Le commentaire n\'a pas pu être modéré/dé-modéré';
-			require 'view/partial/failModal.php';
+			require './view/partial/failModal.php';
 		}
 
 
@@ -190,12 +190,12 @@ if (isset($_GET['src'])) {
 		if (isset($_GET['errorId'])) {
 
 			$contentModal = 'L\'utilisateur pas pu être identifié';
-			require 'view/partial/failModal.php';
+			require './view/partial/failModal.php';
 
 		} else if (isset($_GET['errorData'])) {
 
 			$contentModal = 'Les données ne sont pas valides';
-			require 'view/partial/failModal.php';
+			require './view/partial/failModal.php';
 		}
 
 	} else if (isset($_GET['log'])) {
@@ -204,12 +204,12 @@ if (isset($_GET['src'])) {
 
 			case 'successPost':
 				$contentModal = "Votre récit est bien ajouté";
-				require 'view/partial/successModal.php';
+				require './view/partial/successModal.php';
 				break;
 
 			case 'errorPost':
 				$contentModal = "Une erreur est survenue. Votre récit n'est pas ajouté. Veuillez bien remplir les champs.";
-				require 'view/partial/failModal.php';
+				require './view/partial/failModal.php';
 				break;
 		}
 	}
@@ -217,18 +217,18 @@ if (isset($_GET['src'])) {
 
 	if (isset($_GET['errorPost'])){
 		$contentModal = "Le post n'existe pas.";
-		require 'view/partial/failModal.php';
+		require './view/partial/failModal.php';
 	}
 
 } else if (isset($_GET['action']) && $_GET['action'] == 'post') {
 
 	if (isset($_GET['errorUser'])){
 		$contentModal = 'Une erreur est survenu dans votre identification';
-		require 'view/partial/failModal.php';
+		require './view/partial/failModal.php';
 	
 	} else if (isset($_GET['errorPostId'])){
 		$contentModal = 'Une erreur est survenue ce récit n\'extiste pas';
-		require 'view/partial/failModal.php';
+		require './view/partial/failModal.php';
 	}
 }
 
