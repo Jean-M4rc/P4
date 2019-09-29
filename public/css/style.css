@@ -46,4 +46,6 @@ footer{
 	padding-top:20px;
 	background-color:#343a40;
 	padding-bottom:20px;
+	margin :0 !important;
+	width: 100%;
 }
